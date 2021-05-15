@@ -1,3 +1,3 @@
 
-| User Story | Priority | Time |
-| ---------- | -------- | -------- |
+| User Story | Time |
+| ---------- | -------- |
