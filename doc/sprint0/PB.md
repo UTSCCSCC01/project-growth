@@ -1,4 +1,5 @@
-<> P1 means most priority, P5 means least priority.
+<!-- P1 means most priority, P5 means least priority.
+-->
 | User Story |Priority| Time |
 | ---------- | -------- |-------- |
 | As a student Tom, an instructor Jack, I want to sign up an account| P1 | 3 days |
