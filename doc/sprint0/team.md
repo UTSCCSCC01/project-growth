@@ -7,5 +7,5 @@
 | Yihang Cheng          | cheng173 | 1005785839 | yihang.cheng@mail.utoronto.ca   | Discord             | maptory#7827            |
 | Naman Bhandari        | bhand102 | 1005727732 | naman.bhandari@mail.utoronto.ca | Discord             | Naman#3632              |
 | Pritish Panda         | pandapri | 1005970914 | pritish.panda@mail.utoronto.ca  | WhatsApp            | Lordpritish#3449        |
-| Jaiteg Sahota         | sahota42 | 1006529856 | jaiteg.sahota@mail.utoronto.ca  | Discord             | Ethan Zhang#0756        |
-| Zhengyi Zhang         | zhan3196 | 1002926569 | ethanzy.zhang@mail.utoronto.ca  | Discord             | Jai ThegoodStudent#0053 |
+| Jaiteg Sahota         | sahota42 | 1006529856 | jaiteg.sahota@mail.utoronto.ca  | Discord             | Jai ThegoodStudent#0053 |
+| Zhengyi Zhang         | zhan3196 | 1002926569 | ethanzy.zhang@mail.utoronto.ca  | Discord             | Ethan Zhang#0756        |
