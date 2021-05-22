@@ -18,19 +18,18 @@
 | E-Learning |
 | As an aspiring entrepreneur Tom, I want to register to e-learning so that I can access learning materials | Medium | 2 days |
 | As an aspiring entrepreneur Tom, I want to access modules so that I can freely learn and build on my ideas | Medium | 2 days |
-| As an aspiring entrepreneur Tom, I want to be able to submit my assignments so that I can then wait for my instructor to assess them | Medium | 3 days |
-| As an aspiring entrepreneur Tom, I want to be able to schedule and attend events and reminders so that I am up-to-date with my tasks and know about the upcoming events | Medium | 3 days
+| As an aspiring entrepreneur Tom, I want to be able to submit my documents, quizzes, surveys, assignments so that I can then wait for my instructor to assess them | Medium | 3 days |
+| As an aspiring entrepreneur Tom, I want to be able to schedule and know about upcoming events and reminders on my calender so that I am up-to-date with my learning | Medium | 3 days
 | As an aspiring entrepreneur Tom, I want to be able to do video conferencing so that I can interact with others in the community in real time | Highest | 5 days |
 | As an aspiring entrepreneur Tom, I want to download video and able to watch in in different speeds so that I can learn easily| Lowest | 1 day |
 | As an aspiring entrepreneur Tom, I want to view the breakdown info of the course including subsection so that I can view each section of a topic| Low | 2 days |
-| As an instructor Jack, I want to be able to do video conferencing so that I can interact with others in the community in real time | Highest | 5 days |
+| As an instructor Jack, I want to be able to video conference so that I can interact with others in the community in real time | Highest | 5 days |
 | As an instructor Jack, I want to be able to grade the assignments done by students so that students know about their performance | Medium | 3 days |
 | As an instructor Jack, I want to be able to view the statistics of the class performance so that I can improve based on the statistics | Medium | 3 days |
 | As an instructor Jack, I want to sign up an account so that I can have an account| Highest | 3 days |
 | As an instructor Jack, I want to login to the system so that I can access material of e learning| Highest | 4 days |
 | As an instructor Jack, I want to view my info in profile so that I can identify myself | Medium| 2 days |
-| As an instructor Jack, I want to deliver/upload quizs, documents, videos and assignments so that I can deliver material to students| Medium | 3 days|
-| As a partner Bob, I want to 
+| As an instructor Jack, I want to deliver/upload quizs, surveys, documents, videos and assignments with deadlines so that I can deliver material on a timely manner to students| Medium | 3 days|
 ||
 
 
