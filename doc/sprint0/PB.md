@@ -2,6 +2,7 @@
 -->
 | User Story |Priority| Time |
 | ---------- | -------- |-------- |
+| As a student Tom, an instructor Jack, I want to view my info in profile| Medium| 2 days |
 | As a student Tom, an instructor Jack, I want to sign up an account| Highest | 3 days |
 | As a student Tom, an instructor Jack, I want to login to the system| Highest | 4 days |
 | As a student Tom, an instructor Jack, I want to view and edit my profiles | Medium | 2 days |
