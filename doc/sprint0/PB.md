@@ -20,10 +20,10 @@
 | As an aspiring entrepreneur Tom, I want to access modules so that I can freely learn and build on my ideas | Medium | 2 days |
 | As an aspiring entrepreneur Tom, I want to submit my documents, quizzes, surveys, assignments so that I can then wait for my instructor to assess them | Medium | 3 days |
 | As an aspiring entrepreneur Tom, I want to schedule and know about upcoming events and reminders on my calender so that I am up-to-date with my learning | Medium | 3 days
-| As an aspiring entrepreneur Tom, I want to join video conferencing so that I can interact with others in the community in real time | Highest | 5 days |
+| As an aspiring entrepreneur Tom, I want to join and communicate with video conferencing so that I can interact with others in the community in real time | Highest | 5 days |
 | As an aspiring entrepreneur Tom, I want to download video and able to watch in in different speeds so that I can learn easily| Lowest | 1 day |
 | As an aspiring entrepreneur Tom, I want to view the breakdown info of the course including subsection so that I can view each section of a topic| Low | 2 days |
-| As an instructor Jack, I want to host video conference so that I can interact with others in the community in real time | Highest | 5 days |
+| As an instructor Jack, I want to host video conferences so that I can interact with others in the community in real time | Highest | 5 days |
 | As an instructor Jack, I want to grade the assignments done by students so that students know about their performance | Medium | 3 days |
 | As an instructor Jack, I want to view the statistics of the class performance so that I can improve based on the statistics | Medium | 3 days |
 | As an instructor Jack, I want to sign up an account so that I can have an account| Highest | 3 days |
