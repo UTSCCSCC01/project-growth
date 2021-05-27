@@ -4,3 +4,8 @@
 ## Key Use Cases
 ## Key Usage Scenarios
 ## Principles
+### Community:
+To connect people in an organized fashion with filters even if it sacrifices the simplicity of a minimal functionality alternative like Google Classroom.
+### E-learning:
+Enable structured interaction between instructors and aspiring entrepreneurs over excessive permissions/control given to the aspiring entrepreneur. 
+
