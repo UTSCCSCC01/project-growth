@@ -13,7 +13,7 @@
 - Pritish: summary.md, PB.md, Personas, team.md
 
 ## How did you make decisions?
-- We used to have a vote on decisions that had more than one opinion. The minority always understood the point of view of the majority and worked on the tasks willingly and happily.
+- We used to have a vote on decisions that had more than one opinion. The minority always understood the point of view of the majority and worked on the tasks willingly and happily. To help organize meetings and assign tasks, we decided to create a role in rotation that would be followed on every meeting for all Sprints. The rotation is as follows: Jai, Ronish, Shashwat, Ethan, Naman, Pritish, Yihang. The designated person would help guide the meeting and assign work in the form of tasks to be completed before the next meeting. The entire team would then review the progress of assigned tasks during the next meeting. Each task is peer-reviewed by at least one other team member before merges/commits are done. 
 
 ## How did you define priority and/or points of user stories? How many rounds of voting (on average) did you need to come to a consensus for the point estimate?
 - The project handout had a very detailed description of what was asked from us. Also, Lecture 2 gave a lot more insight on the expectations of the project. Through this, we took a decision based on the information we gathered. Usually we went through 3 rounds of voting to decide the consensus for the point estimate. 
