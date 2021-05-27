@@ -1,5 +1,3 @@
-<!-- P1 means most priority, P5 means least priority.
--->
 | User Story |Priority| Time |
 | ---------- | -------- |-------- |
 | Community |
