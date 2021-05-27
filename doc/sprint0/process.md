@@ -4,7 +4,7 @@
 ## How did you organize the team? Which tools did you use, if any?
 - Our primary method to contact is Discord, where team members posted doubts or questions regarding any tasks they were stuck in. Each team member is free to discuss it in the weekly meeting as well if the question requries more discussion. We also used Piazza regarding doubts which TA's or the professor could answer better. 
 - **Roles were divided as follows:**
-- Ronish: UI/UX Design, process.md, PB.md
+- Ronish: UI/UX Design, process.md, PB.md, README.md
 - Jai: Personas, team-contract.pdf, PB.md
 - Ethan: Personas, summary.md, PB.md, team-contract.pdf
 - Shashwat: UI/UX Design, process.md, README.md, PB.md
