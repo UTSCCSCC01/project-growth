@@ -10,7 +10,7 @@
 - Shashwat: UI/UX Design, process.md, README.md, PB.md
 - Yihang: done.md, competition.md, PB.md
 - Naman: competition.md, Personas, PB.md, done.md
-- Pritish: summary.md, PB.md, Personas
+- Pritish: summary.md, PB.md, Personas, team.md
 
 ## How did you make decisions?
 - We used to have a vote on decisions that had more than one opinion. The minority always understood the point of view of the majority and worked on the tasks willingly and happily.
