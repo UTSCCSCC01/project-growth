@@ -5,11 +5,11 @@
 - Our primary method to contact is Discord, where team members posted doubts or questions regarding any tasks they were stuck in. Each team member is free to discuss it in the weekly meeting as well if the question requries more discussion. We also used Piazza regarding doubts which TA's or the professor could answer better. 
 - **Roles were divided as follows:**
 - Ronish: UI/UX Design, process.md, PB.md
-- Jai: Personas, PB.md
-- Ethan: Personas, summary.md, PB.md
-- Shashwat: UI/UX Design, process.md, PB.md
-- Yihang: done.md, competition.md, PB.md
-- Naman: competition.md, Personas, PB.md
+- Jai: Personas, team-contract.pdf, PB.md
+- Ethan: Personas, summary.md, PB.md, team-contract.pdf
+- Shashwat: UI/UX Design, process.md, README.md, PB.md
+- Yihang: done.md, competition.md, PB.md, Personas
+- Naman: competition.md, Personas, PB.md, done.md
 
 ## How did you make decisions?
 - We used to have a vote on decisions that had more than one opinion. The minority always understood the point of view of the majority and worked on the tasks willingly and happily.
