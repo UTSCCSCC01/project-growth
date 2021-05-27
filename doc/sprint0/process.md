@@ -1,8 +1,8 @@
 ● Reflect on how your team worked together.
-- We scheduled our group meetings as soon as the Sprint 0 handout was posted. We made sure to have 2 meetings scheduled per week, making it easy for team members situated in different time zones to attend.
+- We scheduled our group meetings as soon as the Sprint 0 handout was posted. We made sure to have 2 meetings scheduled per week, making it easy for team members situated in different time zones to attend. At the start of every meeting, ensured we were all on the same page by recapping events from previous meeting as well as progress on Sprint 0 since the last meeting. Communicated specific details and tasks to be completed to each member of the team so they could be completed before the set deadlines.
 
 ● How did you organize the team? Which tools did you use, if any?
-- Our primary method to contact is Discord, where team members posted doubts or questions regarding any tasks they were stuck in. Each team member is free to discuss it in the weekly meeting as well if the question requries more discussion. We also used Piazza regarding doubts which TA's or the professor could answer better.
+- Our primary method to contact is Discord, where team members posted doubts or questions regarding any tasks they were stuck in. Each team member is free to discuss it in the weekly meeting as well if the question requries more discussion. We also used Piazza regarding doubts which TA's or the professor could answer better. 
 
 ● How did you make decisions?
 - We used to have a vote on decisions that had more than one opinion. The minority always understood the point of view of the majority and worked on the tasks willingly and happily.
