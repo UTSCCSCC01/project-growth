@@ -2,7 +2,7 @@
 -->
 | User Story |Priority| Time |
 | ---------- | -------- |-------- |
-## Community 
+| Community |
 | As an aspiring entrepreneur Tom, I want to view my info in profile so that I can identify myself | Medium| 2 days |
 | As an aspiring entrepreneur Tom, I want to sign up an account so that I can have an account| Highest | 3 days |
 | As an aspiring entrepreneur Tom, I want to login to the system so that I can access features of the platform| Highest | 4 days |
@@ -15,7 +15,7 @@
 | As a partner Jai Legal TM, I want to sign up using my work email so that a partner profile is automatically created for me | Medium | 1 |
 | As a partner Jai Legal TM, I want to have interactions with the aspiring entrepreneurs so that any unresolved questions can be answered | Medium | 2 days |
 |            |
- ## E-Learning
+| E-Learning |
 | As an aspiring entrepreneur Tom, I want to register to e-learning so that I can access learning materials | Medium | 2 days |
 | As an aspiring entrepreneur Tom, I want to access modules so that I can freely learn and build on my ideas | Medium | 2 days |
 | As an aspiring entrepreneur Tom, I want to submit my documents, quizzes, surveys, assignments so that I can then wait for my instructor to assess them | Medium | 3 days |
