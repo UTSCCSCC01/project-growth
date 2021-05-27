@@ -22,5 +22,5 @@
 - We had 2 meetings per week (Thursday and Saturday) in order to come up with a good plan on tasks for Sprint 0.
 
 ## What lessons should you take forward to the next phase?
-- Our primary goal is to make our project stand out. In order to achieve this goal, we learned that it is extremely essential to discuss with your team members, ask questions, in order to come up with new and interesting ideas. The more we discuss, the more ideas are given space to grow, making our project "different" from the rest. For the next phase, we will make sure to have meetings a bit more spread out, or even have just one long meeting, giving the team members enough time to complete their tasks.
+- Our primary goal is to make our project stand out. In order to achieve this goal, we learned that it is extremely essential to discuss with your team members, ask questions, in order to come up with new and interesting ideas. The more we discuss, the more ideas are given space to grow, making our project "different" from the rest. For the next phase, we will make sure to have meetings a bit more spread out, or even have just one long meeting, giving the team members enough time to complete their tasks. We'll also ensure we are clear on all the criteria by asking further questions through Discord and on Piazza to clear any/all confusion.
 
