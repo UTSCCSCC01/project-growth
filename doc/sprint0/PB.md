@@ -27,6 +27,5 @@
 | As an instructor Jack, I want to login to the system so that I can access material of e learning| Highest | 4 days |
 | As an instructor Jack, I want to view my info in profile so that I can identify myself | Medium| 2 days |
 | As an instructor Jack, I want to deliver/upload quizs, surveys, documents, videos and assignments with deadlines so that I can deliver material on a timely manner to students| Medium | 3 days|
-||
 
 
