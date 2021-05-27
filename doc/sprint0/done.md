@@ -6,4 +6,4 @@
 4. Regression testing needs to be passed after merging to main branch.
 5. Manual test on UI needs to be passed on final product.
 6. The features of final product should satisfy the criteria. 
-7. Stories are approved and implemented properly
+7. Stories are approved and implemented by team members properly
