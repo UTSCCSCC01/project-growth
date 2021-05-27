@@ -2,7 +2,7 @@
 -->
 | User Story |Priority| Time |
 | ---------- | -------- |-------- |
-| # Community |
+| Community |
 | As an aspiring entrepreneur Tom, I want to view my info in profile so that I can identify myself | Medium| 2 days |
 | As an aspiring entrepreneur Tom, I want to sign up an account so that I can have an account| Highest | 3 days |
 | As an aspiring entrepreneur Tom, I want to login to the system so that I can access features of the platform| Highest | 4 days |
