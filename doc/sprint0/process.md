@@ -8,7 +8,7 @@
 - Jai: Personas, team-contract.pdf, PB.md
 - Ethan: Personas, summary.md, PB.md, team-contract.pdf
 - Shashwat: UI/UX Design, process.md, README.md, PB.md
-- Yihang: done.md, competition.md, PB.md, Personas
+- Yihang: done.md, competition.md, PB.md
 - Naman: competition.md, Personas, PB.md, done.md
 
 ## How did you make decisions?
