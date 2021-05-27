@@ -18,7 +18,7 @@
 
 Some of the technologies which are going to be used are:
 
-***( NOTE: As our team consists of both MacOS as well as Windows Users, we will provide a link that contains the installation guides for both of these platforms below.)***
+***( NOTE: As our team consists of both MacOS as well as Windows Users, we will provide a link that contains the installation guides for both of these platforms below. )***
 
 1. **NoSQL**
 
