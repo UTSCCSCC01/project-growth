@@ -7,7 +7,7 @@
 | As a community user, I want to directly message other users in the platform so that I can have organic and guided interaction within the community | Highest | 3 days| 
 | As a community user, I want to post, upload, comment, react and share threads as well as view post uploads so that ideas can be exchanged and feedback can be obtained | Highest | 5 days |
 | As an aspiring enterpreneur Tom, I want to identify my team mates and create company profile so that I can collaborate and seek guidance | Highest | 3 days |
-| As an aspiring entrepreneur Tom, as a company SunGrid Ltd, I want to search, sort, filter posts based on poster name, poster type, date, post content so that I/we can easily navigate to relevant posts | Highest | 3 days|
+| As a community user, I want to search, sort, filter posts based on poster name, poster type, date, post content so that I/we can easily navigate to relevant posts | Highest | 3 days|
 | As a company SunGrid Ltd, we want sections dedicated to listing of company founders and brief description of our company so that we can be easily identified by viewers | Medium | 2 days |
 | As a partner Jai Legal TM, I want to sign up using my work email so that a partner profile is automatically created for me | Medium | 1 day |
 |            |
