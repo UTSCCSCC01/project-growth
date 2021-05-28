@@ -1,4 +1,4 @@
-# CSCC01-Project
+# Team Growth
 
 | Full name             | UTOR ID  | Student ID | Email                           | Best Way to Contact | Discord Username        |
 |-----------------------|----------|------------|---------------------------------|---------------------|-------------------------|
