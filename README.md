@@ -39,6 +39,12 @@ Some of the technologies which are going to be used are:
 - npm download page: https://www.npmjs.com/get-npm  
 - antd download: write yarn add antd in cmd
 - less: yarn add less less-loader
+- Steps:
+- 1. Make sure you download all above
+- 2. npm install -g create-react-app
+- 3. clone the project
+- 4. cd ./admin_client
+- 5. npm start
 
 - Windows: https://www.liquidweb.com/kb/install-react-js-windows/
 - Mac:     https://www.zeolearn.com/magazine/setup-react-mac
