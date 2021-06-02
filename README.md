@@ -34,6 +34,11 @@ Some of the technologies which are going to be used are:
 - Mac:     https://appdividend.com/2018/03/28/how-to-install-django-in-mac/
 
 4. **React**
+- We will use React staging create-react-app to deploy our project. 
+- Plugins used: react-router-dom, antd, npm, yarn
+- npm download page: https://www.npmjs.com/get-npm  
+- antd download: yarn add antd in cmd
+- less: yarn add less less-loader
 
 - Windows: https://www.liquidweb.com/kb/install-react-js-windows/
 - Mac:     https://www.zeolearn.com/magazine/setup-react-mac
