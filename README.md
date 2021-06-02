@@ -37,6 +37,7 @@ Some of the technologies which are going to be used are:
 - We will use React staging create-react-app to deploy our project. 
 - Plugins used: react-router-dom, antd, npm, yarn
 - npm download page: https://www.npmjs.com/get-npm  
+- yarn: npm install -g yarn
 - antd download: write yarn add antd in cmd
 - less: yarn add less less-loader
 - Steps:
