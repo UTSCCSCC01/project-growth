@@ -45,6 +45,7 @@ Some of the technologies which are going to be used are:
 - 3. clone the project
 - 4. cd ./admin_client
 - 5. npm start
+- 6. visit localhost:3000
 
 - Windows: https://www.liquidweb.com/kb/install-react-js-windows/
 - Mac:     https://www.zeolearn.com/magazine/setup-react-mac
