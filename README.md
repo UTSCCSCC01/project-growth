@@ -40,7 +40,7 @@ Some of the technologies which are going to be used are:
 - antd download: write yarn add antd in cmd
 - less: yarn add less less-loader
 - Steps:
-- 1. Make sure you download all above
+- 1. You can ignroe yarn, antd, less right now
 - 2. npm install -g create-react-app
 - 3. clone the project
 - 4. cd ./admin_client
