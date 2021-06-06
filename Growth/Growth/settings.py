@@ -117,9 +117,14 @@ STATIC_URL = '/static/'
 AUTH_USER_MODEL = 'users.User'
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
-    'users.backends.EmailBackend',
+    #'users.backends.EmailBackend',
 )
 LOGOUT_REDIRECT_URL = '/'
 LOGIN_REDIRECT_URL = '/'
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'cydy8001@gmail.com'
+EMAIL_HOST_PASSWORD = 'ss2231151' # when you read this, please do not copy down and pretend you did not see this

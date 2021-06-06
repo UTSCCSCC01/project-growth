@@ -13,6 +13,7 @@
         <div>
             <h1 class="logo"><a href="{% url 'index' %}">Welcome Entrepreneurs</a></h1>
             {% if user.is_authenticated %}
+                <!--This if block contains the homepage if user has logged in. So please add features such as chat box below-->
                 <p>Welcome to login：<a href="#">{{ user.username }}</a></p>
                 <button class="btn btn-default"><a href="{% url 'logout' %}?next={{ request.path }}">Log out</a>
                 </button>
