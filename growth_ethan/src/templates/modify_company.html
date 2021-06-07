@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content1 %}
+<h2>Modify Company</h2>
+<p>This is where you'll modify a company</p>
+<p>I am {{ request.user }}</p>
+
+
+<p>
+    {{ name }}, {{ size }}
+
+    <ul>
+        This is the founders:
+        {% for founder in founders %}
+            <li>{{founder}}</li>
+        {% endfor %}
+
+    </ul>
+
+
+
+</p>
+{% endblock %}
