@@ -18,13 +18,13 @@ class Company(models.Model):
     ]
 
     list_of_types = [
-        (0, "Self-employed"),
-        (1, "Public company"),
-        (2, "Government agency"),
-        (3, "Nonprofit"),
-        (4, "Sole proprietorship"),
-        (5, "Privately-held"),
-        (6, "Partnership"),
+        ('a', "Self-employed"),
+        ('b', "Public company"),
+        ('c', "Government agency"),
+        ('d', "Nonprofit"),
+        ('e', "Sole proprietorship"),
+        ('f', "Privately-held"),
+        ('g', "Partnership"),
     ]
 
     name = models.CharField(
@@ -47,7 +47,7 @@ class Company(models.Model):
     type = models.CharField(
         choices=list_of_types,
         max_length=20,
-        default="0"
+        default="a"
     )
 
     location = models.CharField(
@@ -68,6 +68,7 @@ class Company(models.Model):
     )
 
     verify = models.BooleanField(
+        default=False,
         help_text = "I verify that I am an authorized representative of this organization and have the right to act on its behalf in the creation and management of this page. The organization and I agree to the additional terms for Pages."
         #TODO: Make it a widget
 

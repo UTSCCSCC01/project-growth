@@ -5,7 +5,7 @@ from django.http import  HttpResponse
 def add_company_view(request, *args, **kwargs):
     user = request.user
     print(user)
-    return render(request, "add_company.html", {})
+    return render(request, "company/add_company.html", {})
     #return HttpResponse("<h1>Add Company</h>") # String of HTML code
 
 def modify_company_view(request, *args, **kwargs):
@@ -16,4 +16,4 @@ def modify_company_view(request, *args, **kwargs):
         "size": "0-3 employees",
         "founders": ["Ethan", "Diana"]
     }
-    return render(request, "modify_company.html", my_company)
+    return render(request, "company/modify_company.html", my_company)

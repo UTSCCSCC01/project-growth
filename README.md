@@ -51,6 +51,9 @@ Some of the technologies which are going to be used are:
 - Windows: https://www.liquidweb.com/kb/install-react-js-windows/
 - Mac:     https://www.zeolearn.com/magazine/setup-react-mac
 
+4. **Pillow**
+- Use "pip install pillow" to install 
+
 ## Contribution
 
 - Do you use git flow? ***YES***
