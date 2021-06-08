@@ -23,5 +23,6 @@ urlpatterns = [
     # don't forget import include
     url(r'^users/', include('users.urls')),
     url(r'^users/', include('django.contrib.auth.urls')),
-    url(r'^$', views.index, name='index')
+    url(r'^$', views.index, name='index'),
+    url(r'^chat/', include('chat.urls'))
 ]
