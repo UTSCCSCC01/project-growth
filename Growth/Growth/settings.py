@@ -28,21 +28,19 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
-]
-
 INSTALLED_APPS = [
+    'forum.apps.ForumConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'users',
-    'company_page'
-
+    'users.apps.UsersConfig',
+    'crispy_forms',    
 ]
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -55,6 +53,8 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'Growth.urls'
+LOGIN_URL = '/users/login'
+
 
 TEMPLATES = [
     {
@@ -73,9 +73,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'Growth.wsgi.application'
-
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-MEDIA_URL = '/media/'
 
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
