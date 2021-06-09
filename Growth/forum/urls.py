@@ -14,7 +14,4 @@ urlpatterns = [
     path('post/<int:pk>/edit/', EditPost.as_view(), name='edit-post'),
     path('post/<int:pk>/delete/', DeletePost.as_view(), name='delete-post'),
 
-
-
-    path('about/', views.about, name='forum-about'),
 ]

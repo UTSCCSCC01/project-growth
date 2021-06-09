@@ -15,12 +15,6 @@ from django.views.generic import (
 
 #should decide which view to use: ListView, FormView, RecycleView
 
-def home(request):
-    #makes a dictionary
-    allPosts = {
-        'posts': Post.objects.all() #accesses db
-    }
-    return render(request, 'forum/forum.html', allPosts)
 #forum in the path refers to templates/forum.
 #in HTML it will be called like this {% for post in posts %}
 #'posts' is the key for dictionary
@@ -84,8 +78,7 @@ class DeletePost(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
             return True
         return False
 
-def about(request):
-    return HttpResponse('<h1>Blog About</h1>')
+
 
 
 
