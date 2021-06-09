@@ -1,6 +1,10 @@
-{% extends 'company/base.html' %}
+{% extends 'builder.html' %}
 
-{% block content1 %}
+{% block title %}
+My Company
+{% endblock %}
+
+{% block content %}
     <h2>My Company</h2>
     <p>This is where you'll register a company</p>
     <p>I am {{ request.user }}</p>
