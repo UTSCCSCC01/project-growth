@@ -1,0 +1,5 @@
+# The following files should be ignored - Created by Ethan
+lib
+bin
+pyvenv.cfg
+**/.DS_Store
