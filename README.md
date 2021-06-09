@@ -17,18 +17,18 @@
 One time install:\
 `pip3 install virtualenv`\
 
-Set up repo for developers after cloning:
+Set up repo for developers after cloning:\
 `cd project-growth`\
 `git flow init -d`\
 `git pull origin develop`\
 `git flow feature start feature_name`\
 
-Running the code:
+Running the code:\
 `virtualenv -p python3 .`\
 `source bin/activate`\
 `pip install django`\
 `pip install django-crispy-forms` <- Used by forums\
-`pip install pillow` <- to prevent error No module named 'PIL'\
+`pip install pillow` <- to prevent error No module named 'PIL' \
 `cd Growth`\
 `python3 manage.py runserver`\
 
