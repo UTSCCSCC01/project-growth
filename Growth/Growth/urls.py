@@ -33,5 +33,6 @@ urlpatterns = [
     # Ethan's url
     url(r'^company/add_company', company_page.add_company_view, name='add_company'),
     url(r'^company/modify_company', company_page.modify_company_view, name='modify_company'),
+    url(r'^chat/', include('chat.urls'))
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) 
