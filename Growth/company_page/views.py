@@ -2,6 +2,12 @@ from django.shortcuts import render
 from django.http import  HttpResponse
 
 # Create your views here.
+
+def my_company_view(request, *args, **kwargs):
+    user = request.user
+    print(user)
+    return render(request, "company/my_company.html", {})
+
 def add_company_view(request, *args, **kwargs):
     user = request.user
     print(user)

@@ -13,7 +13,7 @@ class Company(models.Model):
         ("0-3","0-3 employees"),
         ("4-6" ,"4-6 employees"),
         ("6-10","6-10 employees"),
-        ("10-20 employees","10-20 employees"),
+        ("10-20","10-20 employees"),
         ("20+","20+ employees")
     ]
 
@@ -80,3 +80,6 @@ class Company(models.Model):
     #founders = get_founders_of_company(self)
 
 
+    #how it will be printed out
+    def __str__(self):
+        return self.name
