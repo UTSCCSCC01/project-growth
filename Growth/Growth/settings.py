@@ -28,6 +28,10 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
+
 INSTALLED_APPS = [
     'forum.apps.ForumConfig',
     'django.contrib.admin',
@@ -37,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'users.apps.UsersConfig',
+    'company_page.apps.CompanyPageConfig',
     'crispy_forms',    
 ]
 
@@ -73,6 +78,9 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'Growth.wsgi.application'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
 
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases

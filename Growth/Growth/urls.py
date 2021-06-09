@@ -15,9 +15,13 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
+from django.conf.urls.static import static
+from django.conf import settings
 from django.urls import path, include
 
 from users import views
+from company_page import views as company_page
+
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -25,5 +29,9 @@ urlpatterns = [
     url(r'^users/', include('users.urls')),
     url(r'^users/', include('django.contrib.auth.urls')),
     url(r'^$', views.index, name='index'),
-    path('forum/', include('forum.urls'))
-]
+    path('forum/', include('forum.urls')),
+    # Ethan's url
+    url(r'^company/add_company', company_page.add_company_view, name='add_company'),
+    url(r'^company/modify_company', company_page.modify_company_view, name='modify_company'),
+
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) 
