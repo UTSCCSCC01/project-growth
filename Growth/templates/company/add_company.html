@@ -1,7 +1,23 @@
 {% extends 'builder.html' %}
 
+{% block title %}
+Add My Company
+{% endblock %}
+
 {% block content %}
-    <h2>Add Company</h2>
-    <p>This is where you'll register a company</p>
-    <p>I am {{ request.user }}</p>
+
+    <br>
+    <br>
+    <h3>Register a new company for you and your team</h3>
+    <form method="POST" enctype="multipart/form-data"> {% csrf_token %}
+        {{ form.as_p }}
+    <input type="submit" value="Save" />
+    </form>
+
+
+    <button class="btn btn-default"><a href="{% url 'my_company' %}">Back</a></button>
+
+
+
+</p>
 {% endblock %}

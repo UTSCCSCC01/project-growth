@@ -4,7 +4,7 @@ from PIL import Image
 # Create your models here.
 class Company(models.Model):
 
-    text_file = open("company_page/industries.txt", "r")
+    text_file = open("static/industries.txt", "r")
     list_of_industries = [(industry.strip('\n'),industry.strip('\n')) for industry in text_file.readlines()]
 
     #print(list_of_industries)
@@ -63,6 +63,7 @@ class Company(models.Model):
 
     logo = models.ImageField(
         default="default_company_logo.png",
+        upload_to='img',
         blank = True,
         null = True
     )
