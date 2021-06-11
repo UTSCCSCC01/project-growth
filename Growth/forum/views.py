@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from .models import Post #this means import from the model.py of forum
+from .models import Post, Comment, Reply #this means import from the model.py of forum
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
 from django.views.generic import (
@@ -40,7 +40,6 @@ class MakePost(LoginRequiredMixin , CreateView):
     #this links to post_from.html automatically  
     # Note: this autmatically has a default form that it passes to the above html
     #overiding the default method 
-    
 
     def form_valid(self, form):
         form.instance.username = self.request.user
@@ -78,13 +77,20 @@ class DeletePost(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
             return True
         return False
 
+class CommentCreateView(LoginRequiredMixin, CreateView):
+    model = Comment
+    fields = ['text']
 
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        form.instance.post_id = self.kwargs['pk']
+        return super().form_valid(form)
 
+class ReplyCreateView(LoginRequiredMixin, CreateView):
+    model = Reply
+    fields = ['text']
 
-
-
-
-
-
-
-
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        form.instance.post_id = self.kwargs['pk']
+        return super().form_valid(form)

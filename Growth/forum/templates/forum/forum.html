@@ -14,6 +14,8 @@
             <!-- detailed view for a single post -->
             <h2><a class="article-title" href="{% url 'individual-post' post.id %}">{{ post.title }}</a></h2>
             <p class="article-content">{{ post.text }}</p>
+                        <!-- preview latest comment for post -->
+            <p class="article-content">{{ post.comment_set.last }}</p> 
           </div>
         </article>
     {% endfor %}
