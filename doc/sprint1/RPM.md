@@ -1,24 +1,22 @@
-# Release Goals
+# Release Planning Meeting
 
 The goal of the project is to create a web application which provides an intuitive, easy-to-use platform for aspiring African entrepreneurs to build their startup ideas. We aim to provide a platform where these young minds can enhance their knowledge through learning and interacting with other members in the African Impact Challenge - instructors, partners, and their peers. These young minds will also have an option to grow their ideas by forming groups (company) to build their product. We aim to also have a video conferencing feature which can benefit these aspirants immensely.  Students are able to take classes, as well as communicate with other users on the platform regarding any doubts or ideas they wish to share.
 
-Some basic features of the application is referenced in DON-24, DON-1, DON-2, DON-6:
- - Having a landing page when opening the application
- - Being able to sign up and login to an account
- - Being able to view a dashboard consisting all courses currently being taken after login
+Some basic features of the application is referenced in GROW-3, GROW-4, GROW-5, GROW-7:
+ - Having a login/sign up page
+ - Having posting, replying on the forum
+ - Able to interact with other users in the application
 
-The feature to take courses is referenced in DON-7, DON-9, and DON-10.
- - The courses will be separated into chapters so the lessons can be organized and have a seamless transition from one to another
- - The students will be able to view the course overview to determine whether or not they are interested in the course
- - The lessons will have pdf files and videos which will contain the course content
+The feature for login/sign up is referenced in GROW-3, GROW-4, GROW-8.
+ - GROW-3: Sign up account
+ - GROW-4: Login to the system
+ - GROW-8: Create and Interact with Threads
 
- The ability to create courses is referenced in DON-11 and DON-12. 
- - DON-11: An instructor will be able to create a course with title and summary for students to view so that they can decide whether they are interested
- - DON-12: An instructor will be able to upload videos, documents(pdf, docx, etc) so that students can learn the content
+ The ability to post/reply is referenced in GROW-8. 
+ - GROW-8: Create and Interact with Threads
 
-The giving garden is referenced in DON-16, DON-17, DON-18.
- - DON-16: Students will be able to post on the giving garden asking for support so that they can afford to take a course
- - DON-17: Students will be able to post on the giving garden offering services for instructors and organizations to utilize the skills they learned
- - DON-18: Instructors will be able to make posts offering free courses to students
+The ability to interact with other users in the application is referenced in GROW-5, GROW-8.
+ - GROW-5: Message other users
+ - GROW-8: Create and Interact with Threads
 
-Participants: Shree Shah, Ivin Able, Eric Li, Bryan Liu, Simar Bassi, Runjie Zhang, Harry Geng
+Participants: Ronish Bhatt, Yihang Cheng, Naman Bhandari, Shashwat Piyush Doshi, Jaiteg Sahota, Zhengyi Zhang, Pritish Panda
