@@ -9,9 +9,15 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/chatroom.css' %}">
 </head>
 <body>
+    <h2 id="title-chat">Welcome {{ user }} !</h2>
+    <h2 id="username">{{ user }}</h2>
     <textarea id="chat-log" cols="100" rows="20"></textarea><br>
-    <input id="chat-message-input" type="text" size="100"><br>
-    <input id="chat-message-submit" type="button" value="Send">
+
+    <div id="chat-text-box">
+        <input id="chat-message-input" type="text" placeholder="Type a message..."><br>
+    </div>
+
+    <button id="chat-message-submit" type="button" class="btn btn-danger btn-lg">Send</button>
     {{ room_name|json_script:"room-name" }}
     <script>
         const roomName = JSON.parse(document.getElementById('room-name').textContent);
@@ -28,7 +34,7 @@
 
         chatSocket.onmessage = function(e) {
             const data = JSON.parse(e.data);
-            document.querySelector('#chat-log').value += (data.message + '\n');
+            document.querySelector('#chat-log').value += (document.getElementById("username").innerHTML + ": " + data.message + '\n');
         };
 
         chatSocket.onclose = function(e) {
