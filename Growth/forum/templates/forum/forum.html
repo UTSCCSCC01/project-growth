@@ -1,0 +1,20 @@
+{% extends "forum/builder.html" %}
+{% block content %}
+    {% for post in posts %}
+        <article class="media content-section">
+          <div class="media-body">
+            <div class="article-metadata">
+              <a class="mr-2" href="#">{{ post.username }}</a>
+              <small class="text-muted">Posted on: {{ post.date_posted}}</small>
+              <!-- to change the date using a date filter using documentation and date format filters
+                {{ post.date_posted|date:"F d, Y"}} so this is without time-->
+              <small class="text-muted">Last updated: {{ post.last_modified}}</small>
+
+            </div>
+            <!-- detailed view for a single post -->
+            <h2><a class="article-title" href="{% url 'individual-post' post.id %}">{{ post.title }}</a></h2>
+            <p class="article-content">{{ post.text }}</p>
+          </div>
+        </article>
+    {% endfor %}
+{% endblock content %}

@@ -1,0 +1,62 @@
+{% extends 'builder.html' %}
+
+{% block title %}
+My Company
+{% endblock %}
+
+{% block content %}
+
+
+
+    <!-- If user has a company (company name is not null)-->
+    {% if company_obj %}
+        <!--Company name-->
+        <h2>{{ company_obj.name }}</h2>
+
+        <!--Company logo-->
+        <img src="{{ company_obj.logo.url }}" alt="logo" width="300px">
+        <br>
+        <br>
+        <br>
+        <br>
+
+        <!--Company details-->
+        <h5> Company Details</h5>
+        <p>description: {{ company_obj.description }}<p>
+        <p>industry: {{ company_obj.get_industry_display }}<p>
+        <p>size: {{ company_obj.get_size_display }}<p>
+        <p>type: {{ company_obj.get_type_display }}<p>
+        <p>location: {{ company_obj.location }}<p>
+        <p>website_url: {{ company_obj.website_url }}<p>
+        <p>verified: {{ company_obj.verified }}<p>
+
+        <!--
+        <ul>
+            This is the founders:
+            {% for founder in founders %}
+                <li>{{founder}}</li>
+        </ul>
+
+        {% endfor %}
+        -->
+
+        <!--Buttons-->
+        <button class="btn btn-default"><a href="{% url 'modify_company' %}">Modify company</a></button>
+        <button class="btn btn-default"><a href="{% url 'modify_company' %}">Delete company</a></button>
+
+
+    <!-- If user don't have a company -->
+    {% else %}
+        <p> You don't have an company yet !</p>
+        <button class="btn btn-default"><a href="{% url 'add_company' %}">Add company</a></button>
+
+    {% endif %}
+
+    <br>
+    <button class="btn btn-default"><a href="{% url 'index' %}">Back to {{request.user}}'s profile</a></button>
+
+    <!--TODO: It's existence is purely for testing only. Remove it later-->
+    <br>
+    <button class="btn btn-default"><a href="{% url 'add_company' %}">Add another company</a></button>
+
+{% endblock %}
