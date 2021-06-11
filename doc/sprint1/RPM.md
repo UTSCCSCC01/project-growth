@@ -5,7 +5,6 @@ The goal of the project is to create a web application which provides an intuiti
 Some basic features of the application is referenced in GROW-3, GROW-4, GROW-5, GROW-7:
  - Having a login/sign up page
  - Having posting, replying on the forum
- - Having a page to add, view and manage user's companies
  - Able to interact with other users in the application
 
 The feature for login/sign up is referenced in GROW-3, GROW-4, GROW-8.
@@ -13,7 +12,7 @@ The feature for login/sign up is referenced in GROW-3, GROW-4, GROW-8.
  - GROW-4: Login to the system
  - GROW-8: Create and Interact with Threads
 
-The ability to post/reply is referenced in GROW-8. 
+ The ability to post/reply is referenced in GROW-8. 
  - GROW-8: Create and Interact with Threads
 
 The ability to interact with other users in the application is referenced in GROW-5, GROW-8.
