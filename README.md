@@ -28,7 +28,13 @@ Running the code:
 `source bin/activate`  
 `pip install django`  
 `pip install django-crispy-forms` <- Used by forums  
-`pip install pillow` <- to prevent error No module named 'PIL'  
+`pip install pillow` <- to prevent error No module named 'PIL' 
+
+`docker run -p 6379:6379 -d redis:5`
+`python3 -m pip install channels_redis`
+
+***Now, install Docker: https://www.docker.com/get-docker****
+
 `cd Growth`  
 `python3 manage.py runserver`  
 
