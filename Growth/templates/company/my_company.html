@@ -8,13 +8,11 @@ My Company
 
 
 
-    <!-- If user has a company (company name is not null)-->
-    {% if company_obj %}
         <!--Company name-->
         <h2>{{ company_obj.name }}</h2>
 
         <!--Company logo-->
-        <img src="{{ company_obj.logo.url }}" alt="logo" width="300px">
+        <img src="{{ company_obj.logo.url }}" alt="logo" width="150px">
         <br>
         <br>
         <br>
@@ -28,29 +26,15 @@ My Company
         <p>type: {{ company_obj.get_type_display }}<p>
         <p>location: {{ company_obj.location }}<p>
         <p>website_url: {{ company_obj.website_url }}<p>
-        <p>verified: {{ company_obj.verified }}<p>
 
-        <!--
-        <ul>
-            This is the founders:
-            {% for founder in founders %}
-                <li>{{founder}}</li>
-        </ul>
 
-        {% endfor %}
-        -->
 
         <!--Buttons-->
-        <button class="btn btn-default"><a href="{% url 'modify_company' %}">Modify company</a></button>
-        <button class="btn btn-default"><a href="{% url 'modify_company' %}">Delete company</a></button>
+        <button class="btn btn-default"><a href="{% url 'modify_company' company_obj.id %}">Modify company</a></button>
+        <!--TODO: MAKE this delete work-->
+        <button class="btn btn-default"><a href="{% url 'modify_company' company_obj.id %}">Delete company</a></button>
 
 
-    <!-- If user don't have a company -->
-    {% else %}
-        <p> You don't have an company yet !</p>
-        <button class="btn btn-default"><a href="{% url 'add_company' %}">Add company</a></button>
-
-    {% endif %}
 
     <br>
     <button class="btn btn-default"><a href="{% url 'index' %}">Back to {{request.user}}'s profile</a></button>
