@@ -11,20 +11,20 @@ Some basic features of the application planned in Sprint-1 is referenced in GROW
 - Ability to manage and create company profiles
 
 
-- The feature for login/sign up is referenced in GROW-3, GROW-4, GROW-8.
-GROW-3: Sign up account
-GROW-4: Login to the system
-GROW-8: Create and Interact with Threads
+The feature for login/sign up is referenced in GROW-3, GROW-4, GROW-8.
+- GROW-3: Sign up account
+- GROW-4: Login to the system
+- GROW-8: Create and Interact with Threads
 
 The ability to post/reply is referenced in GROW-8.
-GROW-8: Create and Interact with Threads
+- GROW-8: Create and Interact with Threads
 
 The ability to interact with other users in the application is referenced in GROW-5, GROW-8.
-GROW-5: Message other users
-GROW-8: Create and Interact with Threads
+- GROW-5: Message other users
+- GROW-8: Create and Interact with Threads
 
 The ability to manage and create company profiles is referenced in GROW-7
-GROW-7: Create and manage Company Profile
+- GROW-7: Create and manage Company Profile
 
 
 Participants: Ronish Bhatt, Yihang Cheng, Naman Bhandari, Shashwat Piyush Doshi, Jaiteg Sahota, Zhengyi Zhang, Pritish Panda
