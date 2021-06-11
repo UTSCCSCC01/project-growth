@@ -30,10 +30,11 @@ Running the code:
 `pip install django-crispy-forms` <- Used by forums  
 `pip install pillow` <- to prevent error No module named 'PIL' 
 
-`docker run -p 6379:6379 -d redis:5`
-`python3 -m pip install channels_redis`
-
 ***Now, install Docker: https://www.docker.com/get-docker****
+
+
+`docker run -p 6379:6379 -d redis:5` <-gets docker
+`python3 -m pip install channels_redis`
 
 `cd Growth`  
 `python3 manage.py runserver`  
@@ -44,20 +45,16 @@ Some of the technologies which are going to be used are:
 
 ***( NOTE: As our team consists of both MacOS as well as Windows Users, we will provide a link that contains the installation guides for both of these platforms below. )***
 
-1. **NoSQL**
-
-- Link: https://docs.oracle.com/en/database/other-databases/nosql-database/19.5/admin/installing-oracle-nosql-database.html
-
-2. **Python**
+1. **Python**
 
 - Link: https://www.python.org/downloads/
 
-3. **Django**
+2. **Django**
 
 - Windows: https://docs.djangoproject.com/en/1.8/howto/windows/
 - Mac:     https://appdividend.com/2018/03/28/how-to-install-django-in-mac/
 
-4. **React**
+3. **React**
 - We will use React staging create-react-app to deploy our project. 
 - Plugins used: react-router-dom, antd, npm, yarn
 - npm download page: https://www.npmjs.com/get-npm  
