@@ -20,7 +20,6 @@
                 <h1><a href="{% url 'index' %}">Welcome Back Entrepreneurs</a></h1>
                 <h3>Login</h3>
                 <form class="form" action="{% url 'login' %}" method="post">
-                    <!-- the form area-->
                     {% csrf_token %}
                     {{ form.non_field_errors }}
                     {% for field in form %}
