@@ -1,4 +1,4 @@
-# RPM.md
+# Release Planning Meeting
 
 The goal of the project is to create a web application which provides an intuitive, easy-to-use platform for aspiring African entrepreneurs to build their startup ideas. We aim to provide a platform where these young minds can enhance their knowledge through learning and interacting with other members in the African Impact Challenge - instructors, partners, and their peers. These young minds will also have an option to grow their ideas by forming groups (company) to build their product. We aim to also have a video conferencing feature which can benefit these aspirants immensely.  Students are able to take classes, as well as communicate with other users on the platform regarding any doubts or ideas they wish to share.
 
