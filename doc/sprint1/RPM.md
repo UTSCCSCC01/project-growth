@@ -19,4 +19,4 @@ The ability to interact with other users in the application is referenced in GRO
  - GROW-5: Message other users
  - GROW-8: Create and Interact with Threads
 
-Participants: Shree Shah, Ivin Able, Eric Li, Bryan Liu, Simar Bassi, Runjie Zhang, Harry Geng
+Participants: Ronish Bhatt, Yihang Cheng, Naman Bhandari, Shashwat Piyush Doshi, Jaiteg Sahota, Zhengyi Zhang, Pritish Panda
