@@ -18,7 +18,7 @@
     <h5>Comments:</h5>
 
     {% for comment in post.comment_set.all %}
-    <p class="article-content">{{ comment }}</p>
+    <p class="article-content">{{comment.username}}: {{ comment }}</p>
     {% endfor %}
   </div>
 </article>
