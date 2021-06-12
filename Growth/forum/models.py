@@ -38,6 +38,10 @@ class Comment(models.Model):
     def __str__(self):
         return self.text
 
+    def get_absolute_url(self):
+        #refer to forum/urls.py
+        return reverse('individual-post', kwargs={'pk': self.post.pk})
+
 class Reply(models.Model):
     comment = models.ForeignKey(Comment, on_delete=models.CASCADE)
     username = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)

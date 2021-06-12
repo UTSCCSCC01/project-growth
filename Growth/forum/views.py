@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.http import HttpResponse
 from .models import Post, Comment, Reply #this means import from the model.py of forum
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
@@ -10,6 +10,8 @@ from django.views.generic import (
     UpdateView,
     DeleteView
 )
+from .forms import CommentForm
+
 
 #might want to use @login_required in here to restrict acess to users.
 
@@ -32,6 +34,24 @@ class ListPosts(ListView):
 
 class SeePostDetails(DetailView):
     model = Post
+    # def get(self, request, pk, *args, **kwargs):
+    #     post = Post.objects.get(pk=pk)
+    #     form = CommentForm()
+
+    #     context = {
+    #         'post': post,
+    #         'form': form,
+    #     }
+
+    #     return render(request, 'forum/post_detail.html', context)
+
+    # def post(self, request, *args, **kwargs):
+    #     return redirect('/forum/')
+
+    #model = Comment
+
+
+
     #for automatic html detection use this format: <appName>/<model>_<viewtype>.html
 
 class MakePost(LoginRequiredMixin , CreateView):
@@ -80,10 +100,11 @@ class DeletePost(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 class CommentCreateView(LoginRequiredMixin, CreateView):
     model = Comment
     fields = ['text']
+    template_name = 'forum/post_form.html'
 
     def form_valid(self, form):
-        form.instance.author = self.request.user
-        form.instance.post_id = self.kwargs['pk']
+        form.instance.username = self.request.user
+        form.instance.post = Post.objects.get(pk=self.kwargs.get('pk'))
         return super().form_valid(form)
 
 class ReplyCreateView(LoginRequiredMixin, CreateView):
