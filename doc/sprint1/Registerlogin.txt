@@ -1,0 +1,28 @@
+Register
+Parent class: None
+Subclasses: None
+Responsibilities:
+	- Contains username, password, email fields for registering
+	- Important info such as password should be hidden
+	- There is a register button for submitting
+	- Save the information in database
+	- Have link button to jump to login
+	- Prompt with error log if password, email or username are too weak
+Collaborators:
+	- Login
+
+
+
+
+Login:
+Parent class: None
+Subclasses: None
+Responsiblities:
+	- Contains filed such as username and password
+	- Provides link for forgetting password
+	- Important information such as password is hidden
+	- Has a button to submit the username and password
+	- Has a link to Register if user does not have account
+	- Prompt with error log if login fails
+Collaborators:
+	Register
