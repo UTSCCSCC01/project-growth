@@ -21,18 +21,6 @@
         <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'comment-create' object.id %}">Comment</a>
 
     </div>
-
-    <!-- <div class="row justify-content-center mt-3 mb-5">
-              <div class="col-md-5 col-sm-12">
-                  <form method="POST">
-                      {% csrf_token %}
-                      {{ form | crispy }}
-                      <div class="d-grid gap-2">
-                        <button class="btn btn-outline-info" type="submit">Comment</button>
-                      </div>
-                  </form>
-              </div>
-          </div> -->
     <h2 class="article-title">{{ object.title }}</a></h2>
     <p class="article-content">{{ object.text }}</p>
 
