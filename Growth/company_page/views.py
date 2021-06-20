@@ -8,7 +8,7 @@ magic_id = 8
 # Redirect user to their company, or show show_company_view if they don't have one
 def redirect_company(request):
     # If user has a company
-    if 1==1:#request.user.has_company():
+    if 1==2:#request.user.has_company():
         company_id = 2 # TODO: Change it to actual
         return redirect('my_company', company_id=company_id)
     # If user does not have a company
