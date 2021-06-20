@@ -24,36 +24,7 @@ class Post(models.Model):
         return reverse('individual-post', kwargs={'pk': self.pk})
     #Success_url method to go to home page instead
 
-class Comment(models.Model):
-    post = models.ForeignKey(Post, on_delete=models.CASCADE)
-    username = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    text = models.TextField()
-    created_date = models.DateTimeField(default=timezone.now)
-    approved_comment = models.BooleanField(default=False)
 
-    def approve(self):
-        self.approved_comment = True
-        self.save()
-
-    def __str__(self):
-        return self.text
-
-    def get_absolute_url(self):
-        #refer to forum/urls.py
-        return reverse('individual-post', kwargs={'pk': self.post.pk})
-
-class Reply(models.Model):
-    comment = models.ForeignKey(Comment, on_delete=models.CASCADE)
-    username = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    timestamp = models.DateTimeField(auto_now_add=True)
-    text = models.TextField()
-
-    def __str__(self):
-        return self.text
-
-    @property
-    def get_replies(self):
-        return self.replies.all()
 
 
 #Notes on how to run a query to this model
