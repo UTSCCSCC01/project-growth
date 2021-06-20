@@ -59,7 +59,7 @@ class MakePost(LoginRequiredMixin , CreateView):
     fields = ['title', 'text']
     #this links to post_from.html automatically  
     # Note: this autmatically has a default form that it passes to the above html
-    #overiding the default method 
+    #overiding the default method
 
     def form_valid(self, form):
         form.instance.username = self.request.user

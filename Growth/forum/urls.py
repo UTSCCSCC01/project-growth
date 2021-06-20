@@ -2,7 +2,7 @@ from django.urls import path
 from .views import (DeletePost, EditPost, ListPosts,
                     SeePostDetails,
                     MakePost,
-                    EditPost, 
+                    EditPost,
                     CommentCreateView
                     )
 from . import views

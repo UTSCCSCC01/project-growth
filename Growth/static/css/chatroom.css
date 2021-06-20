@@ -16,7 +16,7 @@ html {
 }
 
 #username {
-    display: none !important; 
+    display: none !important;
 }
 
 body {
@@ -44,7 +44,7 @@ body {
     border-radius: 0 0 10px 0;
     border-top: 1px solid rgba(0,0,0,0.25);
     padding-left: 42px;
-    padding-right: 22px;   
+    padding-right: 22px;
 }
 
 #chat-message-input {
@@ -54,9 +54,9 @@ body {
     flex-direction: row;
 
     /* VIMP */
-    justify-content: space-around; /* THIS IS THE ONE TO MAKE ITEMS IN THE CENTRE!!!!!! 
+    justify-content: space-around; /* THIS IS THE ONE TO MAKE ITEMS IN THE CENTRE!!!!!!
      - also it gives inherent PADDING */
-     
+
     min-width: 250px;
     align-self: auto;
     height: 4vh;
