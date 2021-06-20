@@ -3,7 +3,7 @@ from .models import Company
 from .forms import AddCompanyForm, ModifyCompanyForm
 import os
 
-magic_id = 9
+magic_id = 8
 
 # Redirect user to their company, or show show_company_view if they don't have one
 def redirect_company(request):
