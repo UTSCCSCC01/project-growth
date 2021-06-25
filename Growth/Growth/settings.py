@@ -35,6 +35,7 @@ STATICFILES_DIRS = [
 INSTALLED_APPS = [
     'chat',
     'channels',
+    'courses',
     'forum.apps.ForumConfig',
     'django.contrib.admin',
     'django.contrib.auth',

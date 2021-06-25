@@ -30,6 +30,8 @@ urlpatterns = [
     url(r'^users/', include('django.contrib.auth.urls')),
     url(r'^$', views.index, name='index'),
     path('forum/', include('forum.urls')),
+    url(r'^courses/', include('courses.urls')),
+
     # Ethan's url
     url(r'^company/add_company', company_page.add_company_view, name='add_company'),
     url(r'^company/modify_company', company_page.modify_company_view, name='modify_company'),
