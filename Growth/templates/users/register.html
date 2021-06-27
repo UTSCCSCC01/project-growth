@@ -20,10 +20,6 @@
                 <h1><a href="{% url 'index' %}">Registration Form</a></h1>
                 <h3>Register</h3>
                 <form class="form" action="{% url 'users:register' %}" method="post">
-                    <center>
-                        <b>Are you?</b><br>
-                        <input type="checkbox" name="instructor" value="instructor" tabindex="1" /> Instructor <br />
-                        <input type="checkbox" name="partner" value="partner" tabindex="2" /> Partner <br /></center>
                     <!-- form -->
                     {% csrf_token %}
                     {% for field in form %}
