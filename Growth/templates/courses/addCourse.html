@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1>
+
+        <form method="POST" action="/courses/addCourse/">
+            {% csrf_token %}
+            {{ course_name_form }}
+            <button type="submit" class="btn btn-primary btn-block">Submit</button>
+        </form>
+
+    </h1>
+</body>
+</html>
