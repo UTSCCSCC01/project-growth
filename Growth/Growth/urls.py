@@ -30,6 +30,8 @@ urlpatterns = [
     url(r'^$', views.index, name='index'),
     path('forum/', include('forum.urls')),
     path('company/', include('company_page.urls')),
-    url(r'^chat/', include('chat.urls'))
+    url(r'^chat/', include('chat.urls')),
+    path(r'profile/<slug:slug>/', views.profile, name='profile')
 
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) 
+
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
