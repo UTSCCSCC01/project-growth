@@ -20,7 +20,6 @@ from django.conf import settings
 from django.urls import path, include
 
 from users import views
-from company_page import views as company_page
 
 
 urlpatterns = [
@@ -33,10 +32,8 @@ urlpatterns = [
     url(r'^courses/', include('courses.urls')),
     path(r'profile/<slug:slug>/', views.profile, name='profile'),
     # Ethan's url
-    url(r'^company/add_company', company_page.add_company_view, name='add_company'),
-    url(r'^company/modify_company',
-        company_page.modify_company_view, name='modify_company'),
-    url(r'^company/', company_page.my_company_view, name='my_company'),
+    path('company/', include('company_page.urls')),
+
     url(r'^chat/', include('chat.urls'))
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
