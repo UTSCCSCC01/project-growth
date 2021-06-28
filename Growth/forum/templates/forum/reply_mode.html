@@ -1,31 +1,12 @@
 {% extends "forum/post_detail.html" %}
 {% load crispy_forms_tags %}
 
-{% block formStuff %}
-
+{% block commentStuff %}
 <a class="btn btn-outline-danger " href="{% url 'individual-post' object.id %}">Comment</a>
-
-  {% for comment in post.comment_set.all %}
-  <hr>
-
-  <p class="article-content"><strong>{{comment.username}}:</strong> {{ comment }}</p>
+{% endblock commentStuff %}
 
 
-  <h6><strong>Replies:</strong></h6>
-
-  <ul>
-    {% for reply in comment.reply_set.all %}
-
-    <fieldset class="form-group">
-      <li class="article-content"><strong>{{reply.username}}:</strong> {{ reply }}</li>
-
-    </fieldset>
-
-
-
-    {% endfor %}
-  </ul>
-
+{% block replyStuff %}
   <form method="POST">
     {% csrf_token %}
 
@@ -36,5 +17,5 @@
 
     </div>
   </form>
-  {% endfor %}
- {% endblock formStuff%}
+
+ {% endblock replyStuff%}

@@ -31,6 +31,8 @@ class Comment(models.Model):
     text = models.TextField()
     created_date = models.DateTimeField(default=timezone.now)
     approved_comment = models.BooleanField(default=False)
+    likes= models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name='comment_likes')
+
 
     def approve(self):
         self.approved_comment = True
@@ -48,9 +50,14 @@ class Reply(models.Model):
     username = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     timestamp = models.DateTimeField(auto_now_add=True)
     text = models.TextField()
+    likes = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name='reply_likes')
 
     def __str__(self):
         return self.text
+
+    def get_absolute_url(self):
+        #refer to forum/urls.py
+        return reverse('individual-post', kwargs={'pk': self.comment.post.pk})
 
     @property
     def get_replies(self):

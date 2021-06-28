@@ -27,7 +27,38 @@
 
 
     <h5>Comment Here:</h5>
-    {% block formStuff %}{% endblock %}
+
+    {% block commentStuff %}{% endblock %}
+
+    
+      {% for comment in post.comment_set.all %}
+      <hr>
+      <p class="article-content"><strong>{{comment.username}}:</strong> {{ comment }}</p>
+      <p class="article-content">Likes: {{ comment.likes.count }}</p>
+    
+    
+      <h6><strong>Replies:</strong></h6>
+    
+      <ul>
+        {% for reply in comment.reply_set.all %}
+    
+        <fieldset class="form-group">
+          <li class="article-content"><strong>{{reply.username}}:</strong> {{ reply }}</li>
+          <p class="article-content">Likes: {{ reply.likes.count }}</p>
+    
+    
+        </fieldset>
+    
+    
+    
+        {% endfor %}
+      </ul>
+      {% block replyStuff %}{% endblock %}
+  
+      {% endfor %}
+
+
+   
 
 
   </div>

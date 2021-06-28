@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404, redirect, render
 from django.http import HttpResponse, request, HttpRequest
 from django.views.generic.base import RedirectView, View
@@ -36,7 +37,7 @@ class ListPosts(ListView):
     ordering = ['-date_posted']
 
 
-class SeePostDetails(DetailView, CreateView):
+class SeePostDetails(LoginRequiredMixin, DetailView, CreateView):
     model = Post
 
     template_name = 'forum/comment_mode.html'
@@ -135,7 +136,7 @@ class DeletePost(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         return False
 
 
-class ReplyCreateView( DetailView, CreateView):
+class ReplyCreateView(LoginRequiredMixin, DetailView, CreateView):
     model = Post
 
     template_name = 'forum/reply_mode.html'
@@ -148,7 +149,36 @@ class ReplyCreateView( DetailView, CreateView):
         form.instance.comment =  Comment.objects.get(pk=int(self.request.POST.get('replyButton')))
         return super().form_valid(form)
 
-class PostLike(RedirectView):
+class PostLike(LoginRequiredMixin, RedirectView):
     def get_redirect_url(self, *args, **kwargs):
         post = get_object_or_404(Post, id= self.kwargs.get('pk'))
+        current_user = self.request.user
+     
+        if current_user in post.likes.all():
+            post.likes.remove(current_user)
+        else:      
+             post.likes.add(current_user)
         return post.get_absolute_url()
+
+class CommentLike(LoginRequiredMixin, RedirectView):
+    def get_redirect_url(self, *args, **kwargs):
+        comment = get_object_or_404(Comment, id= self.kwargs.get('ck'))
+        current_user = self.request.user
+     
+        if current_user in comment.likes.all():
+            comment.likes.remove(current_user)
+        else:      
+             comment.likes.add(current_user)
+        return comment.get_absolute_url()
+
+
+class ReplyLike(LoginRequiredMixin, RedirectView):
+    def get_redirect_url(self, *args, **kwargs):
+        reply = get_object_or_404(Reply, id= self.kwargs.get('rk'))
+        current_user = self.request.user
+     
+        if current_user in reply.likes.all():
+            reply.likes.remove(current_user)
+        else:      
+             reply.likes.add(current_user)
+        return reply.get_absolute_url()
