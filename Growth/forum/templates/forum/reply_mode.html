@@ -1,0 +1,40 @@
+{% extends "forum/post_detail.html" %}
+{% load crispy_forms_tags %}
+
+{% block formStuff %}
+
+<a class="btn btn-outline-danger " href="{% url 'individual-post' object.id %}">Comment</a>
+
+  {% for comment in post.comment_set.all %}
+  <hr>
+
+  <p class="article-content"><strong>{{comment.username}}:</strong> {{ comment }}</p>
+
+
+  <h6><strong>Replies:</strong></h6>
+
+  <ul>
+    {% for reply in comment.reply_set.all %}
+
+    <fieldset class="form-group">
+      <li class="article-content"><strong>{{reply.username}}:</strong> {{ reply }}</li>
+
+    </fieldset>
+
+
+
+    {% endfor %}
+  </ul>
+
+  <form method="POST">
+    {% csrf_token %}
+
+    {{ form|crispy }}
+    <div class="form-group">
+      <button class="btn btn-primary mt-1 mb-1" id ={{comment.id}} type="submit" name='replyButton' value={{comment.id}}>Reply</button>
+      <a class="btn btn-outline-secondary btn-sm " href = "{%url 'individual-post' object.id%}#{{comment.id}}"> Cancel</a>
+
+    </div>
+  </form>
+  {% endfor %}
+ {% endblock formStuff%}

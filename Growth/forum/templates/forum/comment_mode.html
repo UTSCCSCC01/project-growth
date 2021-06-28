@@ -1,0 +1,44 @@
+{% extends "forum/post_detail.html" %}
+{% load crispy_forms_tags %}
+
+{% block formStuff %}
+
+<form method="POST">
+    {% csrf_token %}
+
+    {{ form|crispy }}
+    <div class="form-group">
+      <button class="btn btn-outline-danger" type="submit">Comment</button>
+
+    </div>
+  </form>
+  {% for comment in post.comment_set.all %}
+  <hr>
+  <p class="article-content"><strong>{{comment.username}}:</strong> {{ comment }}</p>
+
+
+  <h6><strong>Replies:</strong></h6>
+
+  <ul>
+    {% for reply in comment.reply_set.all %}
+
+    <fieldset class="form-group">
+      <li class="article-content"><strong>{{reply.username}}:</strong> {{ reply }}</li>
+
+    </fieldset>
+
+
+
+    {% endfor %}
+  </ul>
+
+
+    <div class="form-group">
+
+        <a class="btn btn-primary btn-sm mt-1 mb-1" id ={{comment.id}} href="{% url 'reply-create' object.id%}#{{comment.id}}" >Reply</a>
+
+      <!-- <button class="btn btn-outline-danger" type="submit" name='replyButton'value={{comment.id}}>Reply {{comment.id}}</button> -->
+
+    </div>
+  {% endfor %}
+ {% endblock formStuff%}

@@ -11,6 +11,7 @@ class Post(models.Model):
     date_posted = models.DateTimeField(default=timezone.now)
     last_modified = models.DateTimeField(auto_now=True)
     username = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    likes= models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name='post_likes')
     #have a reactions thing here, like an int form 1 to 6 or a upvote downvote
 
     #how it will be printed out

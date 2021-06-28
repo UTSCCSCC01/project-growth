@@ -17,19 +17,19 @@
         <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'delete-post' object.id %}">Delete</a>
       </div>
 
-        {% endif %}
-        <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'comment-create' object.id %}">Comment</a>
+      {% endif %}
 
     </div>
     <h2 class="article-title">{{ object.title }}</a></h2>
     <p class="article-content">{{ object.text }}</p>
+    <p class="article-content">Likes: {{ object.likes.count }}</p>
 
 
-    <h5>Comments:</h5>
 
-    {% for comment in post.comment_set.all %}
-    <p class="article-content">{{comment.username}}: {{ comment }}</p>
-    {% endfor %}
+    <h5>Comment Here:</h5>
+    {% block formStuff %}{% endblock %}
+
+
   </div>
 </article>
 {% endblock content %}
