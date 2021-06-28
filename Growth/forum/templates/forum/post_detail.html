@@ -22,7 +22,8 @@
     </div>
     <h2 class="article-title">{{ object.title }}</a></h2>
     <p class="article-content">{{ object.text }}</p>
-    <p class="article-content">Likes: {{ object.likes.count }}</p>
+    <a class="btn btn-success btn-sm mt-1 mb-1" id=pos{{object.id}} href="{% url 'like-post' object.id %}">Like: {{ object.likes.count }}</a>
+
 
 
 
@@ -33,18 +34,18 @@
     
       {% for comment in post.comment_set.all %}
       <hr>
-      <p class="article-content"><strong>{{comment.username}}:</strong> {{ comment }}</p>
-      <p class="article-content">Likes: {{ comment.likes.count }}</p>
+      <p class="article-content" id=com{{comment.id}}><strong>{{comment.username}}:</strong> {{ comment }}</p>
+      <a class="btn btn-success btn-sm mt-1 mb-1"  href="{% url 'like-comment' comment.id %}#com{{comment.id}}">Like: {{ comment.likes.count }}</a>
+
     
-    
-      <h6><strong>Replies:</strong></h6>
+      <h6 class><strong>Replies:</strong></h6>
     
       <ul>
         {% for reply in comment.reply_set.all %}
-    
+    <hr>
         <fieldset class="form-group">
-          <li class="article-content"><strong>{{reply.username}}:</strong> {{ reply }}</li>
-          <p class="article-content">Likes: {{ reply.likes.count }}</p>
+          <li class="article-content" id=rep{{reply.id}}><strong>{{reply.username}}:</strong> {{ reply }}</li>
+          <a class="btn btn-success btn-sm mt-1 mb-1"  href="{% url 'like-reply' reply.id %}#rep{{reply.id}}">Like: {{ reply.likes.count }}</a>
     
     
         </fieldset>

@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import (CommentLike, DeletePost, EditPost, ListPosts, PostLike, ReplyCreateView, ReplyLike,
+from .views import (CommentLike, DeletePost, EditPost, ListPosts, MyPosts, PostLike, ReplyCreateView, ReplyLike,
                     SeePostDetails,
                     MakePost,
                     EditPost,
@@ -23,6 +23,8 @@ urlpatterns = [
 
 
     path('post/<int:pk>/reply/', ReplyCreateView.as_view(), name='reply-create'),
+        path('myposts/', MyPosts.as_view(), name='my-posts'),
+
 
 
 ]

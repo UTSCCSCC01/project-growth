@@ -36,6 +36,15 @@ class ListPosts(ListView):
     # Change this ordering to by likes when you sort by best
     ordering = ['-date_posted']
 
+class MyPosts(LoginRequiredMixin, ListView):
+    model = Post
+    template_name = 'forum/my_posts.html'  # <appName>/<model>_<viewtype>.html
+    context_object_name = 'posts'
+
+    # this will be minipulated when using filters,
+    # the minus means decending order
+    # Change this ordering to by likes when you sort by best
+    ordering = ['-date_posted']
 
 class SeePostDetails(LoginRequiredMixin, DetailView, CreateView):
     model = Post

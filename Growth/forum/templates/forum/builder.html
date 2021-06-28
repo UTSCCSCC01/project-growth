@@ -31,11 +31,13 @@
               
               <a class="nav-item nav-link" href="{% url 'index' %}">Home</a>
               <a class="nav-item nav-link" href="{% url 'entryChat' %}">Chat</a>
+              <a class="nav-item nav-link" href="{% url 'my-posts' %}">My Posts</a>
+
             </div>
             <!-- Navbar Right Side -->
             <div class="navbar-nav">
               {% if user.is_authenticated %}
-                <a class="nav-item nav-link" href="{% url 'make-post' %}">New Post</a>
+                <a class="nav-item nav-link" href="{% url 'make-post' %}"><strong>New Post</strong></a>
                 <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
               {% else %}
                 <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
