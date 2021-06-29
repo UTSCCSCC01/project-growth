@@ -29,7 +29,11 @@ urlpatterns = [
     url(r'^users/', include('django.contrib.auth.urls')),
     url(r'^$', views.index, name='index'),
     path('forum/', include('forum.urls')),
+    url(r'^courses/', include('courses.urls')),
+    path(r'profile/<slug:slug>/', views.profile, name='profile'),
+    # Ethan's url
     path('company/', include('company_page.urls')),
+
     url(r'^chat/', include('chat.urls'))
 
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) 
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
