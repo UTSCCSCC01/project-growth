@@ -21,7 +21,6 @@ from django.urls import path, include
 
 from users import views
 
-
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     # don't forget import include
@@ -31,9 +30,11 @@ urlpatterns = [
     path('forum/', include('forum.urls')),
     url(r'^courses/', include('courses.urls')),
     path(r'profile/<slug:slug>/', views.profile, name='profile'),
+    path('edit_profile/<slug:slug>/', views.edit_profile, name='edit_profile'),
+    path('search_profile/',
+         views.search_profile, name='search_profile'),
     # Ethan's url
     path('company/', include('company_page.urls')),
-
     url(r'^chat/', include('chat.urls'))
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

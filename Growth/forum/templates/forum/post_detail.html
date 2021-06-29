@@ -6,7 +6,7 @@
 <article class="media content-section">
   <div class="media-body">
     <div class="article-metadata">
-      <a class="mr-2" href="#">{{ object.username }}</a>
+      <a class="mr-2" href="{% url 'profile' object.username %}">{{ object.username }}</a>
       <small class="text-muted">Posted on: {{ object.date_posted}}</small>
       <!-- to change the date using a date filter using documentation and date format filters
                 {{ post.date_posted|date:"F d, Y"}} so this is without time-->
@@ -22,7 +22,8 @@
     </div>
     <h2 class="article-title">{{ object.title }}</a></h2>
     <p class="article-content">{{ object.text }}</p>
-    <a class="btn btn-success btn-sm mt-1 mb-1" id=pos{{object.id}} href="{% url 'like-post' object.id %}">Like: {{ object.likes.count }}</a>
+    <a class="btn btn-success btn-sm mt-1 mb-1" id=pos{{object.id}} href="{% url 'like-post' object.id %}">Like:
+      {{object.likes.count}}</a>
 
 
 
@@ -31,35 +32,37 @@
 
     {% block commentStuff %}{% endblock %}
 
-    
-      {% for comment in post.comment_set.all %}
-      <hr>
-      <p class="article-content" id=com{{comment.id}}><strong>{{comment.username}}:</strong> {{ comment }}</p>
-      <a class="btn btn-success btn-sm mt-1 mb-1"  href="{% url 'like-comment' comment.id %}#com{{comment.id}}">Like: {{ comment.likes.count }}</a>
 
-    
-      <h6 class><strong>Replies:</strong></h6>
-    
-      <ul>
-        {% for reply in comment.reply_set.all %}
+    {% for comment in post.comment_set.all %}
     <hr>
-        <fieldset class="form-group">
-          <li class="article-content" id=rep{{reply.id}}><strong>{{reply.username}}:</strong> {{ reply }}</li>
-          <a class="btn btn-success btn-sm mt-1 mb-1"  href="{% url 'like-reply' reply.id %}#rep{{reply.id}}">Like: {{ reply.likes.count }}</a>
-    
-    
-        </fieldset>
-    
-    
-    
-        {% endfor %}
-      </ul>
-      {% block replyStuff %}{% endblock %}
-  
+    <p class="article-content" id=com{{comment.id}}><strong>{{comment.username}}:</strong> {{ comment }}</p>
+    <a class="btn btn-success btn-sm mt-1 mb-1" href="{% url 'like-comment' comment.id %}#com{{comment.id}}">Like:
+      {{comment.likes.count}}</a>
+
+
+    <h6 class><strong>Replies:</strong></h6>
+
+    <ul>
+      {% for reply in comment.reply_set.all %}
+      <hr>
+      <fieldset class="form-group">
+        <li class="article-content" id=rep{{reply.id}}><strong>{{reply.username}}:</strong> {{ reply }}</li>
+        <a class="btn btn-success btn-sm mt-1 mb-1" href="{% url 'like-reply' reply.id %}#rep{{reply.id}}">Like:
+          {{reply.likes.count}}</a>
+
+
+      </fieldset>
+
+
+
       {% endfor %}
+    </ul>
+    {% block replyStuff %}{% endblock %}
+
+    {% endfor %}
 
 
-   
+
 
 
   </div>
