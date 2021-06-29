@@ -32,15 +32,12 @@ My Company
         <!--Buttons-->
         <button class="btn btn-default"><a href="{% url 'modify_company' company_obj.id %}">Modify company</a></button>
         <!--TODO: MAKE this delete work-->
-        <button class="btn btn-default"><a href="{% url 'modify_company' company_obj.id %}">Delete company</a></button>
+        <button class="btn btn-default"><a href="{% url 'delete_company' company_obj.id %}">Delete company</a></button>
 
 
 
     <br>
     <button class="btn btn-default"><a href="{% url 'index' %}">Back to {{request.user}}'s profile</a></button>
 
-    <!--TODO: It's existence is purely for testing only. Remove it later-->
-    <br>
-    <button class="btn btn-default"><a href="{% url 'add_company' %}">Add another company</a></button>
 
 {% endblock %}

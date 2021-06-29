@@ -11,6 +11,12 @@ class User(AbstractUser):
     )
     role = models.CharField(max_length=20, default='---Select Role---', choices= ROLE_CHOICES)
 
+    #ompanies = models.IntegerField()
+
+
+    def get_companies(self):
+        return self.companies
+
 
     class Meta(AbstractUser.Meta):
         pass
