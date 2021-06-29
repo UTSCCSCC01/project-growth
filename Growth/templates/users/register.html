@@ -22,6 +22,7 @@
                 <form class="form" action="{% url 'users:register' %}" method="post">
 
                     <!-- form -->
+                    <p><b>Are you?</b></p>
                     {% csrf_token %}
                     {% for field in form %}
                         {{ field.label_tag }}
