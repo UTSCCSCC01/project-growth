@@ -36,5 +36,3 @@ class LessonInfo(models.Model):
     class Meta:
         verbose_name = "lession_name"
         verbose_name_plural = verbose_name
-
-
