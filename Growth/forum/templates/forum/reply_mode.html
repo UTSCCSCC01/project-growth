@@ -1,0 +1,21 @@
+{% extends "forum/post_detail.html" %}
+{% load crispy_forms_tags %}
+
+{% block commentStuff %}
+<a class="btn btn-outline-danger " href="{% url 'individual-post' object.id %}">Comment</a>
+{% endblock commentStuff %}
+
+
+{% block replyStuff %}
+  <form method="POST">
+    {% csrf_token %}
+
+    {{ form|crispy }}
+    <div class="form-group">
+      <button class="btn btn-primary mt-1 mb-1" id ={{comment.id}} type="submit" name='replyButton' value={{comment.id}}>Reply</button>
+      <a class="btn btn-outline-secondary btn-sm " href = "{%url 'individual-post' object.id%}#{{comment.id}}"> Cancel</a>
+
+    </div>
+  </form>
+
+ {% endblock replyStuff%}
