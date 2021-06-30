@@ -10,7 +10,7 @@ urlpatterns = [
     path('redirecting', views.redirect_company, name='redirect_company'),
     path('', views.companies_view, name='companies'),
     path('<int:company_id>/delete', views.delete_company_view, name='delete_company'),
-    path('<int:company_id>/manage_user', views.manage_users_view, name='manage_users'),
+    path('<int:company_id>/manage_users', views.manage_users_view, name='manage_users'),
     path('<int:company_id>/add_current_user', views.add_current_user_view, name='add_current_user'),
 
 ]

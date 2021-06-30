@@ -14,6 +14,15 @@ class User(AbstractUser):
 
     company = models.ForeignKey(Company, on_delete=models.SET_NULL, null=True, blank=True)
 
+    company_role = models.CharField( # Role in a company
+        choices=[
+            ("admin", "admin"),
+            ("admin_pending_approval", "admin_pending_approval"), # Requested to be an admin but have not been approved
+            ("member", "member")
+        ],
+        max_length=100,
+        default="member"
+    )
 
     class Meta(AbstractUser.Meta):
         pass

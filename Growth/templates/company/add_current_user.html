@@ -23,16 +23,20 @@ Add current user
 
     {% if has_company %}
 
-        <p>Cannot be added to this company because you are already a member of other company!</p>
+        <p>Cannot join this company because you have already joined another company.</p>
 
 
     {% else %}
 
-        <p>After joinig this company as a member, I will have access to managing the company profile and users</p>
+        <!--TODO: IF company has admin, show below-->
+        <p>You will need company admin's approval to join</p>
+        <p>After joinig this company as a member, I will have access to managing the company profile</p>
         <p>Are you sure to join this company?</p>
         <form action="" method="POST">{% csrf_token %}
             <input type="submit" name="add_user" value="Confirm" />
         </form>
+        <!--TODO: IF company does not have admin, show claim this company as admin-->
+
 
     {% endif %}
 

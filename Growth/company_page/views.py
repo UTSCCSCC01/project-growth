@@ -51,13 +51,35 @@ def company_profile_view(request, company_id):
     # Get company obj
     company_obj = get_object_or_404(Company, id=company_id)
     # Get users list
-    users = User.objects.filter(company=company_obj)
+    admins, members = get_users(company_obj)["admins"], get_users(company_obj)["members"]
+
     # True if current viewer is company member
-    viewer_is_member = request.user in users
+    viewer_is_admin = request.user in admins
+    viewer_is_member = request.user in members
+
+    # When Leave this company button is pressed
+    if "leave_this_company" in request.POST:
+
+        #  Additional step, check if there's more admin left
+        if viewer_is_admin and len(admins) < 2:  # If it is not the last admin
+            # Don't do anything and raise this error message
+            messages.error(request, "Cannot remove the last admin!")
+
+        else:
+            # Remove existing admin/member from company
+            user_to_remove = request.user  # User obj of user member to be removed
+
+            user_to_remove.company_role = "member"  # Set role back to member
+            user_to_remove.save()
+
+            company_obj.user_set.remove(user_to_remove)  # Remove this user in User model's foreign key column
+            return redirect('company_profile', company_id=company_id)
 
     context = {
         "company_obj": company_obj, # Target company obj
-        'users': users, # Company company member list
+        'admins': admins, # Company company admin list
+        'members': members, # Company company list
+        "viewer_is_admin": viewer_is_admin, # True if current viewer is admin
         "viewer_is_member": viewer_is_member # True if current viewer is member
     }
     return render(request, "company/company_profile.html", context)
@@ -132,7 +154,9 @@ def modify_company_view(request, company_id):
 def delete_company_view(request, company_id):
     # Get the company object
     company_obj = get_object_or_404(Company, id = company_id)
-    users_existing = User.objects.filter(company=company_obj)
+    # users_existing = User.objects.filter(company=company_obj)
+    admins = get_users(company_obj)['admins']
+    members = get_users(company_obj)['members']
 
     if request.method == "POST": # Run after user press "Confirm" button on deletion page
         # Confirming deletion
@@ -141,7 +165,8 @@ def delete_company_view(request, company_id):
 
     context = {
         "company_obj": company_obj,
-        "users_existing": users_existing # Members in the company that will be affected by this action
+        "admins": admins, # Members in the company that will be affected by this action
+        "members": members # Members in the company that will be affected by this action
     }
     return render(request, "company/delete_company.html", context)
 
@@ -151,6 +176,12 @@ def manage_users_view(request, company_id):
 
     # Get the company object
     company_obj = get_object_or_404(Company, id = company_id)
+    # Users that do not have a company yet and is available
+    users_available = User.objects.filter(company=None)
+    # Current members in the company
+    admins, members = get_users(company_obj)["admins"], get_users(company_obj)["members"]
+    # True if user is admin (can see this page)
+    is_admin = request.user in admins
 
     # When posting the form
     if request.method == "POST":
@@ -163,26 +194,73 @@ def manage_users_view(request, company_id):
             new_user = User.objects.get(id=userId) # User obj of user member to be added
             company_obj.user_set.add(new_user) # Add this user in User model's foreign key column
 
-        # When "Remove" Button is pressed on manage member page
-        elif "remove_user" in request.POST:
+        # When Remove (admin) button is pressed
+        elif "remove_admin" in request.POST:
+
+            # TODO: Additional step, check if there's more admin left
+            if len(admins) >= 2: # If it is not the last admin
+
+                # Remove existing admin from company
+                userId = request.POST.get('user_to_remove') # UserId of user member to be removed
+                user_to_remove = User.objects.get(id=userId) # User obj of user member to be removed
+
+                user_to_remove.company_role = "member" # Set role back to member
+                user_to_remove.save()
+
+                company_obj.user_set.remove(user_to_remove)  # Remove this user in User model's foreign key column
+            else:
+                # Don't do anything and raise this error message
+                messages.error(request, "Cannot remove the last admin!")
+
+        # When Remove (member) button is pressed
+        elif "remove_member" in request.POST:
 
             # Remove existing users form company
             userId = request.POST.get('user_to_remove') # UserId of user member to be removed
             user_to_remove = User.objects.get(id=userId) # User obj of user member to be removed
-            company_obj.user_set.remove(user_to_remove) # Remove this user in User model's foreign key column
+
+            user_to_remove.company_role = "member" # TODO： MAKE it work
+            user_to_remove.save()
+            company_obj.user_set.remove(user_to_remove)  # Remove this user in User model's foreign key column
+
+        # When set_as_member (admin) button is pressed
+        elif "set_as_member" in request.POST:
+
+            # Additional step, check if there's more admin left
+            if len(admins) >= 2: # If it is not the last admin
+
+                # Get the admin object
+                userId = request.POST.get('user_to_remove') # UserId of user member to be removed
+                user_to_remove = User.objects.get(id=userId) # User obj of user member to be removed
+
+                user_to_remove.company_role = "member" # Set role back to member
+                user_to_remove.save()
+
+            else:
+                # Don't do anything and raise this error message
+                messages.error(request, "Cannot set the last admin to member!")
+
+        # When set_as_admin (member) button is pressed
+        elif "set_as_admin" in request.POST:
+
+            userId = request.POST.get('user_to_remove')  # UserId of user member to be removed
+            user = User.objects.get(id=userId)  # User obj of user member to be removed
+
+            user.company_role = "admin"  # Set role back to member
+            user.save()
 
         # On success, go back to company profile page
-        return redirect('company_profile' , company_id=company_id)
+        return redirect('manage_users' , company_id=company_id)
 
     # When just viewing the form
     else:
-        users_available = User.objects.filter(company=None) # Users that do not have a company yet and is available
-        users_existing = User.objects.filter(company=company_obj) # Current members in the company
 
         context = {
             'users_available': users_available,
             'company_obj': company_obj,
-            'users_existing': users_existing
+            'admins': admins,
+            'members': members,
+            'is_admin': is_admin # True if user is a valid admin for this page
         }
         return render(request, 'company/manage_users.html', context)
 
@@ -215,16 +293,48 @@ def add_current_user_view(request, company_id):
         return render(request, 'company/add_current_user.html', context)
 
 
+
+# Helper function to get all the users
+def get_users(company_obj):
+    admins = User.objects.filter(company=company_obj, company_role="admin")
+    pending_admins = User.objects.filter(company=company_obj, company_role="admin_pending_approval")
+    members = User.objects.filter(company=company_obj, company_role="member")
+    return {"admins": admins, "pending_admins": pending_admins, "members": members}
+
+
 # Helper function to get a pretty string of main members
 def get_users_string(company_obj):
-    users = User.objects.filter(company=company_obj)
-    result = "Members: "
-    if len(users) == 0:
-        result = "No member"
-    elif len(users) <= 2:
-        for user in users:
+    users = get_users(company_obj)
+    admins = users['admins']
+    members = users['members']
+
+    result = ""
+    if len(admins) == 0:
+        result += "No admin"
+    elif len(admins) <= 2:
+        result += "Admins: "
+        for user in admins:
             result += user.username + ", "
         result = result[:-2]
     else:
-        result += users[0].username + ", " + users[1].username + " and " + str(len(users)-2) + " other(s) "
+        result += "Admins: " + admins[0].username + ", " + admins[1].username \
+                  + " and " + str(len(admins)-2) + " other(s) "
+
+    result += ". "
+
+
+    if len(members) == 0:
+        result += "No member"
+    elif len(members) <= 2:
+        result += "Members: "
+        for user in members:
+            result += user.username + ", "
+        result = result[:-2]
+    else:
+        result += "Members: " + members[0].username + ", " + members[1].username \
+                  + " and " + str(len(members)-2) + " other(s) "
+
+
+        # result += members[0].username + ", " + members[1].username + " and " + str(len(members)-2) + " other(s) "
+
     return result

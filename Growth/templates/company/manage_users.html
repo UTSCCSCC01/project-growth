@@ -5,6 +5,22 @@ Manage company members
 {% endblock %}
 
 {% block content %}
+
+    {% if not is_admin %}
+        <p>Only company admin has access to this page</p>
+        <button class="btn btn-default"><a href="{% url 'companies' %}">Go back to company</a></button>
+
+    {% else %}
+
+
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li{% if message.tag %} class="{{ message.tags }}" {% endif %}>{{message}}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
     <br>
     <br>
     <h3>Manage members</h3>
@@ -36,8 +52,8 @@ Manage company members
     <br>
     <br>
 
-    <h4>Add new members</h4>
-    <p>Only users without an existing company can be invited</p>
+    <h3>Add new members</h3>
+    <p><i>Only users without an existing company can be invited</i></p>
     <form action="" method="POST">{% csrf_token %}
     <select name="user_to_add" required>
         <option disabled selected value> -- select an user -- </option>
@@ -52,24 +68,66 @@ Manage company members
 
     <br>
     <br>
+    <h3>Manage current members</h3>
+    <b>Admins</b>
+    <i>will have access to managing company page and membership</i>
+        <ul>
+        {% for user in admins %}
+            <li>
+            <d>
+                <form action="" method="POST">{% csrf_token %}
+                    <a  href="{% url 'profile' user.username %}" >{{ user.username }} </a>
+                    <input type="hidden" name="user_to_remove" value="{{user.id}}"> </input>
+                    <input type="submit" name="set_as_member" value="Set as member" />
+                    <input type="submit" name="remove_admin" value="Remove" />
+                </form>
+                <br>
 
-
-    <h4>Remove current members</h4>
-    <p>Removed user will have no access to managing this company page</p>
-    <form action="" method="POST">{% csrf_token %}
-    <select name="user_to_remove" required>
-        <option disabled selected value> -- select a member -- </option>
-        {% for user in users_existing %}
-        <option value="{{user.id}}"> {{user.username}} </option>
+            </d>
+            </li>
         {% endfor %}
-    </select>
-    <input type="submit" name="remove_user" value="Remove" />
-    </form>
+        </ul>
 
 
 
-   <button class="btn btn-default"><a href="{% url 'company_profile' company_obj.id %}">Cancel</a></button>
+
+    <b>Members</b>
+    <i>will have access to adding files and edit company page</i>
+        <ul>
+        {% for user in members %}
+            <li>
+            <d>
+                <form action="" method="POST">{% csrf_token %}
+                    <a  href="{% url 'profile' user.username %}" >{{ user.username }} </a>
+                    <input type="hidden" name="user_to_remove" value="{{user.id}}"> </input>
+                    <input type="submit" name="set_as_admin" value="Set as admin" />
+                    <input type="submit" name="remove_member" value="Remove" />
+                </form>
+                <br>
+
+            </d>
+            </li>
+        {% endfor %}
+        </ul>
 
 
+    <!--<h4>Remove current members</h4>-->
+    <!--<p>Removed user will have no access to managing this company page</p>-->
+    <!--<form action="" method="POST">{% csrf_token %}-->
+    <!--<select name="user_to_remove" required>-->
+        <!--<option disabled selected value> &#45;&#45; select a member &#45;&#45; </option>-->
+        <!--{% for user in users_existing %}-->
+        <!--<option value="{{user.id}}"> {{user.username}} </option>-->
+        <!--{% endfor %}-->
+    <!--</select>-->
+    <!--<input type="submit" name="remove_user" value="Remove" />-->
+    <!--</form>-->
+
+
+
+   <button class="btn btn-default"><a href="{% url 'company_profile' company_obj.id %}">Back</a></button>
+
+
+    {% endif %}
 
 {% endblock %}
