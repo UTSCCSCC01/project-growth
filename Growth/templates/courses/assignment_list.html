@@ -11,9 +11,11 @@
     {% block content %}
     {% block content_header %}
     <h2>Assignments, Quizes, Documents, Videos, and Surveys </h2>
+    {% if role == 'Instructor' %}
     <p>
       <a href="{% url 'upload_assignment' %}" class="btn btn-primary">Upload Assignments</a>
     </p>
+    {% endif %}
     {% endblock %}
   <table class="table mb-0">
     <thead>
