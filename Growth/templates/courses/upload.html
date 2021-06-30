@@ -1,3 +1,4 @@
+<!--
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,6 +9,7 @@
 </head>
 <body>
 
+    {% block content %}
     <h2>Upload</h2>
     <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
@@ -17,6 +19,8 @@
     {% if url %}
         <p>Uploaded file: <a href="{{ url }}">{{ url }}</a></p>
     {% endif %}
-    
+    {% endblock %}
 </body>
 </html>
+
+-->

@@ -47,7 +47,7 @@ urlpatterns = [
 
     # URL for Courses
     
-    path('upload/', courses.upload, name='upload'),
+
     path('assignments/', courses.assignment_list, name='assignment_list'),
     path('assignments/upload/', courses.upload_assignments, name='upload_assignment'),
     path('assignments/<int:pk>/', courses.delete_assignment, name='delete_assignment'),

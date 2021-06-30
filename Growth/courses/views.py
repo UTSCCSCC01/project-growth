@@ -152,7 +152,8 @@ def assignment_list(request, course_id):
         role = request.user.role
 
         if(role == 'Instructor' or role == 'Student'):
-            assignments=Assignment.objects.filter(id=int(course_id))
+            course_name = CourseInfo.objects.filter(id=int(course_id))[1]
+            assignments=Assignment.objects.filter(course_name[0])
         else:
             assignments = Assignment.objects.all()
 

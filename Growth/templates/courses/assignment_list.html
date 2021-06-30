@@ -8,14 +8,18 @@
 </head>
 <body>
 
+    {% block content %}
+    {% block content_header %}
     <h2>Assignments, Quizes, Documents, Videos, and Surveys </h2>
     <p>
       <a href="{% url 'upload_assignment' %}" class="btn btn-primary">Upload Assignments</a>
     </p>
-
+    {% endblock %}
   <table class="table mb-0">
     <thead>
       <tr>
+        
+        <th>Photo Cover</th>
         <th>Assignment Topic</th>
         <th>Deadlines</th>
         <th>Download</th>
@@ -32,8 +36,8 @@
               <span class="text-muted">No cover</span>
             {% endif %}
           </td>
-          <td>{{ assignment.title }}</td>
-          <td>{{ assignment.author }}</td>
+          <td>{{ assignment.assignment }}</td>
+          <td>{{ assignment.deadline }}</td>
           <td>
             <a href="{{ assignment.pdf.url }}" class="btn btn-primary btn-sm" target="_blank">
               Download PDF
@@ -42,13 +46,14 @@
           <td>
             <form method="post" action="{% url 'delete_assignment' assignment.pk %}">
               {% csrf_token %}
-              <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+              <a href="{% url 'delete_assignment' %}" class="btn btn-primary">Delete</a>
             </form>
           </td>
         </tr>
       {% endfor %}
     </tbody>
   </table>
-    
+    {% endblock %}
+   
 </body>
 </html>

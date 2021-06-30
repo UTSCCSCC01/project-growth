@@ -1,5 +1,7 @@
 from django.conf.urls import url
+
 from .views import *
+
 
 urlpatterns = [
     url(r'^$', course_list, name='course_list'),
@@ -11,4 +13,7 @@ urlpatterns = [
     url(r'^enrollCourse/', enrollCourse, name='enrollCourse'),
     url(r'^enrollOneCourse/', enrollOneCourse, name='enrollOneCourse'),
     url(r'^unenrollCourse/', unenrollCourse, name='unenrollCourse'),
+
+
+    
 ]

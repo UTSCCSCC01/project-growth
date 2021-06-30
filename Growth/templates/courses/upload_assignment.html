@@ -14,7 +14,9 @@
   <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form|crispy }}
-    <button type="submit" class="btn btn-primary">Upload Assignment</button>
+    <p>
+        <a href="{% url 'upload_assignment' %}" class="btn btn-primary">Upload Assigment</a>
+    </p>
   </form>
 
 </body>

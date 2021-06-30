@@ -11,4 +11,4 @@ class CourseForm(forms.ModelForm):
 class AssignmentForm(forms.ModelForm):
     class Meta:
         model = Assignment
-        fields = ('id','assignment', 'deadline', 'pdf', 'cover')
+        fields = ('cover','assignment', 'deadline', 'pdf')
