@@ -1,7 +1,7 @@
 {% extends 'builder.html' %}
 
 {% block title %}
-My Company
+Company profile
 {% endblock %}
 
 {% block content %}
@@ -41,6 +41,7 @@ My Company
         <!--TODO: ONLY COMPANY OWNER CAN SEE THE FOLLOWING LINKS-->
 
         {% if viewer_is_member %}
+            <p>ONLY COMPANY OWNER CAN SEE THE FOLLOWING LINKS</p>
 
             <!--Buttons-->
             <button class="btn btn-default"><a href="{% url 'modify_company' company_obj.id %}">Modify company</a></button>

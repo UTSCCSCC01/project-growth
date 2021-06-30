@@ -1,7 +1,8 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from users.models import User
 
+from users.models import User
 from .models import Company
+
 from .forms import AddCompanyForm, ModifyCompanyForm
 from django.contrib import messages
 import os
@@ -9,95 +10,89 @@ import os
 
 # Redirect user to their company, or show show_company_view if they don't have one
 def redirect_company(request):
+    # If user has company
     if request.user.company:
-        # get your models
+        # get current user's company
         company_id = request.user.company.id
-        return redirect('my_company', company_id=company_id)
-
+        return redirect('company_profile', company_id=company_id)
+    # If user does not have a company
     else:
         return redirect('no_company')
 
-# Helper function to get a pretty string of main members
-def get_users_string(company_obj):
-    users = User.objects.filter(company=company_obj)
-    result = "Members: "
-    if len(users) == 0:
-        result = "No member"
-    elif len(users) <= 2:
-        for user in users:
-            result += user.username + ", "
-        result = result[:-2]
-    else:
-        result += users[0].username + ", " + users[1].username + " and " + str(len(users)-2) + " other(s) "
-    return result
 
-# Landing page for users without a company
+# Display current user company and company list page
 def companies_view(request):
 
+    # Get current user's company
     company_obj = request.user.company
-    has_company =  company_obj != None
-    member_list = get_users_string(company_obj)
+    has_company =  company_obj != None #True if user has company, false otherwise
+    member_list = get_users_string(company_obj) #Get "members: xxx, xxx" string
 
+    # Get all companies
     companies = Company.objects.all()
+    # Get "members: xxx, xxx" string and map it into a dictionary
     companies_dict = {company_obj: get_users_string(company_obj) for company_obj in companies }
 
     if has_company:
         companies_dict.pop(company_obj)
 
     context = {
-        "companies_dict": companies_dict,
-        "has_company": has_company,
-        "company_obj": company_obj,
-        "member_list": member_list
+        "companies_dict": companies_dict, # ALl companies
+        "has_company": has_company, # Current user has company or no
+        "company_obj": company_obj, # Current user's company
+        "member_list": member_list # Current user's company's members
     }
     return render(request, "company/companies.html", context)
 
+
 # Page for viewing user's company
-def my_company_view(request, company_id):
+def company_profile_view(request, company_id):
+
+    # Get company obj
     company_obj = get_object_or_404(Company, id=company_id)
+    # Get users list
     users = User.objects.filter(company=company_obj)
+    # True if current viewer is company member
     viewer_is_member = request.user in users
-    print(viewer_is_member)
 
     context = {
-        "company_obj": company_obj,
-        'users': users,
-        "viewer_is_member": viewer_is_member
+        "company_obj": company_obj, # Target company obj
+        'users': users, # Company company member list
+        "viewer_is_member": viewer_is_member # True if current viewer is member
     }
-    return render(request, "company/my_company.html", context)
+    return render(request, "company/company_profile.html", context)
+
 
 # Page for adding a new company
 def add_company_view(request):
+
+    # Initiate Django form
     form = AddCompanyForm()
     if request.method == "POST":
 
-        # Check for existing company
+        # Check if viewer is already a member of other company
         if request.user.company:
             # Return alert message
             messages.error(request, "You already have a company!")
-
+        # Otherwise, generate form
         else:
-
             form = AddCompanyForm(request.POST or None, request.FILES)
 
     # Check if the form is valid, if so, get the new object id and save it
     if form.is_valid():
-        new_company = form.save()
+        new_company = form.save() # Get django generated obj from form completion
+        new_company.user_set.add(request.user) # Add current user to company
 
-
-        new_company.user_set.add(request.user)
-
-        #request.user.
-        # Go back to company page while passing the new id
-        return redirect('my_company' , company_id=new_company.id)
+        # When success, go back to company page while passing the new id
+        return redirect('company_profile' , company_id=new_company.id)
 
 
     # If the form is not valid, re-run the form
     context = {
         'form' : form
     }
-
     return render(request, "company/add_company.html", context)
+
 
 # Page for company owners to edit their company
 def modify_company_view(request, company_id):
@@ -116,12 +111,13 @@ def modify_company_view(request, company_id):
 
             # deleting old uploaded logo image.
             new_image_path = company_obj.logo.path
-            if os.path.exists(old_image_path) and old_image_path != new_image_path:
+            if os.path.exists(old_image_path) and old_image_path != new_image_path: # True if logo is updated
                 os.remove(old_image_path)
 
             # Save the new form
             form.save()
-            return redirect('my_company', company_id=company_id)
+            # Redirect to company profile page for edited company
+            return redirect('company_profile', company_id=company_id)
 
     # When just viewing the form
     else:
@@ -132,25 +128,25 @@ def modify_company_view(request, company_id):
         }
         return render(request, "company/modify_company.html", context)
 
+
 def delete_company_view(request, company_id):
     # Get the company object
     company_obj = get_object_or_404(Company, id = company_id)
     users_existing = User.objects.filter(company=company_obj)
 
-    print(request.method)
-
-    if request.method == "POST":
+    if request.method == "POST": # Run after user press "Confirm" button on deletion page
         # Confirming deletion
         company_obj.delete()
-        return redirect("../../")
+        return redirect("../")
 
     context = {
         "company_obj": company_obj,
-        "users_existing": users_existing
+        "users_existing": users_existing # Members in the company that will be affected by this action
     }
     return render(request, "company/delete_company.html", context)
 
-# Page for company owners to edit their company
+
+# Page for company owners to manage company members
 def manage_users_view(request, company_id):
 
     # Get the company object
@@ -158,39 +154,30 @@ def manage_users_view(request, company_id):
 
     # When posting the form
     if request.method == "POST":
-        # if request.GET.get.action
-        print(request.GET.get)
+
+        # When "Add" Button is pressed on manage member page
         if "add_user" in request.POST:
 
             # Add new user to company
-            userid = request.POST.get('user_to_add')
-            new_user = User.objects.get(id=userid)
-            company_obj.user_set.add(new_user)
+            userId = request.POST.get('user_to_add') # UserId of user member to be added
+            new_user = User.objects.get(id=userId) # User obj of user member to be added
+            company_obj.user_set.add(new_user) # Add this user in User model's foreign key column
 
+        # When "Remove" Button is pressed on manage member page
         elif "remove_user" in request.POST:
+
             # Remove existing users form company
-            userid = request.POST.get('user_to_remove')
-            user_to_remove = User.objects.get(id=userid)
-            company_obj.user_set.remove(user_to_remove)
+            userId = request.POST.get('user_to_remove') # UserId of user member to be removed
+            user_to_remove = User.objects.get(id=userId) # User obj of user member to be removed
+            company_obj.user_set.remove(user_to_remove) # Remove this user in User model's foreign key column
 
-        return redirect('my_company' , company_id=company_id)
-
-        # form = ModifyCompanyForm(request.POST or None, request.FILES, instance=company_obj)
-        # if form.is_valid():
-        #
-        #     # deleting old uploaded logo image.
-        #     new_image_path = company_obj.logo.path
-        #     if os.path.exists(old_image_path) and old_image_path != new_image_path:
-        #         os.remove(old_image_path)
-        #
-        #     # Save the new form
-        #     form.save()
-        #     return redirect('my_company', company_id=company_id)
+        # On success, go back to company profile page
+        return redirect('company_profile' , company_id=company_id)
 
     # When just viewing the form
     else:
-        users_available = User.objects.filter(company=None)
-        users_existing = User.objects.filter(company=company_obj)
+        users_available = User.objects.filter(company=None) # Users that do not have a company yet and is available
+        users_existing = User.objects.filter(company=company_obj) # Current members in the company
 
         context = {
             'users_available': users_available,
@@ -215,10 +202,7 @@ def add_current_user_view(request, company_id):
             new_user = request.user
             company_obj.user_set.add(new_user)
 
-
-        return redirect('my_company' , company_id=company_id)
-
-
+        return redirect('company_profile' , company_id=company_id)
 
     # When just viewing the form
     else:
@@ -230,9 +214,17 @@ def add_current_user_view(request, company_id):
         }
         return render(request, 'company/add_current_user.html', context)
 
-        # form = ModifyCompanyForm(instance=company_obj)
-        # context = {
-        #     "company_obj": company_obj,
-        #     'form' : form
-        # }
-        # return render(request, "company/modify_company.html", context)
+
+# Helper function to get a pretty string of main members
+def get_users_string(company_obj):
+    users = User.objects.filter(company=company_obj)
+    result = "Members: "
+    if len(users) == 0:
+        result = "No member"
+    elif len(users) <= 2:
+        for user in users:
+            result += user.username + ", "
+        result = result[:-2]
+    else:
+        result += users[0].username + ", " + users[1].username + " and " + str(len(users)-2) + " other(s) "
+    return result

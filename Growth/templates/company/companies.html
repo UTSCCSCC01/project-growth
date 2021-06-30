@@ -19,7 +19,7 @@ No Company Found
         <p>{{ company_obj.description }}<p>
         <p>{{ member_list }}<p>
 
-        <button class="btn btn-default"><a href="{% url 'my_company' company_obj.id %}">Go to my company page</a></button>
+        <button class="btn btn-default"><a href="{% url 'company_profile' company_obj.id %}">Go to my company page</a></button>
 
         <br>
         <br><p> ============================================== </p>
@@ -57,7 +57,7 @@ No Company Found
 
             <!--Company name-->
             <p></p>
-            <h5><a href="{% url 'my_company' company_obj.id %}">{{ company_obj.id }} - {{ company_obj.name }}</a></h5>
+            <h5><a href="{% url 'company_profile' company_obj.id %}">{{ company_obj.id }} - {{ company_obj.name }}</a></h5>
 
             <i>{{ company_obj.description }}</i>
             <p>{{ member_list }}</p>
