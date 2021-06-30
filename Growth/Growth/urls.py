@@ -35,6 +35,7 @@ urlpatterns = [
          views.search_profile, name='search_profile'),
     # Ethan's url
     path('company/', include('company_page.urls')),
-    url(r'^chat/', include('chat.urls'))
+    url(r'^chat/', include('chat.urls')),
+    url('video_chat/', include('video_chat.urls'))
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
