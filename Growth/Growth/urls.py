@@ -13,15 +13,22 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url, include
+
 from django.contrib import admin
-from django.conf.urls.static import static
-from django.conf import settings
 from django.urls import path, include
+from django.conf import settings
+from django.conf.urls.static import static
+
+from courses import views
+
+from django.conf.urls import url, include
+
+
+
 
 from users import views
 from company_page import views as company_page
-
+from courses import views as courses
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -36,6 +43,17 @@ urlpatterns = [
     url(r'^company/add_company', company_page.add_company_view, name='add_company'),
     url(r'^company/modify_company', company_page.modify_company_view, name='modify_company'),
     url(r'^company/', company_page.my_company_view, name='my_company'),
-    url(r'^chat/', include('chat.urls'))
+    url(r'^chat/', include('chat.urls')),
+
+    # URL for Courses
+    
+    path('upload/', courses.upload, name='upload'),
+    path('assignments/', courses.assignment_list, name='assignment_list'),
+    path('assignments/upload/', courses.upload_assignments, name='upload_assignment'),
+    path('assignments/<int:pk>/', courses.delete_assignment, name='delete_assignment'),
+
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) 
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

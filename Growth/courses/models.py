@@ -36,3 +36,21 @@ class LessonInfo(models.Model):
     class Meta:
         verbose_name = "lession_name"
         verbose_name_plural = verbose_name
+
+class Assignment(models.Model):
+
+    id = models.BigAutoField(primary_key=True) 
+
+    assignment = models.CharField(max_length=20)
+    deadline = models.CharField(max_length=100)
+    
+    pdf = models.FileField(upload_to='assignments/pdfs/')
+    cover = models.ImageField(upload_to='assignments/covers/', null=True, blank=True)
+
+    def __str__(self):
+        return self.title
+
+    def delete(self, *args, **kwargs):
+        self.pdf.delete()
+        self.cover.delete()
+        super().delete(*args, **kwargs)

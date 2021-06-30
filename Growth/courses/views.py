@@ -1,9 +1,13 @@
 from django.shortcuts import render,redirect
+from django.views.generic import TemplateView, ListView, CreateView
+from django.core.files.storage import FileSystemStorage
 
-from .forms import CourseForm
-from .models import CourseInfo,CourseUser
+from .forms import AssignmentForm, CourseForm
+from .models import CourseInfo,CourseUser, Assignment
+
 from users.models import User
 from .import models
+from django.views.generic import TemplateView
 # Create your views here.
 def course_list(request):
     role = request.user.role
@@ -23,7 +27,7 @@ def course_list(request):
 def course_detail(request,course_id):
     if course_id:
         course = CourseInfo.objects.filter(id=int(course_id))[0]
-        return render(request,'courses/course_detail.html', {
+        return render(request,'courses/home.html', {
             'course':course
         })
 
@@ -110,3 +114,66 @@ def unenrollCourse(request):
     bb = CourseUser.objects.get(course_id=nid,user_id=request.user.id)
     bb.delete()
     return redirect('/courses/')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# NAMAN CODE
+
+def upload(request):
+
+    context = {}
+    if request.method == 'POST':
+        uploaded_file = request.FILES['document']
+        fs = FileSystemStorage()
+        name = fs.save(uploaded_file.name, uploaded_file)
+        context['url'] = fs.url(name)
+    
+    return render(request, 'courses/upload.html')
+
+def assignment_list(request, course_id):
+
+    if course_id:
+
+        role = request.user.role
+
+        if(role == 'Instructor' or role == 'Student'):
+            assignments=Assignment.objects.filter(id=int(course_id))
+        else:
+            assignments = Assignment.objects.all()
+
+    return render(request, 'courses/assignment_list.html', {
+        'assignments': assignments
+    })
+
+def upload_assignments(request):
+    if request.method == 'POST':
+        form = AssignmentForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('courses/assignment_list')
+    else:
+        form = AssignmentForm()
+    return render(request, 'courses/upload_assignment.html', {
+        'form': form
+    })
+
+def delete_assignment(request, pk):
+    if request.method == 'POST':
+        assignment = Assignment.objects.get(pk=pk)
+        assignment.delete()
+    return redirect('courses/assignment_list')
