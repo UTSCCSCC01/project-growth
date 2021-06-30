@@ -28,11 +28,12 @@ My Company
         <p>website_url: {{ company_obj.website_url }}<p>
 
 
+        <!--TODO: ONLY COMPANY OWNER CAN SEE THE FOLLOWING LINKS-->
 
         <!--Buttons-->
         <button class="btn btn-default"><a href="{% url 'modify_company' company_obj.id %}">Modify company</a></button>
-        <!--TODO: MAKE this delete work-->
         <button class="btn btn-default"><a href="{% url 'delete_company' company_obj.id %}">Delete company</a></button>
+        <button class="btn btn-default"><a href="{% url 'add_users' company_obj.id %}">Add users</a></button>
 
 
 

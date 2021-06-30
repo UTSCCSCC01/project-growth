@@ -1,0 +1,48 @@
+{% extends 'builder.html' %}
+
+{% block title %}
+Add other users to company
+{% endblock %}
+
+{% block content %}
+    <br>
+    <br>
+    <h3>Add another user for this company: "{{company_obj.name}}"</h3>
+    <img src="{{ company_obj.logo.url }}" alt="logo" width="150px">
+
+
+
+    <!-- TODO: Only users own this company shoud see this page -->
+
+<ul>
+    {% for user in users %}
+    <li> {{ user.username }} </li>
+    {% endfor %}
+</ul>
+
+
+
+  <h4>Select the user</h4>
+  <form action="" method="POST">{% csrf_token %}
+  <select name="user_to_add">
+    {% for user in users %}
+    <option value="{{user.id}}"> {{user.username}} </option>
+    {% endfor %}
+  </select>
+   <input type="submit" value="Confirm" />
+
+
+
+    <!--<form method="POST" > {% csrf_token %}-->
+        <!--{{ form.as_p }}-->
+        <!--<input  type=""-->
+    <!--<input type="submit" value="Confirm" />-->
+    </form>
+
+
+
+   <button class="btn btn-default"><a href="{% url 'my_company' company_obj.id %}">Cancel</a></button>
+
+
+
+{% endblock %}

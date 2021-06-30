@@ -6,6 +6,15 @@ Add My Company
 
 {% block content %}
 
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li{% if message.tag %} class="{{ message.tags }}" {% endif %}>{{message}}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+    {% endif %}
+
     <br>
     <br>
     <h3>Register a new company for you and your team</h3>

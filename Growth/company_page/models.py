@@ -78,11 +78,6 @@ class Company(models.Model):
     )
 
 
-    #TODO: Work with user db, add a company field. Then create get_founders_of_company, add_founders_to_company,
-    #TODO: remove_founders_from_company functions
-    #founders = get_founders_of_company(self)
-
-
     #how it will be printed out
     def __str__(self):
         return self.name

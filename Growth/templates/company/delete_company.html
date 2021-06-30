@@ -8,6 +8,13 @@ Delete this company
 
     <br>
     <br>
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li{% if message.tag %} class="{{ message.tags }}" {% endif %}>{{message}}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
 
     <form method="POST" enctype="multipart/form-data"> {% csrf_token %}
         <h3>Are you sure to delete this company: "{{company_obj.name}}"?</h3>
