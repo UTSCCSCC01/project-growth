@@ -23,7 +23,13 @@ Delete this company
         <br>
         <br>
         <br>
-        <p><input type="submit" value="Yes" /> </p>
+        <p>All the following members will not have access to this company any more:</p>
+        <ul>
+        {% for user in users_existing %}
+        <li> {{ user.username }} </li>
+        {% endfor %}
+        </ul>
+        <p><input type="submit" value="Confirm" /> </p>
 
     </form>
 

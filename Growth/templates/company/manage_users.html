@@ -1,0 +1,75 @@
+{% extends 'builder.html' %}
+
+{% block title %}
+Manage company members
+{% endblock %}
+
+{% block content %}
+    <br>
+    <br>
+    <h3>Manage members</h3>
+    <br>
+    <br>
+
+    <!--Company logo-->
+    <img src="{{ company_obj.logo.url }}" alt="logo" width="150px">
+
+    <!--Company name-->
+    <h2>{{ company_obj.name }}</h2>
+    <p>{{ company_obj.description }}<p>
+
+    <br>
+    <br>
+
+
+    <!-- TODO: Only users own this company shoud see this page -->
+
+<!--<ul>-->
+    <!--{% for user in users %}-->
+    <!--<li> {{ user.username }} </li>-->
+    <!--{% endfor %}-->
+<!--</ul>-->
+
+
+
+
+    <br>
+    <br>
+
+    <h4>Add new members</h4>
+    <p>Only users without an existing company can be invited</p>
+    <form action="" method="POST">{% csrf_token %}
+    <select name="user_to_add" required>
+        <option disabled selected value> -- select an user -- </option>
+
+        {% for user in users_available %}
+        <option value="{{user.id}}"> {{user.username}} </option>
+        {% endfor %}
+    </select>
+    <input type="submit" name="add_user" value="Add" />
+    </form>
+
+
+    <br>
+    <br>
+
+
+    <h4>Remove current members</h4>
+    <p>Removed user will have no access to managing this company page</p>
+    <form action="" method="POST">{% csrf_token %}
+    <select name="user_to_remove" required>
+        <option disabled selected value> -- select a member -- </option>
+        {% for user in users_existing %}
+        <option value="{{user.id}}"> {{user.username}} </option>
+        {% endfor %}
+    </select>
+    <input type="submit" name="remove_user" value="Remove" />
+    </form>
+
+
+
+   <button class="btn btn-default"><a href="{% url 'my_company' company_obj.id %}">Cancel</a></button>
+
+
+
+{% endblock %}

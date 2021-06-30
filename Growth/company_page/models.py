@@ -1,5 +1,4 @@
 from django.db import models
-from PIL import Image
 
 # Create your models here.
 class Company(models.Model):
@@ -63,7 +62,7 @@ class Company(models.Model):
     )
 
     logo = models.ImageField(
-        default="default_company_logo.png",
+        default="img/default_company_logo.png",
         upload_to='img',
         blank = True,
         null = True

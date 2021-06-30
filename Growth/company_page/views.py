@@ -17,19 +17,52 @@ def redirect_company(request):
     else:
         return redirect('no_company')
 
-
+# Helper function to get a pretty string of main members
+def get_users_string(company_obj):
+    users = User.objects.filter(company=company_obj)
+    result = "Members: "
+    if len(users) == 0:
+        result = "No member"
+    elif len(users) <= 2:
+        for user in users:
+            result += user.username + ", "
+        result = result[:-2]
+    else:
+        result += users[0].username + ", " + users[1].username + " and " + str(len(users)-2) + " other(s) "
+    return result
 
 # Landing page for users without a company
-def no_company_view(request):
-    return render(request, "company/no_company.html")
+def companies_view(request):
+
+    company_obj = request.user.company
+    has_company =  company_obj != None
+    member_list = get_users_string(company_obj)
+
+    companies = Company.objects.all()
+    companies_dict = {company_obj: get_users_string(company_obj) for company_obj in companies }
+
+    if has_company:
+        companies_dict.pop(company_obj)
+
+    context = {
+        "companies_dict": companies_dict,
+        "has_company": has_company,
+        "company_obj": company_obj,
+        "member_list": member_list
+    }
+    return render(request, "company/companies.html", context)
 
 # Page for viewing user's company
 def my_company_view(request, company_id):
-    #user = request.user
     company_obj = get_object_or_404(Company, id=company_id)
+    users = User.objects.filter(company=company_obj)
+    viewer_is_member = request.user in users
+    print(viewer_is_member)
+
     context = {
         "company_obj": company_obj,
-        "founders": ["Ethan", "Diana"] # TODO: Change to real founders
+        'users': users,
+        "viewer_is_member": viewer_is_member
     }
     return render(request, "company/my_company.html", context)
 
@@ -102,6 +135,8 @@ def modify_company_view(request, company_id):
 def delete_company_view(request, company_id):
     # Get the company object
     company_obj = get_object_or_404(Company, id = company_id)
+    users_existing = User.objects.filter(company=company_obj)
+
     print(request.method)
 
     if request.method == "POST":
@@ -110,27 +145,33 @@ def delete_company_view(request, company_id):
         return redirect("../../")
 
     context = {
-        "company_obj": company_obj
+        "company_obj": company_obj,
+        "users_existing": users_existing
     }
     return render(request, "company/delete_company.html", context)
 
 # Page for company owners to edit their company
-def add_other_user(request, company_id):
+def manage_users_view(request, company_id):
 
     # Get the company object
     company_obj = get_object_or_404(Company, id = company_id)
 
     # When posting the form
     if request.method == "POST":
-        users = User.objects.filter(company=None)
-        users = User.objects.all()
+        # if request.GET.get.action
+        print(request.GET.get)
+        if "add_user" in request.POST:
 
-        userid = request.POST.get('user_to_add')
-        # TODO: DO something with the selected user
-        #context = {'users ': users}
-        print("selection: " + userid)
-        new_user = User.objects.get(id=userid)
-        company_obj.user_set.add(new_user)
+            # Add new user to company
+            userid = request.POST.get('user_to_add')
+            new_user = User.objects.get(id=userid)
+            company_obj.user_set.add(new_user)
+
+        elif "remove_user" in request.POST:
+            # Remove existing users form company
+            userid = request.POST.get('user_to_remove')
+            user_to_remove = User.objects.get(id=userid)
+            company_obj.user_set.remove(user_to_remove)
 
         return redirect('my_company' , company_id=company_id)
 
@@ -148,14 +189,46 @@ def add_other_user(request, company_id):
 
     # When just viewing the form
     else:
-        users = User.objects.filter(company=None)
-        print(users)
+        users_available = User.objects.filter(company=None)
+        users_existing = User.objects.filter(company=company_obj)
+
         context = {
-            'users': users,
+            'users_available': users_available,
             'company_obj': company_obj,
-            'user1':request.user
+            'users_existing': users_existing
         }
-        return render(request, 'company/add_user_to_company.html', context)
+        return render(request, 'company/manage_users.html', context)
+
+
+def add_current_user_view(request, company_id):
+
+    # Get the company object
+    company_obj = get_object_or_404(Company, id = company_id)
+
+    # When posting the form
+    if request.method == "POST":
+        # if request.GET.get.action
+        print(request.GET.get)
+        if "add_user" in request.POST:
+
+            # Add new user to company
+            new_user = request.user
+            company_obj.user_set.add(new_user)
+
+
+        return redirect('my_company' , company_id=company_id)
+
+
+
+    # When just viewing the form
+    else:
+        has_company = request.user.company != None
+
+        context = {
+            'company_obj': company_obj,
+            "has_company":has_company
+        }
+        return render(request, 'company/add_current_user.html', context)
 
         # form = ModifyCompanyForm(instance=company_obj)
         # context = {

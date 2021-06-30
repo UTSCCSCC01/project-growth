@@ -7,38 +7,62 @@ My Company
 {% block content %}
 
 
+        <br>
+        <br>
+        <br>
 
-        <!--Company name-->
-        <h2>{{ company_obj.name }}</h2>
 
         <!--Company logo-->
         <img src="{{ company_obj.logo.url }}" alt="logo" width="150px">
-        <br>
-        <br>
+
+        <!--Company name-->
+        <h2>{{ company_obj.name }}</h2>
+        <p>{{ company_obj.description }}<p>
+
         <br>
         <br>
 
         <!--Company details-->
         <h5> Company Details</h5>
-        <p>description: {{ company_obj.description }}<p>
         <p>industry: {{ company_obj.get_industry_display }}<p>
         <p>size: {{ company_obj.get_size_display }}<p>
         <p>type: {{ company_obj.get_type_display }}<p>
         <p>location: {{ company_obj.location }}<p>
         <p>website_url: {{ company_obj.website_url }}<p>
+        <br>
+        <h5>Company members:</h5>
+        <ul>
+        {% for user in users %}
+        <li> {{ user.username }} </li>
+        {% endfor %}
+        </ul>
 
 
         <!--TODO: ONLY COMPANY OWNER CAN SEE THE FOLLOWING LINKS-->
 
-        <!--Buttons-->
-        <button class="btn btn-default"><a href="{% url 'modify_company' company_obj.id %}">Modify company</a></button>
-        <button class="btn btn-default"><a href="{% url 'delete_company' company_obj.id %}">Delete company</a></button>
-        <button class="btn btn-default"><a href="{% url 'add_users' company_obj.id %}">Add users</a></button>
+        {% if viewer_is_member %}
+
+            <!--Buttons-->
+            <button class="btn btn-default"><a href="{% url 'modify_company' company_obj.id %}">Modify company</a></button>
+            <button class="btn btn-default"><a href="{% url 'delete_company' company_obj.id %}">Delete company</a></button>
+            <button class="btn btn-default"><a href="{% url 'manage_users' company_obj.id %}">Manage users</a></button>
+            <!--TODO: Implement these-->
+            <br>
+            <button class="btn btn-default">Add files</a></button>
+            <button class="btn btn-default">Add photos</a></button>
+
+        {% else %}
+            <button class="btn btn-default"><a href="{% url 'add_current_user' company_obj.id %}">Add me to this company</a></button>
+        <p><i>Only company members can modify the company page</i></p>
+
+        {% endif %}
+
+
 
 
 
     <br>
-    <button class="btn btn-default"><a href="{% url 'index' %}">Back to {{request.user}}'s profile</a></button>
+    <button class="btn btn-default"><a href="{% url 'companies' %}">Back </a></button>
 
 
 {% endblock %}

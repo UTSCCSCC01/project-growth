@@ -1,0 +1,53 @@
+{% extends 'builder.html' %}
+
+{% block title %}
+Add current user
+{% endblock %}
+
+{% block content %}
+    <br>
+    <br>
+    <h3>Join this company</h3>
+    <br>
+    <br>
+
+    <!--Company logo-->
+    <img src="{{ company_obj.logo.url }}" alt="logo" width="150px">
+
+    <!--Company name-->
+    <h2>{{ company_obj.name }}</h2>
+    <p>{{ company_obj.description }}<p>
+
+    <br>
+    <br>
+
+    {% if has_company %}
+
+        <p>Cannot be added to this company because you are already a member of other company!</p>
+
+
+    {% else %}
+
+        <p>After joinig this company as a member, I will have access to managing the company profile and users</p>
+        <p>Are you sure to join this company?</p>
+        <form action="" method="POST">{% csrf_token %}
+            <input type="submit" name="add_user" value="Confirm" />
+        </form>
+
+    {% endif %}
+
+
+
+
+
+    <br>
+    <br>
+
+
+
+
+   <button class="btn btn-default"><a href="{% url 'my_company' company_obj.id %}">Cancel</a></button>
+
+
+
+{% endblock %}

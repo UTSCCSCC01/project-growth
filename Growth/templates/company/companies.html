@@ -1,0 +1,75 @@
+{% extends 'builder.html' %}
+
+{% block title %}
+No Company Found
+{% endblock %}
+
+{% block content %}
+
+
+    {% if has_company %}
+        <h3>My Company:</h3>
+
+
+        <!--Company logo-->
+        <img src="{{ company_obj.logo.url }}" alt="logo" width="150px">
+
+        <!--Company name-->
+        <h4>{{ company_obj.id }} - {{ company_obj.name }}</h4>
+        <p>{{ company_obj.description }}<p>
+        <p>{{ member_list }}<p>
+
+        <button class="btn btn-default"><a href="{% url 'my_company' company_obj.id %}">Go to my company page</a></button>
+
+        <br>
+        <br><p> ============================================== </p>
+
+        <h3>Browse other companies in the community:</h3>
+
+
+
+        <br>
+        <br>
+
+    {% else %}
+        <br>
+        <br>
+        <p> You don't have an company yet !</p>
+        <button class="btn btn-default"><a href="{% url 'add_company' %}">Create my company</a></button>
+        <button class="btn btn-default"><a href="{% url 'index' %}">Back to {{request.user}}'s profile</a></button>
+
+        <br>
+        <br>
+
+        <h3>Have your teammate already registered a company?</h3>
+        <p>Check out and join other companies</p>
+    {% endif %}
+
+    <br>
+
+
+        <ul>
+        {% for company_obj, member_list in companies_dict.items %}
+
+            <d>
+            <!--Company logo-->
+            <img src="{{ company_obj.logo.url }}" alt="logo" width="50px">
+
+            <!--Company name-->
+            <p></p>
+            <h5><a href="{% url 'my_company' company_obj.id %}">{{ company_obj.id }} - {{ company_obj.name }}</a></h5>
+
+            <i>{{ company_obj.description }}</i>
+            <p>{{ member_list }}</p>
+
+
+
+            <p> ------------- </p>
+            <br>
+            </d>
+
+
+        {% endfor %}
+        </ul>
+
+{% endblock %}

@@ -29,7 +29,7 @@ Home page
         <p>Welcome to login：<a href="#">{{ user.username }}</a></p>
         <button class="btn btn-default"><a href="{% url 'logout' %}?next={{ request.path }}">Log out</a>
         </button>
-        <button class="btn btn-default"><a href="{% url 'redirect_company' %}">My company</a>
+        <button class="btn btn-default"><a href="{% url 'companies' %}">Companies</a>
         </button>
         <button class="btn btn-default"><a href="{% url 'entryChat' %}">Chat room</a>
         </button>
