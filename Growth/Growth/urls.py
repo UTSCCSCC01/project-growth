@@ -20,8 +20,6 @@ from django.conf import settings
 from django.urls import path, include
 
 from users import views
-from company_page import views as company_page
-
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -31,11 +29,12 @@ urlpatterns = [
     url(r'^$', views.index, name='index'),
     path('forum/', include('forum.urls')),
     url(r'^courses/', include('courses.urls')),
-
+    path(r'profile/<slug:slug>/', views.profile, name='profile'),
+    path('edit_profile/<slug:slug>/', views.edit_profile, name='edit_profile'),
+    path('search_profile/',
+         views.search_profile, name='search_profile'),
     # Ethan's url
-    url(r'^company/add_company', company_page.add_company_view, name='add_company'),
-    url(r'^company/modify_company', company_page.modify_company_view, name='modify_company'),
-    url(r'^company/', company_page.my_company_view, name='my_company'),
+    path('company/', include('company_page.urls')),
     url(r'^chat/', include('chat.urls'))
 
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) 
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

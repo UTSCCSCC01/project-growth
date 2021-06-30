@@ -20,7 +20,7 @@
     <!--Code for nav bar-->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">WebsiteName</a>
+            <a class="navbar-brand" href="#">Growth</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -53,11 +53,10 @@
 
                     <button class="btn btn-outline-success btn-sm mt-1 mt-2 mr-2" type="submit">Search</button>
                     <li>
-                    </li class="nav-item">
-                    <button class="btn btn-default  btn-sm  mt-1 mt-2 ml-2"><a
-                            href="{% url 'login' %}?next={{ request.path }}">Log
-                            in</a></button>
-                    <li>
+                        {% block loggedin %}
+                        This will be replaced by actual title within title block on different page
+                        {% endblock %}
+                    </li>
                     </li>
                 </ul>
 
