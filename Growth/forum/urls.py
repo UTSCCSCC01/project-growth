@@ -1,9 +1,9 @@
 from django.urls import path
-from .views import (CommentLike, DeletePost, EditPost, ListPosts, MyPosts, PostLike, ReplyCreateView, ReplyLike,
+from .views import (CommentLike, DeletePost, EditPost, LikedListPosts, ListPosts, MyPosts, PostLike, ReplyCreateView, ReplyLike,
                     SeePostDetails,
                     MakePost,
                     EditPost,
-                    ReplyCreateView
+                    ReplyCreateView, search_forum
                     )
 from . import views
 
@@ -23,7 +23,11 @@ urlpatterns = [
 
 
     path('post/<int:pk>/reply/', ReplyCreateView.as_view(), name='reply-create'),
-        path('myposts/', MyPosts.as_view(), name='my-posts'),
+    path('myposts/', MyPosts.as_view(), name='my-posts'),
+    path('serach/', views.search_forum, name='forum-search'),
+    path('new/', LikedListPosts.as_view(), name='sort-like'),
+
+
 
 
 

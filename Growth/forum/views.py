@@ -1,3 +1,4 @@
+from django.contrib.auth import get_user_model
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404, redirect, render
 from django.http import HttpResponse, request, HttpRequest
@@ -15,6 +16,8 @@ from django.views.generic import (
     DeleteView
 )
 from .forms import CommentForm, ReplyForm
+from django.db.models import Q
+from itertools import chain
 
 
 # might want to use @login_required in here to restrict acess to users.
@@ -26,7 +29,51 @@ from .forms import CommentForm, ReplyForm
 # 'posts' is the key for dictionary
 # if we use as the third arguement {'user': 'john'} we could make specific titles for specifc users
 
+
+def search_forum(request):
+    if request.method == 'POST':
+        searched = request.POST['ForumSearch']
+        if searched != None and searched != '':
+            posts = Post.objects.filter(Q(
+                text__icontains=searched)| Q(
+                title__icontains=searched))#| Q(username.username__icontains = searched))
+            comments =  Comment.objects.filter(Q(
+                text__icontains=searched))
+            reply =  Reply.objects.filter(Q(
+                text__icontains=searched))
+            users = get_user_model().objects.filter(Q(
+                username__icontains=searched))
+            
+            querychain = chain(posts, comments, reply, users)
+            qs = sorted(querychain, key=lambda instance: instance.pk, reverse=True)
+            return render(request, 'forum/my_search.html', context={'data': qs})
+        else:
+            return redirect('/forum/')
+    else:
+        return redirect('/forum/')
+
+
 class ListPosts(ListView):
+    model = Post
+    template_name = 'forum/forum.html'  # <appName>/<model>_<viewtype>.html
+    context_object_name = 'posts'
+
+    # this will be minipulated when using filters,
+    # the minus means decending order
+    # Change this ordering to by likes when you sort by best
+    ordering = ['-date_posted']
+
+class NewListPosts(ListView):
+    model = Post
+    template_name = 'forum/forum.html'  # <appName>/<model>_<viewtype>.html
+    context_object_name = 'posts'
+
+    # this will be minipulated when using filters,
+    # the minus means decending order
+    # Change this ordering to by likes when you sort by best
+    ordering = ['-date_posted']
+
+class LikedListPosts(ListView):
     model = Post
     template_name = 'forum/forum.html'  # <appName>/<model>_<viewtype>.html
     context_object_name = 'posts'
