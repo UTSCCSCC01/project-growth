@@ -75,13 +75,9 @@ class PopularListPosts(ListView):
         context = super().get_context_data(**kwargs)
         # Add in a QuerySet of all the books
         context['posts'] = context['posts'].filter()\
-        .annotate(num_votes=Count('likes'))\
-        .order_by('-num_votes')
+        .annotate(comment_count = Count( ('comment')))\
+        .order_by('-comment_count')
         return context
-    # this will be minipulated when using filters,
-    # the minus means decending order
-    # Change this ordering to by likes when you sort by best
-    ordering = ['-date_posted']
 
 class LikedListPosts(ListView):
     model = Post
@@ -93,13 +89,9 @@ class LikedListPosts(ListView):
         context = super().get_context_data(**kwargs)
         # Add in a QuerySet of all the books
         context['posts'] = context['posts'].filter()\
-        .annotate(num_votes=Count('likes'))\
-        .order_by('-num_votes')
+        .annotate(likes_count=Count('likes'))\
+        .order_by('-likes_count')
         return context
-    # this will be minipulated when using filters,
-    # the minus means decending order
-    # Change this ordering to by likes when you sort by best
-    #ordering = ['-likes']
 
 class MyPosts(LoginRequiredMixin, ListView):
     model = Post

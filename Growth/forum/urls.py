@@ -3,7 +3,7 @@ from .views import (CommentLike, DeletePost, EditPost, LikedListPosts, ListPosts
                     SeePostDetails,
                     MakePost,
                     EditPost,
-                    ReplyCreateView, search_forum
+                    ReplyCreateView, search_forum, PopularListPosts
                     )
 from . import views
 
@@ -26,6 +26,8 @@ urlpatterns = [
     path('myposts/', MyPosts.as_view(), name='my-posts'),
     path('search/', views.search_forum, name='forum-search'),
     path('top/', LikedListPosts.as_view(), name='post-sort-like'),
+    path('popular/', PopularListPosts.as_view(), name='post-sort-popular'),
+
 
 
 
