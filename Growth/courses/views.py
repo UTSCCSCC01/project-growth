@@ -10,6 +10,7 @@ from users.models import User
 from .import models
 from django.views.generic import TemplateView
 # Create your views here.
+
 def course_list(request):
     role = request.user.role
     user_id = request.user.id
@@ -31,6 +32,7 @@ def course_detail(request,course_id):
         return render(request,'courses/course_detail.html', {
             'course':course
         })
+
 
 
 
