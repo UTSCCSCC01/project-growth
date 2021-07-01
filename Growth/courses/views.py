@@ -155,10 +155,17 @@ def upload(request):
 
 
 def book_list(request):
-    books = Book.objects.all()
-    return render(request, 'courses/book_list.html', {
-        'books': books
-    })
+
+    role = request.user.role
+
+    if(role == 'Instructor' or role == 'Student' or role == 'Partner'):
+        books = Book.objects.all()
+        return render(request, 'courses/book_list.html', {
+            'books': books
+            })
+
+
+
 
 
 def upload_book(request):
@@ -166,7 +173,7 @@ def upload_book(request):
         form = BookForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            return redirect('courses/book_list')
+            return redirect('book_list')
     else:
         form = BookForm()
     return render(request, 'courses/upload_book.html', {
@@ -178,7 +185,7 @@ def delete_book(request, pk):
     if request.method == 'POST':
         book = Book.objects.get(pk=pk)
         book.delete()
-    return redirect('courses/book_list')
+    return redirect('book_list')
 
 
 class BookListView(ListView):
