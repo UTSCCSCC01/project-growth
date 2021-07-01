@@ -17,8 +17,8 @@ class User(AbstractUser):
     company_role = models.CharField( # Role in a company
         choices=[
             ("admin", "admin"),
-            ("admin_pending_approval", "admin_pending_approval"), # Requested to be an admin but have not been approved
-            ("member", "member")
+            ("member", "member"),
+            ("pending_member", "pending_member") # Requested to be an member but have not been approved
         ],
         max_length=100,
         default="member"

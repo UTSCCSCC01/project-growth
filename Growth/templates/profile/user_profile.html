@@ -147,7 +147,11 @@
                                     <h6 class="mb-0">Company</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    None
+                                    {% if data.company %}
+                                    <a href="{% url 'company_profile' data.company.id %}">{{data.company.name}}</a>
+                                    {% else %} Not in a company
+                                    {% endif %}
+
                                 </div>
                             </div>
                             <hr>

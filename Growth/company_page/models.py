@@ -1,4 +1,8 @@
 from django.db import models
+import os
+from django.utils import timezone
+
+
 
 # Create your models here.
 class Company(models.Model):
@@ -62,8 +66,8 @@ class Company(models.Model):
     )
 
     logo = models.ImageField(
-        default="img/default_company_logo.png",
-        upload_to='img',
+        default="logo/default_company_logo.png",
+        upload_to='logo',
         blank = True,
         null = True
     )
@@ -76,7 +80,55 @@ class Company(models.Model):
 
     )
 
+    #how it will be printed out
+    def __str__(self):
+        return self.name
+
+def get_upload_path(instance, filename):
+    return os.path.join(
+        "company_files",
+        "company_%d" % instance.company.id,
+        filename
+    )
+
+def get_photos_upload_path(instance, filename):
+    return os.path.join(
+        "company_photos",
+        "company_%d" % instance.company.id,
+        filename
+    )
+
+class File(models.Model):
+
+    list_of_tags = [
+        ('pitch_decks', "Pitch Decks"),
+        ('financial_decks', "Financial Decks"),
+        ('MC', "MC"),
+        ('founding_team', "Founding Team"),
+        ('other', "other"),
+    ]
+
+    company = models.ForeignKey(Company, on_delete=models.CASCADE)
+    name = models.CharField(max_length=100)
+    description = models.TextField(blank=True, null=True)
+    tag = models.CharField(choices=list_of_tags, max_length=100, blank=True, null=True)
+    file = models.FileField(upload_to=get_upload_path)
+    date_added = models.DateTimeField(default=timezone.now)
+    last_modified = models.DateTimeField(auto_now=True)
 
     #how it will be printed out
     def __str__(self):
         return self.name
+
+class Photo(models.Model):
+
+    company = models.ForeignKey(Company, on_delete=models.CASCADE)
+    description = models.TextField(blank=True, null=True)
+    photo = models.ImageField(upload_to=get_photos_upload_path)
+    date_added = models.DateTimeField(default=timezone.now)
+    last_modified = models.DateTimeField(auto_now=True)
+
+    #how it will be printed out
+    def __str__(self):
+        return str(self.photo) + " at " + str(self.date_added)
+

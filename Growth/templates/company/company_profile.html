@@ -40,7 +40,7 @@ Company profile
         <h5>Company admins:</h5>
         <ul>
         {% for user in admins %}
-        <li> {{ user.username }} </li>
+        <li> <a href="{% url 'profile' user.username %}">{{ user.username }}</a></li>
         {% endfor %}
         </ul>
 
@@ -48,7 +48,7 @@ Company profile
         <h5>Company members:</h5>
         <ul>
         {% for user in members %}
-        <li> {{ user.username }} </li>
+        <li> <a href="{% url 'profile' user.username %}">{{ user.username }}</a></li>
         {% endfor %}
         </ul>
 
@@ -60,10 +60,9 @@ Company profile
             <!--Buttons-->
             <button class="btn btn-default"><a href="{% url 'modify_company' company_obj.id %}">Modify company</a></button>
             <button class="btn btn-default"><a href="{% url 'manage_users' company_obj.id %}">Manage users</a></button>
-            <!--TODO: Implement these-->
             <br>
-            <button class="btn btn-default">Manage files</a></button>
-            <button class="btn btn-default">Manage photos</a></button>
+            <button class="btn btn-default"><a href="{% url 'manage_photos' company_obj.id %}">Add/Edit company photos</a></button>
+            <button class="btn btn-default"><a href="{% url 'manage_files' company_obj.id %}">Add/Edit files</a></button>
             <!--Button: Leave this company-->
             <form action="" method="POST">{% csrf_token %}
                 <input type="hidden" name="user_to_remove" value="{{user.id}}"> </input>
@@ -74,8 +73,8 @@ Company profile
 
         {% elif viewer_is_member %}
 
-            <button class="btn btn-default">Add files</a></button>
-            <button class="btn btn-default">Add photos</a></button>
+            <button class="btn btn-default"><a href="{% url 'manage_photos' company_obj.id %}">Add/Edit company photos</a></button>
+            <button class="btn btn-default"><a href="{% url 'manage_files' company_obj.id %}">Add/Edit files</a></button>
             <!--Button: Leave this company-->
             <form action="" method="POST">{% csrf_token %}
                 <input type="submit" name="leave_this_company" value="Leave this company" />

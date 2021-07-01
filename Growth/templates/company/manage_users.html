@@ -124,8 +124,10 @@ Manage company members
     <!--</form>-->
 
 
-
-   <button class="btn btn-default"><a href="{% url 'company_profile' company_obj.id %}">Back</a></button>
+    <button class="btn btn-default"><a href="{% url 'manage_photos' company_obj.id %}">Add/Edit company photos</a></button>
+    <button class="btn btn-default"><a href="{% url 'manage_files' company_obj.id %}">Add/Edit files</a></button>
+    <br>
+    <button class="btn btn-default"><a href="{% url 'company_profile' company_obj.id %}">Back</a></button>
 
 
     {% endif %}

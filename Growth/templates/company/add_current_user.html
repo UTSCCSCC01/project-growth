@@ -28,14 +28,32 @@ Add current user
 
     {% else %}
 
-        <!--TODO: IF company has admin, show below-->
-        <p>You will need company admin's approval to join</p>
-        <p>After joinig this company as a member, I will have access to managing the company profile</p>
-        <p>Are you sure to join this company?</p>
-        <form action="" method="POST">{% csrf_token %}
-            <input type="submit" name="add_user" value="Confirm" />
-        </form>
-        <!--TODO: IF company does not have admin, show claim this company as admin-->
+        <!--IF company has admin, show below-->
+        {% if has_admin %}
+
+            <p>You will need company admin's approval to join.</p>
+            <p>After joinig this company as a member, you will have access to managing the company profile.</p>
+            <p>If you have pending request to another company, it will be reverted.</p>
+            <p>Are you sure to join this company?</p>
+            <form action="" method="POST">{% csrf_token %}
+                <input type="submit" name="user_request_to_be_member" value="Request" />
+            </form>
+
+        <!--IF company does not have admin, show claim this company as admin-->
+        {% else %}
+            <p>You are seeing this because this company do not have an admin yet.</p>
+            <p>This is illegal and should not happen, unless this is a legacy company.</p>
+            <p>Now, by joining this company, you will automatically claim the ownership and become an admin.</p>
+            <p>After this, you will not be allowed to leave, unless you assign another admin as a replacement, or completely delete this company.</p>
+            <p>Are you sure to claim this company?</p>
+            <form action="" method="POST">{% csrf_token %}
+                <input type="submit" name="user_request_to_be_admin" value="Confirm" />
+            </form>
+
+
+        {% endif %}
+
+
 
 
     {% endif %}

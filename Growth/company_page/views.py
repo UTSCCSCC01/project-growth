@@ -25,7 +25,6 @@ def companies_view(request):
 
     # Get current user's company
     company_obj = request.user.company
-    has_company =  company_obj != None #True if user has company, false otherwise
     member_list = get_users_string(company_obj) #Get "members: xxx, xxx" string
 
     # Get all companies
@@ -33,12 +32,12 @@ def companies_view(request):
     # Get "members: xxx, xxx" string and map it into a dictionary
     companies_dict = {company_obj: get_users_string(company_obj) for company_obj in companies }
 
-    if has_company:
+    if has_company(request.user):
         companies_dict.pop(company_obj)
 
     context = {
         "companies_dict": companies_dict, # ALl companies
-        "has_company": has_company, # Current user has company or no
+        "has_company": has_company(request.user), # Current user has company or no
         "company_obj": company_obj, # Current user's company
         "member_list": member_list # Current user's company's members
     }
@@ -93,7 +92,7 @@ def add_company_view(request):
     if request.method == "POST":
 
         # Check if viewer is already a member of other company
-        if request.user.company:
+        if has_company(request.user):
             # Return alert message
             messages.error(request, "You already have a company!")
         # Otherwise, generate form
@@ -102,11 +101,15 @@ def add_company_view(request):
 
     # Check if the form is valid, if so, get the new object id and save it
     if form.is_valid():
+
+        request.user.company_role = "admin"  # Set role back to admin by default
+        request.user.save()
+
         new_company = form.save() # Get django generated obj from form completion
         new_company.user_set.add(request.user) # Add current user to company
 
         # When success, go back to company page while passing the new id
-        return redirect('company_profile' , company_id=new_company.id)
+        return redirect('manage_users' , company_id=new_company.id)
 
 
     # If the form is not valid, re-run the form
@@ -197,7 +200,6 @@ def manage_users_view(request, company_id):
         # When Remove (admin) button is pressed
         elif "remove_admin" in request.POST:
 
-            # TODO: Additional step, check if there's more admin left
             if len(admins) >= 2: # If it is not the last admin
 
                 # Remove existing admin from company
@@ -219,7 +221,7 @@ def manage_users_view(request, company_id):
             userId = request.POST.get('user_to_remove') # UserId of user member to be removed
             user_to_remove = User.objects.get(id=userId) # User obj of user member to be removed
 
-            user_to_remove.company_role = "member" # TODO： MAKE it work
+            user_to_remove.company_role = "member"
             user_to_remove.save()
             company_obj.user_set.remove(user_to_remove)  # Remove this user in User model's foreign key column
 
@@ -264,6 +266,16 @@ def manage_users_view(request, company_id):
         }
         return render(request, 'company/manage_users.html', context)
 
+def manage_photos_view(request, company_id):
+    # Get the company object
+    company_obj = get_object_or_404(Company, id = company_id)
+    context = {
+        'company_obj': company_obj
+    }
+    return render(request, 'company/manage_photos.html', context)
+
+def manage_files_view(request, company_id):
+    return
 
 def add_current_user_view(request, company_id):
 
@@ -272,34 +284,59 @@ def add_current_user_view(request, company_id):
 
     # When posting the form
     if request.method == "POST":
-        # if request.GET.get.action
-        print(request.GET.get)
-        if "add_user" in request.POST:
 
-            # Add new user to company
+        if "user_request_to_be_member" in request.POST:
+
+            # Set the new_user's company_role as pending_member
+            # Company admin can see list of pending members and approve them
             new_user = request.user
+
+            new_user.company_role = "pending_member"  # Set role to pending_member
+            new_user.save()
+
+            company_obj.user_set.add(new_user)
+
+            messages.success(request, "Request sent to admin!")
+
+
+        if "user_request_to_be_admin" in request.POST:
+
+            # Add new user to company and set to admin
+            new_user = request.user
+
+            new_user.company_role = "admin"  # Set role back to member
+            new_user.save()
+
             company_obj.user_set.add(new_user)
 
         return redirect('company_profile' , company_id=company_id)
 
     # When just viewing the form
     else:
-        has_company = request.user.company != None
+
+        # True if this company has a working admin
+        has_admin = len(get_users(company_obj)['admins']) > 0
 
         context = {
             'company_obj': company_obj,
-            "has_company":has_company
+            "has_company":has_company(request.user),
+            'has_admin': has_admin
         }
         return render(request, 'company/add_current_user.html', context)
+
+
+def has_company(user):
+    # True if user has a company
+    return (user.company != None) and (user.company_role != "pending_member") # user is not an unapproved member
 
 
 
 # Helper function to get all the users
 def get_users(company_obj):
     admins = User.objects.filter(company=company_obj, company_role="admin")
-    pending_admins = User.objects.filter(company=company_obj, company_role="admin_pending_approval")
+    pending_members = User.objects.filter(company=company_obj, company_role="pending_member")
     members = User.objects.filter(company=company_obj, company_role="member")
-    return {"admins": admins, "pending_admins": pending_admins, "members": members}
+    return {"admins": admins, "pending_members": pending_members, "members": members}
 
 
 # Helper function to get a pretty string of main members
