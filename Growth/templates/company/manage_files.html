@@ -1,10 +1,17 @@
 {% extends 'builder.html' %}
 
 {% block title %}
-Add My Company
+Manage files
 {% endblock %}
 
 {% block content %}
+
+    {% if not viewer_is_admin_or_member %}
+        <p>Only company admin has access to this page</p>
+        <button class="btn btn-default"><a href="{% url 'companies' %}">Go back to company</a></button>
+
+    {% else %}
+
 
     {% if messages %}
         <ul class="messages">
@@ -12,27 +19,70 @@ Add My Company
                 <li{% if message.tag %} class="{{ message.tags }}" {% endif %}>{{message}}</li>
             {% endfor %}
         </ul>
-    {% else %}
     {% endif %}
 
     <br>
     <br>
-    <h3>Register a new company for you and your team</h3>
-    <img src=" /media/img/default_company_logo.png " alt="logo" width="150px">
+    <h3>Upload your company files</h3>
+    <p>This is where you share your initiatives</p>
+
+
+    <p><b>Upload new files</b></p>
+
 
     <form method="POST" enctype="multipart/form-data"> {% csrf_token %}
         {{ form.as_p }}
-        <p><b>By registering this new company, you will be set by default as the company page admin.</b></p>
-    <input type="submit" value="Register" />
+                <!--{{ form.fields.as_hidden }}-->
+
+    <input type="submit" name="add_file" value="Upload" />
     </form>
 
 
+        <br><p> ============================================== </p>
 
 
-    <button class="btn btn-default"><a href="{% url 'companies' %}">Cancel</a></button>
+        <h4>Preview - Company Files</h4>
+
+        <ul>
+
+        {% for file in files %}
+
+            <d>
+                <form action="" method="POST">{% csrf_token %}
+
+
+
+                    <p><i>{{ file.name }}</i></p>
+                    <!--<p><i>{{ file.file.url }}</i></p>-->
+                    <a href="{{ file.file.url }}" target="_blank">Preview</a>
+                    <a href="{{ file.file.url }}" download>Download</a>
+                    <p><i>{{ file.tag }}</i></p>
+                    <p><i>{{ file.description }}</i></p>
+                    <p><i></i></p>
+                    <p><i>Uploaded: {{ file.date_added }} - Id: {{ file.id }} </i></p>
+
+                    <input type="hidden" name="file_to_remove" value="{{file.id}}"> </input>
+                    <input type="submit" name="remove_file" value="Remove" />
+
+                </form>
+
+
+            <p> ------------- </p>
+            <br>
+            </d>
+
+
+        {% endfor %}
+        </ul>
+
+
+
+
+    <button class="btn btn-default"><a href="{% url 'company_profile' company_obj.id %}">Back</a></button>
 
 
 
 
 </p>
+{% endif %}
 {% endblock %}

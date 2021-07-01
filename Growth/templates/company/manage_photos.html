@@ -6,34 +6,79 @@ Manage photos
 
 {% block content %}
 
+    {% if not viewer_is_admin_or_member %}
+        <p>Only company admin has access to this page</p>
+        <button class="btn btn-default"><a href="{% url 'companies' %}">Go back to company</a></button>
+
+    {% else %}
+
+
     {% if messages %}
         <ul class="messages">
             {% for message in messages %}
                 <li{% if message.tag %} class="{{ message.tags }}" {% endif %}>{{message}}</li>
             {% endfor %}
         </ul>
-    {% else %}
     {% endif %}
 
     <br>
     <br>
     <h3>Build your company gallery</h3>
     <p>This is where you can showcase your company's products and services</p>
-    <img src=" /media/img/default_company_logo.png " alt="logo" width="150px">
+
+
+    <p><b>Upload new photos</b></p>
+
 
     <form method="POST" enctype="multipart/form-data"> {% csrf_token %}
         {{ form.as_p }}
-        <p><b>All photos uploaded will be made public to platform users</b></p>
-    <input type="submit" value="Register" />
+                <!--{{ form.fields.as_hidden }}-->
+
+    <input type="submit" name="add_photo" value="Upload" />
     </form>
 
 
+        <br><p> ============================================== </p>
 
 
-    <button class="btn btn-default"><a href="{% url 'companies' %}">Cancel</a></button>
+        <h4>Preview - Company Galleries</h4>
+
+        <ul>
+
+        {% for photo in photos %}
+
+            <d>
+                <form action="" method="POST">{% csrf_token %}
+
+                    <!--Company photos-->
+                    <img src="{{ photo.photo.url }}" alt="photo" width="400px">
+
+                    <p><i>{{ photo.description }}</i></p>
+                    <p><i></i></p>
+                    <p><i>Uploaded: {{ photo.date_added }} - Id: {{ photo.id }} </i></p>
+
+                    <input type="hidden" name="photo_to_remove" value="{{photo.id}}"> </input>
+                    <input type="submit" name="remove_photo" value="Remove" />
+
+                </form>
+
+
+            <p> ------------- </p>
+            <br>
+            </d>
+
+
+        {% endfor %}
+        </ul>
+
+
+
+
+    <button class="btn btn-default"><a href="{% url 'company_profile' company_obj.id %}">Back</a></button>
 
 
 
 
 </p>
+{% endif %}
 {% endblock %}

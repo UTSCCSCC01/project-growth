@@ -82,7 +82,7 @@ class Company(models.Model):
 
     #how it will be printed out
     def __str__(self):
-        return self.name
+        return str(self.id) + " - "  + str(self.name)
 
 def get_upload_path(instance, filename):
     return os.path.join(
@@ -98,6 +98,7 @@ def get_photos_upload_path(instance, filename):
         filename
     )
 
+# To store user uploaded company files
 class File(models.Model):
 
     list_of_tags = [
@@ -108,25 +109,36 @@ class File(models.Model):
         ('other', "other"),
     ]
 
-    company = models.ForeignKey(Company, on_delete=models.CASCADE)
+    company = models.ForeignKey(Company, on_delete=models.CASCADE, null=True, blank=True)
     name = models.CharField(max_length=100)
     description = models.TextField(blank=True, null=True)
     tag = models.CharField(choices=list_of_tags, max_length=100, blank=True, null=True)
     file = models.FileField(upload_to=get_upload_path)
     date_added = models.DateTimeField(default=timezone.now)
     last_modified = models.DateTimeField(auto_now=True)
+    verify = models.BooleanField(
+        default=False,
+        help_text = "I understand all information uploaded will be made public to the platform users. "
+    )
 
     #how it will be printed out
     def __str__(self):
-        return self.name
+        return str(self.id) + " - "  + str(self.name)
 
+
+# To store user uploaded company photos
 class Photo(models.Model):
 
-    company = models.ForeignKey(Company, on_delete=models.CASCADE)
-    description = models.TextField(blank=True, null=True)
+
+    company = models.ForeignKey(Company, on_delete=models.CASCADE, null=True, blank=True)
     photo = models.ImageField(upload_to=get_photos_upload_path)
+    description = models.TextField(blank=True, null=True)
     date_added = models.DateTimeField(default=timezone.now)
     last_modified = models.DateTimeField(auto_now=True)
+    verify = models.BooleanField(
+        default=False,
+        help_text = "I understand all information uploaded will be made public to the platform users. "
+    )
 
     #how it will be printed out
     def __str__(self):

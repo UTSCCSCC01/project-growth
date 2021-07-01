@@ -1,9 +1,9 @@
 from django.shortcuts import render, get_object_or_404, redirect
 
 from users.models import User
-from .models import Company
+from .models import Company, Photo, File
 
-from .forms import AddCompanyForm, ModifyCompanyForm
+from .forms import AddCompanyForm, ModifyCompanyForm, AddPhotoForm, AddFileForm
 from django.contrib import messages
 import os
 
@@ -31,6 +31,8 @@ def companies_view(request):
     companies = Company.objects.all()
     # Get "members: xxx, xxx" string and map it into a dictionary
     companies_dict = {company_obj: get_users_string(company_obj) for company_obj in companies }
+    # Company photos, sorted from latest to earliest
+    photos = Photo.objects.all().order_by('-last_modified')
 
     if has_company(request.user):
         companies_dict.pop(company_obj)
@@ -39,7 +41,8 @@ def companies_view(request):
         "companies_dict": companies_dict, # ALl companies
         "has_company": has_company(request.user), # Current user has company or no
         "company_obj": company_obj, # Current user's company
-        "member_list": member_list # Current user's company's members
+        "member_list": member_list, # Current user's company's members
+        "photos": photos
     }
     return render(request, "company/companies.html", context)
 
@@ -55,6 +58,9 @@ def company_profile_view(request, company_id):
     # True if current viewer is company member
     viewer_is_admin = request.user in admins
     viewer_is_member = request.user in members
+
+    # Company photos, sorted from latest to earliest
+    photos = company_obj.photo_set.all().order_by('-last_modified')
 
     # When Leave this company button is pressed
     if "leave_this_company" in request.POST:
@@ -79,7 +85,8 @@ def company_profile_view(request, company_id):
         'admins': admins, # Company company admin list
         'members': members, # Company company list
         "viewer_is_admin": viewer_is_admin, # True if current viewer is admin
-        "viewer_is_member": viewer_is_member # True if current viewer is member
+        "viewer_is_member": viewer_is_member, # True if current viewer is member
+        "photos": photos
     }
     return render(request, "company/company_profile.html", context)
 
@@ -269,13 +276,129 @@ def manage_users_view(request, company_id):
 def manage_photos_view(request, company_id):
     # Get the company object
     company_obj = get_object_or_404(Company, id = company_id)
+    # Company photos, sorted from latest to earliest
+    photos = company_obj.photo_set.all().order_by('-last_modified')
+
+    # True if current viewer is company member
+    admins, members = get_users(company_obj)["admins"], get_users(company_obj)["members"]
+    viewer_is_admin_or_member = request.user in admins or request.user in members
+
+    INITIAL_DATA = {'company': company_obj}
+
+    # return render(request, 'company/manage_photos.html', context)
+
+    # Initiate Django form and pass company obj in
+    form = AddPhotoForm(initial=INITIAL_DATA)
+
+    if request.method == "POST":
+
+        # When "Upload" Button is pressed on manage member page
+        if "add_photo" in request.POST:
+
+            # **** Need to pass initial company object, otherwise new Photo obj will raise lack attribute error
+            form = AddPhotoForm(request.POST or None, request.FILES, initial=INITIAL_DATA)
+
+            # Check if the form is valid, if so, get the new object id and save it
+            if form.is_valid():
+
+                new_photo = form.save() # Get django generated obj from form completion
+                company_obj.photo_set.add(new_photo) # Add new photo to company
+
+                messages.success(request, "Photo successfully added!")
+
+
+        # When "Remove" Button is pressed on manage member page
+        elif "remove_photo" in request.POST:
+
+            # Remove existing users form company
+            photoId = request.POST.get('photo_to_remove') # UserId of user member to be removed
+            photo_to_remove = Photo.objects.get(id=photoId) # User obj of user member to be removed
+            old_photo_path = photo_to_remove.photo.path
+
+            # Remove the old photo object from db
+            company_obj.photo_set.remove(photo_to_remove)
+
+            # Remove old uploaded logo image.
+            os.remove(old_photo_path)
+
+            messages.success(request, "Photo successfully removed!")
+
+        # When success, go back to company page while passing the new id
+        return redirect('manage_photos', company_id=company_id)
+
+
+    # If the form is not valid, or just viewing, re-run the form
     context = {
-        'company_obj': company_obj
+        "company_obj": company_obj,
+        'form': form,
+        'photos': photos,
+        'viewer_is_admin_or_member': viewer_is_admin_or_member
     }
-    return render(request, 'company/manage_photos.html', context)
+    return render(request, "company/manage_photos.html", context)
+
+
 
 def manage_files_view(request, company_id):
-    return
+    # Get the company object
+    company_obj = get_object_or_404(Company, id = company_id)
+    # Company photos, sorted from latest to earliest
+    files = company_obj.file_set.all().order_by('-last_modified')
+
+    # True if current viewer is company member
+    admins, members = get_users(company_obj)["admins"], get_users(company_obj)["members"]
+    viewer_is_admin_or_member = request.user in admins or request.user in members
+
+    INITIAL_DATA = {'company': company_obj}
+
+    # Initiate Django form and pass company obj in
+    form = AddFileForm(initial=INITIAL_DATA)
+
+    if request.method == "POST":
+
+        # When "Upload" Button is pressed on manage member page
+        if "add_file" in request.POST:
+
+            # **** Need to pass initial company object, otherwise new Photo obj will raise lack attribute error
+            form = AddFileForm(request.POST or None, request.FILES, initial=INITIAL_DATA)
+
+            # Check if the form is valid, if so, get the new object id and save it
+            if form.is_valid():
+
+                new_file = form.save() # Get django generated obj from form completion
+                company_obj.file_set.add(new_file) # Add new photo to company
+
+                messages.success(request, "File successfully added!")
+
+
+        # When "Remove" Button is pressed on manage member page
+        elif "remove_file" in request.POST:
+
+            # Remove existing users form company
+            fileId = request.POST.get('file_to_remove') # UserId of user member to be removed
+            file_to_remove = File.objects.get(id=fileId) # User obj of user member to be removed
+            old_path = file_to_remove.file.path
+
+            # Remove the old photo object from db
+            company_obj.file_set.remove(file_to_remove)
+
+            # Remove old uploaded logo image.
+            os.remove(old_path)
+
+            messages.success(request, "File successfully removed!")
+
+        # When success, go back to company page while passing the new id
+        return redirect('manage_files', company_id=company_id)
+
+
+    # If the form is not valid, or just viewing, re-run the form
+    context = {
+        "company_obj": company_obj,
+        'form': form,
+        'files': files,
+        'viewer_is_admin_or_member': viewer_is_admin_or_member
+    }
+    return render(request, "company/manage_files.html", context)
+
 
 def add_current_user_view(request, company_id):
 
@@ -324,11 +447,11 @@ def add_current_user_view(request, company_id):
         }
         return render(request, 'company/add_current_user.html', context)
 
-
+# Returns True if user has a company
 def has_company(user):
     # True if user has a company
+    # TODO: Check for user role (Partner, instructor will pass)
     return (user.company != None) and (user.company_role != "pending_member") # user is not an unapproved member
-
 
 
 # Helper function to get all the users

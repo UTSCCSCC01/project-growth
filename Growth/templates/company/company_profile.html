@@ -30,25 +30,51 @@ Company profile
         <br>
 
         <!--Company details-->
-        <h5> Company Details</h5>
+        <h4>Details</h4>
         <p>industry: {{ company_obj.get_industry_display }}<p>
         <p>size: {{ company_obj.get_size_display }}<p>
         <p>type: {{ company_obj.get_type_display }}<p>
         <p>location: {{ company_obj.location }}<p>
         <p>website_url: {{ company_obj.website_url }}<p>
-        <br>
-        <h5>Company admins:</h5>
+        <b>Admins:</b>
         <ul>
-        {% for user in admins %}
-        <li> <a href="{% url 'profile' user.username %}">{{ user.username }}</a></li>
-        {% endfor %}
+           {% if admins %}
+                {% for user in admins %}
+                <li> <a href="{% url 'profile' user.username %}">{{ user.username }}</a></li>
+                {% endfor %}
+            {% else %} No admins
+            {% endif %}
+        </ul>
+
+        <b>Members:</b>
+        <ul>
+            {% if members %}
+                {% for user in members %}
+                <li> <a href="{% url 'profile' user.username %}">{{ user.username }}</a></li>
+                {% endfor %}
+            {% else %} No members
+            {% endif %}
+
         </ul>
 
         <br>
-        <h5>Company members:</h5>
+        <h>Company Galleries</h>
+
         <ul>
-        {% for user in members %}
-        <li> <a href="{% url 'profile' user.username %}">{{ user.username }}</a></li>
+        {% for photo in photos %}
+            <d>
+                    <!--Company photos-->
+                    <img src="{{ photo.photo.url }}" alt="photo" width="400px">
+
+                    <p><i>{{ photo.description }}</i></p>
+                    <p><i>Uploaded: {{ photo.date_added }} - Id: {{ photo.id }} </i></p>
+
+
+            <p> ------------- </p>
+            <br>
+            </d>
+
+
         {% endfor %}
         </ul>
 

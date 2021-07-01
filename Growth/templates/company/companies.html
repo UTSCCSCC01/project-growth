@@ -19,16 +19,12 @@ Company
         <p>{{ company_obj.description }}<p>
         <p>{{ member_list }}<p>
 
-        <button class="btn btn-default"><a href="{% url 'company_profile' company_obj.id %}">Go to my company page</a></button>
+        <button class="btn btn-default"><a href="{% url 'company_profile' company_obj.id %}">Details</a></button>
 
         <br>
         <br><p> ============================================== </p>
-
         <h3>Browse other companies in the community:</h3>
 
-
-
-        <br>
         <br>
 
     {% else %}
@@ -47,6 +43,22 @@ Company
 
     <br>
 
+        <h4>Company Galleries</h4>
+
+        <ul>
+        {% for photo in photos %}
+
+                    <!--Company photos-->
+            <a href="{% url 'company_profile' photo.company.id %}">
+                    <img src="{{ photo.photo.url }}" alt="photo" width="400px">
+            </a>
+
+
+        {% endfor %}
+        </ul><br>
+
+
+        <h4>Company List</h4>
 
         <ul>
         {% for company_obj, member_list in companies_dict.items %}
