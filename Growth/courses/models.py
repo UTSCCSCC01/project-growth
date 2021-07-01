@@ -5,7 +5,7 @@ from django.db import models
 # Create your models here.
 from users.models import User
 
-
+#set up of courses
 class CourseInfo(models.Model):
     #image = models.ImageField(upload_to='course/',)
     id = models.BigAutoField(primary_key=True)
