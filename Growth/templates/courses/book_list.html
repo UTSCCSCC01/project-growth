@@ -3,10 +3,26 @@
 {% block content %}
 
   {% block content_header %}
+
     <h2>Modules List</h2>
     <p>
-      <a href="{% url 'upload_book' %}" class="btn btn-primary">Upload</a>
+      <a href="{% url 'upload_book' %}" class="btn btn-primary">Upload</a> 
     </p>
+
+    <!--Edit here to hide Upload functionality-->
+
+    {% if role == 'Instructor' %}
+        <div>
+            <button class="btn btn-default"><a href="{% url 'upload_book' %}">Add</a>
+            </button>
+        </div>
+    {% elif role == 'Student' %}
+        <div>
+            <p>
+                Good Luck Entrepreneur on your work
+            </p>
+        </div>
+    {% endif %}
   {% endblock %}
 
   <table class="table mb-0">
