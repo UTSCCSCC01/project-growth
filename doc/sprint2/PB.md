@@ -2,7 +2,6 @@
 | ---------- | -------- |-------- |
 | Community |
 | As an aspiring entrepreneur Tom, I want to view my info in profile so that I can identify myself | Medium| 2 days |
-| As an aspiring entrepreneur Tom, I want to sign up an account so that I can have an account personalized for me | Highest | 3 days |
 | As a community user, I want to search, sort, filter posts based on poster name, poster type, date, post content so that I/we can easily navigate to relevant posts | Highest | 3 days|
 | As a company SunGrid Ltd, we want sections dedicated to listing of company founders, brief description of our company and being able to link employees to the company profiles so that we can be easily identified by viewers. | Medium | 2 days |
 | As a partner Jai Legal TM, I want to sign up using my work email so that a partner profile is automatically created for me | Medium | 1 day |
@@ -19,3 +18,5 @@
 | As an instructor Jack, I want to grade the quizzes as well as view the statistics so that students know about their performance | Highest | 4 days |
 | As an instructor Jack, I want to sign up or log in to an account so that I can access the features in the E-Learning Platform and have an account personalized for me | Highest | 4 days |
 | As an instructor Jack, I want to deliver/upload quizs, surveys, documents, videos and assignments with deadlines so that I can deliver material on a timely manner to students| Medium | 3 days|
+
+
