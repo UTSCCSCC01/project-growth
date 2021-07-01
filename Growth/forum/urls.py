@@ -24,8 +24,8 @@ urlpatterns = [
 
     path('post/<int:pk>/reply/', ReplyCreateView.as_view(), name='reply-create'),
     path('myposts/', MyPosts.as_view(), name='my-posts'),
-    path('serach/', views.search_forum, name='forum-search'),
-    path('new/', LikedListPosts.as_view(), name='sort-like'),
+    path('search/', views.search_forum, name='forum-search'),
+    path('top/', LikedListPosts.as_view(), name='post-sort-like'),
 
 
 

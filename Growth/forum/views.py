@@ -7,6 +7,7 @@ from django.views.generic.edit import FormView
 # this means import from the model.py of forum
 from .models import Post, Comment, Reply
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.db.models import Count
 
 from django.views.generic import (
     ListView,
@@ -17,7 +18,7 @@ from django.views.generic import (
 )
 from .forms import CommentForm, ReplyForm
 from django.db.models import Q
-from itertools import chain
+from itertools import chain, groupby
 
 
 # might want to use @login_required in here to restrict acess to users.
@@ -63,11 +64,20 @@ class ListPosts(ListView):
     # Change this ordering to by likes when you sort by best
     ordering = ['-date_posted']
 
-class NewListPosts(ListView):
+class PopularListPosts(ListView):
     model = Post
     template_name = 'forum/forum.html'  # <appName>/<model>_<viewtype>.html
     context_object_name = 'posts'
 
+
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super().get_context_data(**kwargs)
+        # Add in a QuerySet of all the books
+        context['posts'] = context['posts'].filter()\
+        .annotate(num_votes=Count('likes'))\
+        .order_by('-num_votes')
+        return context
     # this will be minipulated when using filters,
     # the minus means decending order
     # Change this ordering to by likes when you sort by best
@@ -78,10 +88,18 @@ class LikedListPosts(ListView):
     template_name = 'forum/forum.html'  # <appName>/<model>_<viewtype>.html
     context_object_name = 'posts'
 
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super().get_context_data(**kwargs)
+        # Add in a QuerySet of all the books
+        context['posts'] = context['posts'].filter()\
+        .annotate(num_votes=Count('likes'))\
+        .order_by('-num_votes')
+        return context
     # this will be minipulated when using filters,
     # the minus means decending order
     # Change this ordering to by likes when you sort by best
-    ordering = ['-date_posted']
+    #ordering = ['-likes']
 
 class MyPosts(LoginRequiredMixin, ListView):
     model = Post
