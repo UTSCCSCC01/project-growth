@@ -19,5 +19,3 @@
 | As an instructor Jack, I want to grade the quizzes as well as view the statistics so that students know about their performance | Highest | 4 days |
 | As an instructor Jack, I want to sign up or log in to an account so that I can access the features in the E-Learning Platform and have an account personalized for me | Highest | 4 days |
 | As an instructor Jack, I want to deliver/upload quizs, surveys, documents, videos and assignments with deadlines so that I can deliver material on a timely manner to students| Medium | 3 days|
-
-
