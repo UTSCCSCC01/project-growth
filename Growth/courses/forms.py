@@ -1,6 +1,6 @@
 from django import forms
 
-from courses.models import CourseInfo, CourseUser, Assignment
+from courses.models import CourseInfo, CourseUser, Book
 
 
 class CourseForm(forms.ModelForm):
@@ -8,7 +8,7 @@ class CourseForm(forms.ModelForm):
         model = CourseInfo
         fields = ('name', 'description')
 
-class AssignmentForm(forms.ModelForm):
+class BookForm(forms.ModelForm):
     class Meta:
-        model = Assignment
-        fields = ('cover','assignment', 'deadline', 'pdf')
+        model = Book
+        fields = ('title', 'deadline', 'pdf', 'cover')

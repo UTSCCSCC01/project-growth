@@ -1,9 +1,10 @@
 from django.shortcuts import render,redirect
 from django.views.generic import TemplateView, ListView, CreateView
 from django.core.files.storage import FileSystemStorage
+from django.urls import reverse_lazy
 
-from .forms import AssignmentForm, CourseForm
-from .models import CourseInfo,CourseUser, Assignment
+from .forms import BookForm, CourseForm
+from .models import CourseInfo,CourseUser, Book
 
 from users.models import User
 from .import models
@@ -27,7 +28,7 @@ def course_list(request):
 def course_detail(request,course_id):
     if course_id:
         course = CourseInfo.objects.filter(id=int(course_id))[0]
-        return render(request,'courses/home.html', {
+        return render(request,'courses/course_detail.html', {
             'course':course
         })
 
@@ -134,47 +135,58 @@ def unenrollCourse(request):
 
 # NAMAN CODE
 
-def upload(request):
 
+
+
+class Home(TemplateView):
+    template_name = 'book_list.html'
+
+
+def upload(request):
     context = {}
     if request.method == 'POST':
         uploaded_file = request.FILES['document']
         fs = FileSystemStorage()
         name = fs.save(uploaded_file.name, uploaded_file)
         context['url'] = fs.url(name)
-    
-    return render(request, 'courses/upload.html')
+    return render(request, 'upload.html', context)
 
-def assignment_list(request, course_id):
 
-    if course_id:
-
-        role = request.user.role
-
-        if(role == 'Instructor' or role == 'Student'):
-            course_name = CourseInfo.objects.filter(id=int(course_id))[1]
-            assignments=Assignment.objects.filter(course_name[0])
-        else:
-            assignments = Assignment.objects.all()
-
-    return render(request, 'courses/assignment_list.html', {
-        'assignments': assignments
+def book_list(request):
+    books = Book.objects.all()
+    return render(request, 'book_list.html', {
+        'books': books
     })
 
-def upload_assignments(request):
+
+def upload_book(request):
     if request.method == 'POST':
-        form = AssignmentForm(request.POST, request.FILES)
+        form = BookForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            return redirect('courses/assignment_list')
+            return redirect('book_list')
     else:
-        form = AssignmentForm()
-    return render(request, 'courses/upload_assignment.html', {
+        form = BookForm()
+    return render(request, 'upload_book.html', {
         'form': form
     })
 
-def delete_assignment(request, pk):
+
+def delete_book(request, pk):
     if request.method == 'POST':
-        assignment = Assignment.objects.get(pk=pk)
-        assignment.delete()
-    return redirect('courses/assignment_list')
+        book = Book.objects.get(pk=pk)
+        book.delete()
+    return redirect('book_list')
+
+
+class BookListView(ListView):
+    model = Book
+    template_name = 'class_book_list.html'
+    context_object_name = 'books'
+
+
+class UploadBookView(CreateView):
+    model = Book
+    form_class = BookForm
+    success_url = reverse_lazy('class_book_list')
+    template_name = 'upload_book.html'

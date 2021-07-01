@@ -32,7 +32,7 @@
         {% for course in all_courses %}
             <tr>
                 <td>{{course.id}}</td>
-                <td><a class="Course" href="{% url 'assignment_list' course.id %}">{{course.name}}</a></td>
+                <td><a class="Course" href="{% url 'course_detail' course.id %}">{{course.name}}</a></td>
 
                 {% if role == 'Instructor' %}
                     <td><a href="modCourse/?nid={{course.id}}">Modify</a>

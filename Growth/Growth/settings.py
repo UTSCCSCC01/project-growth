@@ -35,7 +35,6 @@ STATICFILES_DIRS = [
 INSTALLED_APPS = [
     'chat',
     'channels',
-    'courses',
     'forum.apps.ForumConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -45,7 +44,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'users.apps.UsersConfig',
     'company_page.apps.CompanyPageConfig',
-    'crispy_forms',    
+    'crispy_forms',
+    'courses.apps.CoursesConfig',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
@@ -129,6 +129,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
 
 AUTH_USER_MODEL = 'users.User'
