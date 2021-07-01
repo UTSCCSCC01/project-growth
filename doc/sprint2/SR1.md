@@ -6,7 +6,7 @@
 - 2 reviewers per PR
 - Pair programming
 ### What are some new practices that you might want to use during next sprint
-- Start and finish work earlier
+- Start early, work regularly so that there is enough time at the end for debugging and last minute fixes.
 - Tasks for one story should usually be split between team members instead of handled by one member (increases communication)
 - More testing should be incorprated (such as unit tests)
 - Learning more about Django REST Frameworks so that it can be incorporated in the project.
