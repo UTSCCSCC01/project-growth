@@ -64,7 +64,7 @@ if(window.location.protocol == 'https:'){
     wsHttp = 'wss://';
 }
 
-var endPoint = wsHttp + window.location.host + '/ws/video_chat/' + window.location.pathname + '/';
+var endPoint = wsHttp + window.location.host + '/ws/video_chat' + window.location.pathname;
 
 var webSocket;
 
