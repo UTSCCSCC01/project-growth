@@ -11,6 +11,7 @@ from .import models
 from django.views.generic import TemplateView
 # Create your views here.
 
+
 def course_list(request):
     role = request.user.role
     user_id = request.user.id
