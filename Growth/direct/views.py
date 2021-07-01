@@ -4,7 +4,9 @@ from django.http import HttpResponse, HttpResponseRedirect, HttpResponseBadReque
 
 from django.contrib.auth.decorators import login_required
 
-from django.contrib.auth.models import User
+#from django.contrib.auth.models import User
+
+from django.contrib.auth import get_user_model
 from direct.models import Message
 
 
@@ -39,6 +41,7 @@ def Inbox(request):
 
 @login_required
 def UserSearch(request):
+	User = get_user_model()
 	query = request.GET.get("q")
 	context = {}
 	
