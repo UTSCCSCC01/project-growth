@@ -1,8 +1,8 @@
 ## Sprint 1 Retrospective
 ---
 ### What are practices that you should continue during next sprint
-- good branch management (one branch per task)
-- informative commit messages
+- Good branch management (one branch per task)
+- Informative commit messages
 - 2 reviewers per PR
 - Pair programming
 ### What are some new practices that you might want to use during next sprint
