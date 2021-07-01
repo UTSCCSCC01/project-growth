@@ -161,7 +161,8 @@ def book_list(request):
     if(role == 'Instructor' or role == 'Student' or role == 'Partner'):
         books = Book.objects.all()
         return render(request, 'courses/book_list.html', {
-            'books': books
+            'books': books,
+            'role':role,
             })
 
 
