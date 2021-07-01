@@ -6,7 +6,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Hello Bulma!</title>
+    <title>Inbox</title>
     <link rel="stylesheet" href="{% static 'css/bulma.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
@@ -17,7 +17,7 @@
   <nav class="navbar" role="navigation" aria-label="main navigation">
   <div class="navbar-brand">
     <a class="navbar-item" href="">
-      <img src="{% static 'img/instagram_black.png' %}" width="64" height="64">
+      Growth
     </a>
 
     <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
@@ -35,8 +35,7 @@
       </a>
 
       <a class="navbar-item">
-        <i class="material-icons">explore</i>
-        Explore
+        About
       </a>
 
 
@@ -46,6 +45,11 @@
         {% if directs_count %}
         <span class="badge">{{ directs_count }}</span>
         {% endif %}
+      </a>
+
+      <a href="{% url 'forum-landing' %}" class="navbar-item">
+        <i class="material-icons">explore</i>
+        Forums
       </a>
 
       <a href="{% url 'profile' request.user %}" class="navbar-item">
