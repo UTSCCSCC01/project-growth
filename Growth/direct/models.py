@@ -1,5 +1,7 @@
 from django.db import models
-from django.contrib.auth.models import User
+#from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
+
 from django.db.models import Max
 from Growth import settings
 # Create your models here.
@@ -29,6 +31,7 @@ class Message(models.Model):
 		return sender_message
 
 	def get_messages(user):
+		User = get_user_model()
 		messages = Message.objects.filter(user=user).values('recipient').annotate(last=Max('date')).order_by('-last')
 		users = []
 		for message in messages:

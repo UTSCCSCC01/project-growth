@@ -85,6 +85,7 @@ def Directs(request, username):
 
 @login_required
 def NewConversation(request, username):
+	User = get_user_model()
 	from_user = request.user
 	body = ''
 	try:
@@ -97,6 +98,7 @@ def NewConversation(request, username):
 
 @login_required
 def SendDirect(request):
+	User = get_user_model()
 	from_user = request.user
 	to_user_username = request.POST.get('to_user')
 	body = request.POST.get('body')
