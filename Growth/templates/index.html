@@ -6,19 +6,8 @@
 Home page
 {% endblock %}
 {% block loggedin %}
-{% if user.is_authenticated %}
-</li class="nav-item">
-<button class="btn btn-default  btn-sm  mt-1 mt-2 ml-2"><a href="{% url 'profile' user.username %}">View
-        Profile</a></button>
-<li>
 
-    {% else %}
-</li class="nav-item">
-<button class="btn btn-default  btn-sm  mt-1 mt-2 ml-2"><a href="{% url 'login' %}?next={{ request.path }}">Log
-        in</a></button>
-<li>
-    {% endif %}
-    {% endblock %}
+{% endblock %}
 
     <!-- To replace content, change the following content block" -->
     {% block content %}

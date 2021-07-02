@@ -6,20 +6,6 @@ Manage photos
 
 {% block content %}
 
-    {% if not viewer_is_admin_or_member %}
-        <p>Only company admin has access to this page</p>
-        <button class="btn btn-default"><a href="{% url 'companies' %}">Go back to company</a></button>
-
-    {% else %}
-
-
-    {% if messages %}
-        <ul class="messages">
-            {% for message in messages %}
-                <li{% if message.tag %} class="{{ message.tags }}" {% endif %}>{{message}}</li>
-            {% endfor %}
-        </ul>
-    {% endif %}
 
     <br>
     <br>
@@ -34,7 +20,7 @@ Manage photos
         {{ form.as_p }}
                 <!--{{ form.fields.as_hidden }}-->
 
-    <input type="submit" name="add_photo" value="Upload" />
+    <input class="btn btn-outline-primary btn-sm" type="submit" name="add_photo" value="Upload" />
     </form>
 
 
@@ -58,7 +44,8 @@ Manage photos
                     <p><i>Uploaded: {{ photo.date_added }} - Id: {{ photo.id }} </i></p>
 
                     <input type="hidden" name="photo_to_remove" value="{{photo.id}}"> </input>
-                    <input type="submit" name="remove_photo" value="Remove" />
+                    <input class="btn btn btn-outline-danger btn-sm"
+                           type="submit" name="remove_photo" value="Remove" />
 
                 </form>
 
@@ -80,5 +67,4 @@ Manage photos
 
 
 </p>
-{% endif %}
 {% endblock %}

@@ -21,12 +21,9 @@ Add current user
     <br>
     <br>
 
-    {% if has_company %}
+    <!--Only users who does not have a company can see this-->
+    {% if not has_company %}
 
-        <p>Cannot join this company because you have already joined another company.</p>
-
-
-    {% else %}
 
         <!--IF company has admin, show below-->
         {% if has_admin %}

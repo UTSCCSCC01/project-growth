@@ -6,20 +6,7 @@ Manage files
 
 {% block content %}
 
-    {% if not viewer_is_admin_or_member %}
-        <p>Only company admin has access to this page</p>
-        <button class="btn btn-default"><a href="{% url 'companies' %}">Go back to company</a></button>
 
-    {% else %}
-
-
-    {% if messages %}
-        <ul class="messages">
-            {% for message in messages %}
-                <li{% if message.tag %} class="{{ message.tags }}" {% endif %}>{{message}}</li>
-            {% endfor %}
-        </ul>
-    {% endif %}
 
     <br>
     <br>
@@ -34,43 +21,30 @@ Manage files
         {{ form.as_p }}
                 <!--{{ form.fields.as_hidden }}-->
 
-    <input type="submit" name="add_file" value="Upload" />
+    <input class="btn btn-outline-primary btn-sm" type="submit" name="add_file" value="Upload" />
     </form>
 
 
         <br><p> ============================================== </p>
 
-
         <h4>Preview - Company Files</h4>
 
         <ul>
-
         {% for file in files %}
-
             <d>
                 <form action="" method="POST">{% csrf_token %}
-
-
-
-                    <p><i>{{ file.name }}</i></p>
-                    <!--<p><i>{{ file.file.url }}</i></p>-->
-                    <a href="{{ file.file.url }}" target="_blank">Preview</a>
-                    <a href="{{ file.file.url }}" download>Download</a>
-                    <p><i>{{ file.tag }}</i></p>
-                    <p><i>{{ file.description }}</i></p>
-                    <p><i></i></p>
+                    <p><i>Name: {{ file.name }}</i></p>
+                    <p><i>Tag: {{ file.tag }}</i></p>
+                    <p><i>Description: {{ file.description }}</i></p>
                     <p><i>Uploaded: {{ file.date_added }} - Id: {{ file.id }} </i></p>
-
+                    <a class="btn btn-outline-primary btn-sm" href="{{ file.file.url }}" target="_blank">Preview</a>
+                    <a class="btn btn-outline-primary btn-sm" href="{{ file.file.url }}" download>Download</a>
                     <input type="hidden" name="file_to_remove" value="{{file.id}}"> </input>
-                    <input type="submit" name="remove_file" value="Remove" />
-
+                    <input class="btn btn-outline-danger btn-sm" type="submit" name="remove_file" value="Remove" />
                 </form>
-
-
             <p> ------------- </p>
             <br>
             </d>
-
 
         {% endfor %}
         </ul>
@@ -84,5 +58,4 @@ Manage files
 
 
 </p>
-{% endif %}
 {% endblock %}

@@ -8,13 +8,6 @@ Delete this company
 
     <br>
     <br>
-    {% if messages %}
-        <ul class="messages">
-            {% for message in messages %}
-                <li{% if message.tag %} class="{{ message.tags }}" {% endif %}>{{message}}</li>
-            {% endfor %}
-        </ul>
-    {% endif %}
 
     <form method="POST" enctype="multipart/form-data"> {% csrf_token %}
         <h3>Are you sure to delete this company: "{{company_obj.name}}"?</h3>
@@ -46,12 +39,13 @@ Delete this company
         {% endif %}
 
 
-        <p><input type="submit" value="Confirm" /> </p>
+        <p><input class="btn btn-danger" type="submit" value="Confirm" /> </p>
 
     </form>
 
 
-    <button class="btn btn-default"><a href="{% url 'company_profile' company_obj.id %}">Cancel</a></button>
+    <button class="btn btn-default"><a href="{% url 'modify_company' company_obj.id %}">Cancel</a></button>
+
 
 
 {% endblock %}

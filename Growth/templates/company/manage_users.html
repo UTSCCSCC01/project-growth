@@ -6,20 +6,8 @@ Manage company members
 
 {% block content %}
 
-    {% if not is_admin %}
-        <p>Only company admin has access to this page</p>
-        <button class="btn btn-default"><a href="{% url 'companies' %}">Go back to company</a></button>
-
-    {% else %}
 
 
-    {% if messages %}
-        <ul class="messages">
-            {% for message in messages %}
-                <li{% if message.tag %} class="{{ message.tags }}" {% endif %}>{{message}}</li>
-            {% endfor %}
-        </ul>
-    {% endif %}
 
     <br>
     <br>
@@ -52,6 +40,26 @@ Manage company members
     <br>
     <br>
 
+    <!--TODO: IF has pending-->
+    {% if pending_members %}
+        <h3><strong>Pending Requests</strong></h3>
+        <p><i>As an admin, you can approve new member requests</i></p>
+        <ul>
+            {% for user in pending_members %}
+                <li>
+                <form action="" method="POST">{% csrf_token %}
+                    <a  href="{% url 'profile' user.username %}" >{{ user.username }}</a> has requested to join
+
+                    <input type="hidden" name="user_to_add" value="{{user.id}}">
+                <input class="btn btn-success btn-sm" type="submit" name="add_new_member" value="Approve" />
+                </form>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+
+
     <h3>Add new members</h3>
     <p><i>Only users without an existing company can be invited</i></p>
     <form action="" method="POST">{% csrf_token %}
@@ -62,7 +70,7 @@ Manage company members
         <option value="{{user.id}}"> {{user.username}} </option>
         {% endfor %}
     </select>
-    <input type="submit" name="add_user" value="Add" />
+    <input class="btn btn-primary btn-sm" type="submit" name="add_user" value="Add" />
     </form>
 
 
@@ -78,8 +86,8 @@ Manage company members
                 <form action="" method="POST">{% csrf_token %}
                     <a  href="{% url 'profile' user.username %}" >{{ user.username }} </a>
                     <input type="hidden" name="user_to_remove" value="{{user.id}}"> </input>
-                    <input type="submit" name="set_as_member" value="Set as member" />
-                    <input type="submit" name="remove_admin" value="Remove" />
+                    <input class="btn btn btn-outline-secondary btn-sm" type="submit" name="set_as_member" value="Set as member" />
+                    <input class="btn btn btn-danger btn-sm" type="submit" name="remove_admin" value="Remove" />
                 </form>
                 <br>
 
@@ -100,8 +108,8 @@ Manage company members
                 <form action="" method="POST">{% csrf_token %}
                     <a  href="{% url 'profile' user.username %}" >{{ user.username }} </a>
                     <input type="hidden" name="user_to_remove" value="{{user.id}}"> </input>
-                    <input type="submit" name="set_as_admin" value="Set as admin" />
-                    <input type="submit" name="remove_member" value="Remove" />
+                    <input class="btn btn-outline-success btn-sm" type="submit" name="set_as_admin" value="Set as admin" />
+                    <input class="btn btn btn-danger btn-sm" type="submit" name="remove_member" value="Remove" />
                 </form>
                 <br>
 
@@ -111,25 +119,9 @@ Manage company members
         </ul>
 
 
-    <!--<h4>Remove current members</h4>-->
-    <!--<p>Removed user will have no access to managing this company page</p>-->
-    <!--<form action="" method="POST">{% csrf_token %}-->
-    <!--<select name="user_to_remove" required>-->
-        <!--<option disabled selected value> &#45;&#45; select a member &#45;&#45; </option>-->
-        <!--{% for user in users_existing %}-->
-        <!--<option value="{{user.id}}"> {{user.username}} </option>-->
-        <!--{% endfor %}-->
-    <!--</select>-->
-    <!--<input type="submit" name="remove_user" value="Remove" />-->
-    <!--</form>-->
-
-
-    <button class="btn btn-default"><a href="{% url 'manage_photos' company_obj.id %}">Add/Edit company photos</a></button>
-    <button class="btn btn-default"><a href="{% url 'manage_files' company_obj.id %}">Add/Edit files</a></button>
     <br>
     <button class="btn btn-default"><a href="{% url 'company_profile' company_obj.id %}">Back</a></button>
 
 
-    {% endif %}
 
 {% endblock %}
