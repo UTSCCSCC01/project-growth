@@ -33,7 +33,7 @@
     {% block commentStuff %}{% endblock %}
 
 
-    {% for comment in post.comment_set.all %}
+    {% for comment in object.comment_set.all %}
     <hr>
     <p class="article-content" id=com{{comment.id}}><strong>{{comment.username}}:</strong> {{ comment }}</p>
     <a class="btn btn-success btn-sm mt-1 mb-1" href="{% url 'like-comment' comment.id %}#com{{comment.id}}">Like:
