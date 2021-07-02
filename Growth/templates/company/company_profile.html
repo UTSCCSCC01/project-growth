@@ -1,0 +1,97 @@
+{% extends 'builder.html' %}
+
+{% block title %}
+Company profile
+{% endblock %}
+
+{% block content %}
+    <button class="btn btn-default"><a href="{% url 'companies' %}">Back </a></button>
+
+        <br>
+        <br>
+        <br>
+
+
+        <!--Company logo-->
+        <img src="{{ company_obj.logo.url }}" alt="logo" width="150px">
+
+        <!--Company name-->
+        <h2>{{ company_obj.name }}</h2>
+        <p>{{ company_obj.description }}<p>
+
+        <br>
+        <br>
+
+        <!--Company details-->
+        <h4>Details</h4>
+        <p>industry: {{ company_obj.get_industry_display }}<p>
+        <p>size: {{ company_obj.get_size_display }}<p>
+        <p>type: {{ company_obj.get_type_display }}<p>
+        <p>location: {{ company_obj.location }}<p>
+        <p>website_url: {{ company_obj.website_url }}<p>
+        <b>Admins:</b>
+        <ul>
+           {% if admins %}
+                {% for user in admins %}
+                <li> <a href="{% url 'profile' user.username %}">{{ user.username }}</a></li>
+                {% endfor %}
+            {% else %} No admins
+            {% endif %}
+        </ul>
+
+        <b>Members:</b>
+        <ul>
+            {% if members %}
+                {% for user in members %}
+                <li> <a href="{% url 'profile' user.username %}">{{ user.username }}</a></li>
+                {% endfor %}
+            {% else %} No members
+            {% endif %}
+
+        </ul>
+
+        <br>
+        <h4>Company Galleries</h4>
+
+        <ul>
+        {% for photo in photos %}
+            <d>
+                    <!--Company photos-->
+                    <img src="{{ photo.photo.url }}" alt="photo" width="400px">
+
+                    <p><i>{{ photo.description }}</i></p>
+                    <p><i>Uploaded: {{ photo.date_added }} - Id: {{ photo.id }} </i></p>
+            <p> ------------- </p>
+            <br>
+            </d>
+        {% endfor %}
+        </ul>
+
+
+        <h4>Company Files</h4>
+
+        <ul>
+        {% for file in files %}
+            <d>
+                <form action="" method="POST">{% csrf_token %}
+                    <p><i>Name: {{ file.name }}</i></p>
+                    <p><i>Tag: {{ file.tag }}</i></p>
+                    <p><i>Description: {{ file.description }}</i></p>
+                    <p><i>Uploaded: {{ file.date_added }} - Id: {{ file.id }} </i></p>
+                    <a class="btn btn-outline-primary btn-sm" href="{{ file.file.url }}" target="_blank">Preview</a>
+                    <a class="btn btn-outline-primary btn-sm" href="{{ file.file.url }}" download>Download</a>
+                </form>
+            <p> ------------- </p>
+            <br>
+            </d>
+
+        {% endfor %}
+        </ul>
+
+
+
+            <br>
+    <button class="btn btn-default"><a href="{% url 'companies' %}">Back </a></button>
+
+
+{% endblock %}

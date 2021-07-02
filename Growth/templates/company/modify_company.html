@@ -13,17 +13,19 @@ Modify my Company
 
 
 
-    <!-- TODO: Only users own this company shoud see this page -->
-
     <form method="POST" enctype="multipart/form-data" > {% csrf_token %}
         {{ form.as_p }}
     <input type="submit" value="Save" />
+            <button class="btn btn-default"><a href="{% url 'company_profile' company_obj.id %}">Cancel</a></button>
+    <br>
+    <a class="btn btn-danger" href="{% url 'delete_company' company_obj.id %}">Delete company</a>
+
+
     </form>
 
 
-    <button class="btn btn-default"><a href="{% url 'my_company' 2 %}">Cancel</a></button>
 
 
 
-</p>
+
 {% endblock %}

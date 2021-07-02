@@ -1,0 +1,127 @@
+{% extends 'builder.html' %}
+
+{% block title %}
+Manage company members
+{% endblock %}
+
+{% block content %}
+
+
+
+
+    <br>
+    <br>
+    <h3>Manage members</h3>
+    <br>
+    <br>
+
+    <!--Company logo-->
+    <img src="{{ company_obj.logo.url }}" alt="logo" width="150px">
+
+    <!--Company name-->
+    <h2>{{ company_obj.name }}</h2>
+    <p>{{ company_obj.description }}<p>
+
+    <br>
+    <br>
+
+
+    <!-- TODO: Only users own this company shoud see this page -->
+
+<!--<ul>-->
+    <!--{% for user in users %}-->
+    <!--<li> {{ user.username }} </li>-->
+    <!--{% endfor %}-->
+<!--</ul>-->
+
+
+
+
+    <br>
+    <br>
+
+    <!--TODO: IF has pending-->
+    {% if pending_members %}
+        <h3><strong>Pending Requests</strong></h3>
+        <p><i>As an admin, you can approve new member requests</i></p>
+        <ul>
+            {% for user in pending_members %}
+                <li>
+                <form action="" method="POST">{% csrf_token %}
+                    <a  href="{% url 'profile' user.username %}" >{{ user.username }}</a> has requested to join
+
+                    <input type="hidden" name="user_to_add" value="{{user.id}}">
+                <input class="btn btn-success btn-sm" type="submit" name="add_new_member" value="Approve" />
+                </form>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+
+
+    <h3>Add new members</h3>
+    <p><i>Only users without an existing company can be invited</i></p>
+    <form action="" method="POST">{% csrf_token %}
+    <select name="user_to_add" required>
+        <option disabled selected value> -- select an user -- </option>
+
+        {% for user in users_available %}
+        <option value="{{user.id}}"> {{user.username}} </option>
+        {% endfor %}
+    </select>
+    <input class="btn btn-primary btn-sm" type="submit" name="add_user" value="Add" />
+    </form>
+
+
+    <br>
+    <br>
+    <h3>Manage current members</h3>
+    <b>Admins</b>
+    <i>will have access to managing company page and membership</i>
+        <ul>
+        {% for user in admins %}
+            <li>
+            <d>
+                <form action="" method="POST">{% csrf_token %}
+                    <a  href="{% url 'profile' user.username %}" >{{ user.username }} </a>
+                    <input type="hidden" name="user_to_remove" value="{{user.id}}"> </input>
+                    <input class="btn btn btn-outline-secondary btn-sm" type="submit" name="set_as_member" value="Set as member" />
+                    <input class="btn btn btn-danger btn-sm" type="submit" name="remove_admin" value="Remove" />
+                </form>
+                <br>
+
+            </d>
+            </li>
+        {% endfor %}
+        </ul>
+
+
+
+
+    <b>Members</b>
+    <i>will have access to adding files and edit company page</i>
+        <ul>
+        {% for user in members %}
+            <li>
+            <d>
+                <form action="" method="POST">{% csrf_token %}
+                    <a  href="{% url 'profile' user.username %}" >{{ user.username }} </a>
+                    <input type="hidden" name="user_to_remove" value="{{user.id}}"> </input>
+                    <input class="btn btn-outline-success btn-sm" type="submit" name="set_as_admin" value="Set as admin" />
+                    <input class="btn btn btn-danger btn-sm" type="submit" name="remove_member" value="Remove" />
+                </form>
+                <br>
+
+            </d>
+            </li>
+        {% endfor %}
+        </ul>
+
+
+    <br>
+    <button class="btn btn-default"><a href="{% url 'company_profile' company_obj.id %}">Back</a></button>
+
+
+
+{% endblock %}
