@@ -41,9 +41,8 @@ STATICFILES_DIRS = [
 ]
 
 INSTALLED_APPS = [
-    'chat',
+    'chat.apps.ChatConfig',
     'channels',
-    'courses',
     'direct',
     'forum.apps.ForumConfig',
     'django.contrib.admin',
@@ -54,6 +53,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'users.apps.UsersConfig',
     'company_page.apps.CompanyPageConfig',
+    'courses.apps.CoursesConfig',
     'video_chat.apps.VideoChatConfig',
     'crispy_forms',    
 ]
@@ -140,6 +140,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
