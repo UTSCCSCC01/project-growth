@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'chat',
     'channels',
     'courses',
+    'direct',
     'forum.apps.ForumConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -82,6 +83,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'direct.views.checkDirects',
             ],
         },
     },
@@ -125,7 +127,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Toronto'
 
 USE_I18N = True
 
