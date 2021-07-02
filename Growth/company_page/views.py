@@ -33,16 +33,28 @@ def companies_view(request):
     companies_dict = {company_obj: get_users_string(company_obj) for company_obj in companies }
     # Company photos, sorted from latest to earliest
     photos = Photo.objects.all().order_by('-last_modified')
+    # Get pending members
+    pending_members = company_obj.user_set.filter(company_role="pending_member")
+
+    # True if current viewer is company member
+    is_admin = request.user in get_users(company_obj)["admins"]
 
     if has_company(request.user):
         companies_dict.pop(company_obj)
+
+    # IF user is admin and there are pending member request
+    if is_admin:
+        for user in pending_members:
+            messages.info(request, "There are pending member request(s): {0}".format(user.username))
 
     context = {
         "companies_dict": companies_dict, # ALl companies
         "has_company": has_company(request.user), # Current user has company or no
         "company_obj": company_obj, # Current user's company
         "member_list": member_list, # Current user's company's members
-        "photos": photos
+        "photos": photos,
+        "pending_members": pending_members, # List of pending members (users that just requested access） for the company
+        "is_admin": is_admin # True if current user is an admin
     }
     return render(request, "company/companies.html", context)
 

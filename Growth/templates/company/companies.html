@@ -6,6 +6,13 @@ Company
 
 {% block content %}
 
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li{% if message.tag %} class="{{ message.tags }}" {% endif %}>{{message}}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
 
     {% if has_company %}
         <h3>My Company:</h3>

@@ -106,12 +106,15 @@ Company profile
                 <input type="submit" name="leave_this_company" value="Leave this company" />
             </form>
             <p><i>You are viewing this page as a MEMBER, you have access to the above actions</i></p>
+            <p><i>If you need more access including editing company profile, membership management,
+            please contact your ADMIN</i></p>
 
 
 
         {% else %}
             <button class="btn btn-default"><a href="{% url 'add_current_user' company_obj.id %}">Request to join this company</a></button>
-        <p><i>You are viewing as a GUEST, you cannot edit anything on this page</i></p>
+            <p><i>You are viewing as a GUEST, you cannot edit anything on this page</i></p>
+            <p><i>If you need more access, please request to join this company</i></p>
 
         {% endif %}
 
