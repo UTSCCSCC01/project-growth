@@ -101,15 +101,15 @@ const constraints = {
     'audio': true
 }
 
-const iceConfiguration = {
-    iceServers: [
-        {
-            urls: ['turn:numb.viagenie.ca'],
-            credential: '{{numb_turn_credential}}',
-            username: '{{numb_turn_username}}'
-        }
-    ]
-};
+// const iceConfiguration = {
+//     iceServers: [
+//         {
+//             urls: ['turn:numb.viagenie.ca'],
+//             credential: '{{numb_turn_credential}}',
+//             username: '{{numb_turn_username}}'
+//         }
+//     ]
+// };
 
         
 // later assign an RTCPeerConnection
