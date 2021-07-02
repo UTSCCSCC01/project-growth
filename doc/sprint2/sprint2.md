@@ -3,7 +3,7 @@
 ### Our Goal
 - To finish(design, code, testing(slight)) at least 9 user stories from the 20 that were designed in sprint 0.
 
-### User Stories for Sprint 1:
+### User Stories for Sprint 2:
 1. E-Learning - Instructor makes deliverables
 2. Community - View profile info and change password,etc
 3. Community - Search, navigate and filter Posts
