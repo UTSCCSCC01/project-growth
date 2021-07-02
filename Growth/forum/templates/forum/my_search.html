@@ -1,0 +1,104 @@
+{% extends "forum/builder.html" %}
+{% load class_name %}
+{% block content %}
+
+
+
+{% for object in data %}
+    {% with object|class_name as klass %}
+      {% if klass == 'Post' %}
+      <h4> Posts:</h4>      
+
+      <article class="media content-section">
+      <div class="media-body">
+          <div class="article-metadata">
+  
+              <a class="mr-2" href="{% url 'profile' object.username %}">{{ object.username }}</a>
+              <small class="text-muted">Posted on: {{ object.date_posted}}</small>
+              <!-- to change the date using a date filter using documentation and date format filters
+                  {{ post.date_posted|date:"F d, Y"}} so this is without time-->
+              <small class="text-muted">Last updated: {{ object.last_modified}}</small>
+  
+          </div>
+          <!-- detailed view for a single post -->
+          <h2><a class="article-title" href="{% url 'individual-post' object.id %}">{{ object.title }}</a></h2>
+          <p class="article-content">{{ object.text }}</p>
+          <a class="btn btn-primary btn-sm mt-1 mb-1" role="button" href="{% url 'like-post' object.id %}">Like:
+              {{object.likes.count }}</a>
+  
+          <!-- preview latest comment for post -->
+  
+      </div>
+  </article>
+      {% elif klass == 'Comment' %}
+      <h4> Comments:</h4>      
+      <article class="media content-section">
+          <div class="media-body">
+              <div class="article-metadata">
+                  <a class="mr-2" href="#">{{object.username}}</a>
+              </div>
+      
+                  <h2><a class="article-title" href="{% url 'individual-post' object.post.id %}#com{{object.id}}">{{ object }}</a></h2>
+      
+          </div>
+      </article>
+
+      {% elif klass == 'Reply' %}
+      <h4> Replies:</h4>      
+      <article class="media content-section">
+          <div class="media-body">
+              <div class="article-metadata">
+                  <a class="mr-2" href="#">{{object.username}}</a>
+              </div>
+      
+                  <h2><a class="article-title" href="{% url 'individual-post' object.comment.post.id %}#rep{{object.id}}">{{ object }}</a></h2>
+      
+          </div>
+      </article>
+        
+      {% elif klass == 'User' %}
+      <h4> Users:</h4>      
+      <article class="media content-section">
+        <div class="media-body">
+            <div class="article-metadata">
+                <a class="mr-2" href="{% url 'profile' object.username %}">{{object.username}}</a>
+            </div>
+    
+                <h2><a class="article-title" href="{% url 'profile' object.username %}"> {{object.description}} Roles to be inserted soon</a></a></h2>
+    
+        </div>
+    </article>
+    
+      {% else %}
+           <div class='row'>
+             <div class='col-12 col-lg-8 offset-lg-4'>
+                <a href='{{ object.get_absolute_url }}'>{{ object }} | {{ object|class_name }}</a>
+            </div>
+           </div>
+        {% endif %}
+        
+    {% endwith %}
+    
+{% empty %}
+<article class="media content-section">
+
+    No User, Post, Comment, Reply found for your search 
+    <!-- <form method='GET' class='' action='.'>
+    
+        <div class="input-group form-group-no-border mx-auto" style="margin-bottom: 0px; font-size: 32px;">
+            <span class="input-group-addon cfe-nav" style='color:#000'>
+                <i class="fa fa-search" aria-hidden="true"></i>
+            </span>
+            <input type="text" name="q" data-toggle="popover" data-placement="bottom" data-content="Press enter to search" class="form-control cfe-nav mt-0 py-3" placeholder="Search..." value="" style="" data-original-title="" title="" autofocus="autofocus">
+        </div>
+
+    </form> -->
+</article>
+
+
+
+
+
+
+{% endfor %}
+{% endblock content %}

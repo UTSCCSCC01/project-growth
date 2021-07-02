@@ -1,17 +1,19 @@
 from django.shortcuts import render, redirect
 
-from .forms import RegisterForm
+from .forms import RegisterForm, EditProfileForm
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
+from django.urls import reverse
 
 
 def register(request):
 
     redirect_to = request.POST.get('next', request.GET.get('next', ''))
 
-
     if request.method == 'POST':
 
         form = RegisterForm(request.POST)
-
 
         if form.is_valid():
 
@@ -25,9 +27,51 @@ def register(request):
 
         form = RegisterForm()
 
-
     return render(request, 'users/register.html', context={'form': form, 'next': redirect_to})
 
 
 def index(request):
     return render(request, 'index.html')
+
+
+@login_required
+def profile(request, slug):
+    # return HttpResponse(slug)
+    data = get_user_model().objects.filter(
+        username=slug).first()
+    return render(request, 'profile/user_profile.html', context={'data': data})
+
+
+@login_required
+def search_profile(request):
+    if request.method == 'POST':
+        searched = request.POST['searched']
+
+        data = get_user_model().objects.filter(
+            username=searched).first()
+        if(data != None):
+            return render(request, 'profile/user_profile.html', context={'data': data})
+        else:
+            return redirect('/forum/')
+    else:
+        return redirect('/forum/')
+
+
+@login_required
+def edit_profile(request, slug):
+    if request.method == 'POST':
+        form = EditProfileForm(request.POST, instance=request.user)
+
+        if form.is_valid():
+            form.save()
+            print(request.get_full_path())
+            data = get_user_model().objects.filter(
+                username=slug).first()
+            return render(request, 'profile/user_profile.html', context={'data': data})
+        else:
+            return redirect('/')
+    else:
+        data = get_user_model().objects.filter(
+            username=slug).first()
+        form = EditProfileForm(instance=request.user)
+        return render(request, 'profile/update_profile.html', context={'form': form, 'data': data})

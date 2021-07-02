@@ -1,9 +1,9 @@
 from django import forms
 from django.utils.safestring import mark_safe
 
-from django.utils.translation import ugettext_lazy as _
 
-from .models import Company
+from .models import Company, Photo, File
+
 
 
 class AddCompanyForm(forms.ModelForm):
@@ -81,3 +81,74 @@ class ModifyCompanyForm(forms.ModelForm):
             'website_url',
             'logo'
         ]
+
+class AddPhotoForm(forms.ModelForm):
+    def __init__(self,*args, **kwargs):
+        super(AddPhotoForm, self).__init__(*args, **kwargs)
+        self.fields['verify'].required = True
+        self.fields['verify'].label = ""
+
+        # self.fields['industry'].label = "Industry*"
+        # self.fields['size'].label = "Size*"
+        # self.fields['type'].label = "Type*"
+
+    # name = forms.CharField(label=mark_safe('<h5>Company Name*</h5>'), label_suffix='')
+    description = forms.CharField(
+        required=False,
+        label='Description',
+        label_suffix=mark_safe('<br><br'),
+        widget=forms.Textarea(
+            attrs={
+                "placeholder": "(Optional) A brief of this picture",
+                "rows":2,
+                "cols":60
+            }
+        )
+    )
+
+    class Meta:
+        model = Photo
+        fields = [
+            'company', #TODO: MAKE THIS HIDDEN
+            'photo',
+            'description',
+            'verify',
+        ]
+        widgets = {'company': forms.HiddenInput()}
+
+class AddFileForm(forms.ModelForm):
+    def __init__(self,*args, **kwargs):
+        super(AddFileForm, self).__init__(*args, **kwargs)
+        self.fields['verify'].required = True
+        self.fields['verify'].label = ""
+
+        # self.fields['industry'].label = "Industry*"
+        # self.fields['size'].label = "Size*"
+        # self.fields['type'].label = "Type*"
+
+    # name = forms.CharField(label=mark_safe('<h5>Company Name*</h5>'), label_suffix='')
+    description = forms.CharField(
+        required=False,
+        label='Description',
+        label_suffix=mark_safe('<br><br'),
+        widget=forms.Textarea(
+            attrs={
+                "placeholder": "(Optional) A brief of this picture",
+                "rows":2,
+                "cols":60
+            }
+        )
+    )
+
+    class Meta:
+        model = File
+        fields = [
+            'company', #TODO: MAKE THIS HIDDEN
+            'file',
+            'name',
+            'tag',
+            'description',
+            'verify',
+        ]
+        widgets = {'company': forms.HiddenInput()}
+
