@@ -16,7 +16,7 @@ class User(AbstractUser):
     city = models.CharField(max_length=50, blank=True)
 
     description = models.CharField(max_length=100, blank=True)
-    mobile_phone = models.IntegerField(blank=True)
+    mobile_phone = models.IntegerField(blank=True, null=True)
 
     class Meta(AbstractUser.Meta):
         pass

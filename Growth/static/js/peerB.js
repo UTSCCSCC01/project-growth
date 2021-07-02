@@ -1,13 +1,11 @@
-var loc = window.location;
 
-var endPoint = '';
 var wsStart = 'ws://';
 
 if(loc.protocol == 'https:'){
     wsStart = 'wss://';
 }
 
-var endPoint = wsStart + loc.host + loc.pathname;
+var endPoint = wsHttp + window.location.host + '/ws/video_chat/' + 'conference';
 
 var webSocket = new WebSocket(endPoint);
 
@@ -49,7 +47,7 @@ function webSocketOnMessage(event){
                 .then(a => peer2.setLocalDescription(a))
                 .then(function(event){
                     console.log('Answer created.');
-                    // sendSignal('peer2', 'send-answer', peer2.localDescription);
+                    sendSignal('peer2', 'send-answer', peer2.localDescription);
                 });
         });
 
@@ -192,10 +190,6 @@ function createAnswerer(){
     peer2.onicecandidate = (event) => {
         if(event.candidate){
             console.log("New Ice Candidate! Reprinting SDP" + JSON.stringify(peer2.localDescription));
-
-            // following statement not required anymore
-            // since answer will be sent after gathering is complete
-            // sendSignal('peer2', 'peer2-candidate', event.candidate);
         }else{
             console.log('Gathering finished!');
 

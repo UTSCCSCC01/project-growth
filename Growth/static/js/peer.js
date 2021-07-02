@@ -63,12 +63,15 @@ var wsHttp = 'ws://';
 if(window.location.protocol == 'https:'){
     wsHttp = 'wss://';
 }
+var roomName = '';
 
-var endPoint = wsHttp + window.location.host + '/ws/video_chat' + window.location.pathname;
+document.title
+
+var endPoint = wsHttp + window.location.host + '/ws/video_chat/' + 'conference';
 
 var webSocket;
 
-var username= document.querySelector('#label-username');
+var username= document.querySelector('#label-username').innerHTML;
 
 var btnJoin = document.querySelector('#btn-join');
 
@@ -76,8 +79,6 @@ var btnJoin = document.querySelector('#btn-join');
 // join room (initiate websocket connection)
 // upon button click
 btnJoin.onclick = () => {
-    username = username.value;
-
     if(username == ''){
         // ignore if username is empty
         return;
@@ -90,7 +91,7 @@ btnJoin.onclick = () => {
 
     webSocket.onopen = function(e){
         console.log('Connection opened! ', e);
-
+        console.log(username + 'haha')
         // notify other peers
         sendSignal('new-peer', {
             'local_screen_sharing': false,
@@ -722,13 +723,13 @@ function createVideo(peerUsername){
     // create the new video element
     // and corresponding user gesture button
     var remoteVideo = document.createElement('video');
-    // var btnPlayRemoteVideo = document.createElement('button');
+    var btnPlayRemoteVideo = document.createElement('button');
 
     remoteVideo.id = peerUsername + '-video';
     remoteVideo.autoplay = true;
     remoteVideo.playsinline = true;
-    // btnPlayRemoteVideo.id = peerUsername + '-btn-play-remote-video';
-    // btnPlayRemoteVideo.innerHTML = 'Click here if remote video does not play';
+    btnPlayRemoteVideo.id = peerUsername + '-btn-play-remote-video';
+    btnPlayRemoteVideo.innerHTML = 'Click here if remote video does not play';
 
     // wrapper for the video and button elements
     var videoWrapper = document.createElement('div');
@@ -743,10 +744,10 @@ function createVideo(peerUsername){
     // as user gesture
     // video is played by button press
     // otherwise, some browsers might block video
-    // btnPlayRemoteVideo.addEventListener("click", function (){
-    //     remoteVideo.play();
-    //     btnPlayRemoteVideo.style.visibility = 'hidden';
-    // });
+    btnPlayRemoteVideo.addEventListener("click", function (){
+        remoteVideo.play();
+        btnPlayRemoteVideo.style.visibility = 'hidden';
+    });
 
     return remoteVideo;
 }

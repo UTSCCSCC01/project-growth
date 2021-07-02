@@ -1,8 +1,8 @@
-from django.urls import path
+from django.conf.urls import url
 from .views import peer, peerA, peerB
 
 urlpatterns = [
-    path('', peer, name='peer'),
-    path('peerA/', peerA, name='peerA'),
-    path('peerB/', peerB, name='peerB'),
+    url(r'^$', peer, name='peer'),
+    url(r'^peerA/', peerA, name='peerA'),
+    url(r'^peerB/', peerB, name='peerB'),
 ]

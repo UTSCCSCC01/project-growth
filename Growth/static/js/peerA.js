@@ -1,14 +1,10 @@
-var loc = window.location;
 
-var endPoint = '';
 var wsStart = 'ws://';
-
-console.log('protocol: ', loc.protocol);
-if(loc.protocol == 'https:'){
+if(window.location.protocol == 'https:'){
     wsStart = 'wss://';
 }
 
-var endPoint = wsStart + loc.host + loc.pathname;
+var endPoint = wsHttp + window.location.host + '/ws/video_chat/' + 'conference';
 
 var webSocket = new WebSocket(endPoint);
 
@@ -236,7 +232,7 @@ function createOfferer(){
             console.log('Gathering finished!');
 
             // send offer in multi peer environment
-            // sendSignal('peer1', 'send-offer', peer1.localDescription);
+            sendSignal('peer1', 'send-offer', peer1.localDescription);
         }
     }
 

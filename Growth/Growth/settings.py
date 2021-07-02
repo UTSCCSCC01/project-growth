@@ -26,7 +26,7 @@ SECRET_KEY = 'e_d-*d^al%=cx5&#02y-a-og2tu@uhy@l*uwqmtc%y&@fhlblr'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 NUMB_TURN_CREDENTIAL = config('NUMB_TURN_CREDENTIAL', default=None)
@@ -160,17 +160,15 @@ EMAIL_HOST_PASSWORD = 'ss2231151' # when you read this, please do not copy down 
 # Channels
 ASGI_APPLICATION = 'Growth.asgi.application'
 
-# CHANNEL_LAYERS = {
-#     "default": {
-#         "BACKEND": "channels.layers.InMemoryChannelLayer"
-#     }
-# }
 
 CHANNEL_LAYERS = {
+    # 'default': {
+    #     'BACKEND': 'channels_redis.core.RedisChannelLayer',
+    #     'CONFIG': {
+    #         "hosts": [('127.0.0.1', 6379)],
+    #     },
+    # },
     'default': {
-        'BACKEND': 'channels_redis.core.RedisChannelLayer',
-        'CONFIG': {
-            "hosts": [('127.0.0.1', 6379)],
-        },
+        "BACKEND": "channels.layers.InMemoryChannelLayer"
     }
 }

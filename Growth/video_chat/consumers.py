@@ -6,8 +6,8 @@ import asyncio
 class ChatConsumer(AsyncWebsocketConsumer):
     async def connect(self):
 
-        # self.room_name = self.scope['url_route']['kwargs']['room_name']
-        # self.room_group_name = 'chat_%s' % self.room_name
+        #self.room_name = self.scope['url_route']['kwargs']['room_name']
+        #self.room_group_name = 'chat_%s' % self.room_name
         self.room_group_name = 'Test-Room'
 
         await self.channel_layer.group_add(
@@ -29,6 +29,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
     # Receive message from WebSocket
     async def receive(self, text_data):
+        print(text_data)
         text_json = json.loads(text_data)
         peer_username = text_json['peer']
         action = text_json['action']
@@ -66,23 +67,23 @@ class ChatConsumer(AsyncWebsocketConsumer):
         # set new receiver as the current sender
         # so that some messages can be sent
         # to this channel specifically
-        receive_dict['message']['receiver_channel_name'] = self.channel_name
+        text_json['message']['receiver_channel_name'] = self.channel_name
 
         # send to all peers
         await self.channel_layer.group_send(
             self.room_group_name,
             {
                 'type': 'send.sdp',
-                'receive_dict': receive_dict,
+                'text_json': text_json,
             }
         )
 
     async def send_sdp(self, event):
-        receive_dict = event['receive_dict']
-
-        this_peer = receive_dict['peer']
-        action = receive_dict['action']
-        message = receive_dict['message']
+        text_json = event['text_json']
+        print(text_json['peer'])
+        this_peer = text_json['peer']
+        action = text_json['action']
+        message = text_json['message']
 
         await self.send(text_data=json.dumps({
             'peer': this_peer,
