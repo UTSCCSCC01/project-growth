@@ -48,7 +48,7 @@ Ronish Bhatt, Yihang Cheng, Naman Bhandari, Shashwat Piyush Doshi, Jaiteg Sahota
 - Courses: Yihang Cheng
 - Video conference: Ronish Bhatt, Pritish Panda
 - Company Information: Zhengyi Zhang
-- Chat Room : Shashwat Doshi
+- Chat Functionality : Shashwat Doshi
 - CRC Cards: Everyone
 - burndown.pdf - Zhengyi Zhang, Yihang Cheng
 - schedule.pdf - Pritish Panda
