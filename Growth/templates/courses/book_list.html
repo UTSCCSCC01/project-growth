@@ -1,0 +1,72 @@
+{% extends 'courses/base.html' %}
+
+{% block content %}
+
+  {% block content_header %}
+
+    <h2>Modules List</h2>
+
+
+    <!--Edit here to hide Upload functionality-->
+
+    {% if role == 'Instructor' %}
+        <div>
+          <p>
+            <b>Hello, Instructor you can upload modules here</b>
+            
+            <div>
+              <a href="{% url 'upload_book' %}" class="btn btn-primary">Upload</a> 
+            </div>
+          </p>
+        </div>
+    {% elif role == 'Student' %}
+        <div>
+            <p>
+                <b>Good Luck Entrepreneur on your work</b>
+            </p>
+        </div>
+    {% endif %}
+  {% endblock %}
+
+  <table class="table mb-0">
+    <thead>
+      <tr>
+        <th>Cover</th>
+        <th>Uploaded Material</th>
+        <th>Deadline</th>
+        <th>Download</th>
+        {% if role == 'Instructor' %}
+        <th>Delete</th>
+        {% endif %}
+      </tr>
+    </thead>
+    <tbody>
+      {% for book in books %}
+        <tr>
+          <td>
+            {% if book.cover %}
+              <img src="{{ book.cover.url }}" alt="{{ book.title }}" style="width:100px;">
+            {% else %}
+              <span class="text-muted">No cover</span>
+            {% endif %}
+          </td>
+          <td>{{ book.title}}</td>
+          <td>{{ book.deadline }}</td>
+          <td>
+            <a href="{{ book.pdf.url }}" class="btn btn-primary btn-sm" target="_blank">
+              Download PDF
+            </a>
+          </td>
+          {% if role == 'Instructor' %}
+          <td>
+            <form method="post" action="{% url 'delete_book' book.pk %}">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+            </form>
+          </td>
+          {% endif %}
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}
