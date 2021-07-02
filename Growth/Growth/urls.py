@@ -19,7 +19,7 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
-from courses import views
+from courses import views as course_views
 
 from django.conf.urls import url, include
 
@@ -38,10 +38,17 @@ urlpatterns = [
     path('edit_profile/<slug:slug>/', views.edit_profile, name='edit_profile'),
     path('search_profile/',
          views.search_profile, name='search_profile'),
-    # Ethan's url
     path('company/', include('company_page.urls')),
     url(r'^chat/', include('chat.urls')),
     url(r'^video_chat/', include('video_chat.urls')),
     url(r'^direct/', include('direct.urls')),
+    path('', course_views.Home.as_view(), name='home'),
+    path('upload/', course_views.upload, name='upload'),
+    path('books/', course_views.book_list, name='book_list'),
+    path('books/upload_book/', course_views.upload_book, name='upload_book'),
+    path('books/<int:pk>/', course_views.delete_book, name='delete_book'),
+
+    path('class/books/', course_views.BookListView.as_view(), name='class_book_list'),
+    path('class/books/upload/', course_views.UploadBookView.as_view(), name='class_upload_book'),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
