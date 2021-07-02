@@ -94,7 +94,10 @@
                                     <button class="btn btn-primary">Follow</button>
 
                                     <!-- Redriect to private chat-->
-                                    <button class="btn btn-outline-primary">Message</button>
+
+                                    <button class="btn btn-outline-primary"><a
+                                            href="{% url 'newconversation' data.username %}">Message </a>
+                                    </button>
                                 </div>
                             </div>
                         </div>
