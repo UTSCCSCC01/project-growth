@@ -1,16 +1,23 @@
 from django.shortcuts import render,redirect
 
 from .forms import CourseForm
-from .models import CourseInfo
+from .models import CourseInfo,CourseUser
 from users.models import User
 from .import models
 # Create your views here.
 def course_list(request):
-    all_courses = CourseInfo.objects.all()
-    all_users = User.objects.all()
+    role = request.user.role
+    user_id = request.user.id
+    all_courses = []
+    if(role == 'Instructor' or role == 'Student'):
+        coursesUsers = CourseUser.objects.filter(user_id=int(user_id))
+        for course in coursesUsers:
+            all_courses.append(CourseInfo.objects.get(id=course.course_id))
+    else:
+        all_courses = CourseInfo.objects.all()
     return render(request, 'courses/course_list.html',{
         'all_courses':all_courses,
-        'all_users':all_users,
+        'role':role,
     })
 
 def course_detail(request,course_id):
@@ -20,20 +27,14 @@ def course_detail(request,course_id):
             'course':course
         })
 
-def course_video(request,course_id):
-    if course_id:
-        course = CourseInfo.objects.filter(id=int(course_id))[0]
-        return render(request,'courses/course_video.html', {
-            'course':course
-        })
 
 
 def addCourse(request):
     if request.method == "GET":
         course_name_form = CourseForm()
-        addCo = User.objects.all()
+
         return render(request,'courses/addCourse.html',{
-            'addCo':addCo,
+
             'course_name_form':course_name_form,
         })
     else:
@@ -45,7 +46,12 @@ def addCourse(request):
                 name=name,
                 description=description)
             courseInfo.save()
-            return redirect('/courses/')
+            courseUser = CourseUser.objects.create(
+                course_id=courseInfo.id,
+                user_id=request.user.id
+            )
+            return course_list(request)
+
 
 def delCourse(request):
     nid = request.GET.get('nid')
@@ -67,3 +73,40 @@ def modCourse(request):
         course.name = name
         course.save()
         return redirect('/courses/')
+
+def enrollCourse(request):
+    user_id = request.user.id
+    instructor_list = list(User.objects.filter(role="Instructor"))
+    course_list = [] # all courses
+    for instructor in instructor_list:
+        courseUsers = list(CourseUser.objects.filter(user_id=instructor.id))
+        for couU in courseUsers:
+            course_list.append(CourseInfo.objects.get(id=couU.course_id))
+    courseU = list(CourseUser.objects.filter(user_id=user_id)) #my chosen course
+    mycourse_list = []
+    for coU in courseU:
+        mycourse_list.append(CourseInfo.objects.get(id=coU.course_id))
+    for el in mycourse_list:
+        course_list.remove(el)
+
+    if request.method == "GET":
+        return render(request, 'courses/enrollCourse.html',
+                      {"all_courses":course_list})
+    else:
+        return redirect('/courses/')
+
+
+def enrollOneCourse(request):
+    nid = request.GET.get('nid')
+    courseuser = CourseUser.objects.create(
+        course_id=nid,
+        user_id=request.user.id)
+    courseuser.save()
+    return redirect('/courses/')
+
+
+def unenrollCourse(request):
+    nid = request.GET.get('nid')
+    bb = CourseUser.objects.get(course_id=nid,user_id=request.user.id)
+    bb.delete()
+    return redirect('/courses/')

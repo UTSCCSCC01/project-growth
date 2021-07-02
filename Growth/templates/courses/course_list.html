@@ -3,14 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="https://unpkg.com/mobi.css/dist/mobi.min.css">
+    <style>
+        table {margin:auto;}
+        body {text-align:center;}
+    </style>
 </head>
 <body>
-    <h1>Courses</h1>
-    <div>
-        <button class="btn btn-default"><a href="{% url 'addCourse' %}">Add</a>
-        </button>
-    </div>
 
+    <h1><a href="/">Home</a></h1>
+    <h2>Courses</h2>
+    {% if role == 'Instructor' %}
+        <div>
+            <button class="btn btn-default"><a href="{% url 'addCourse' %}">Add</a>
+            </button>
+        </div>
+    {% elif role == 'Student' %}
+        <div>
+            <button class="btn btn-default"><a href="{% url 'enrollCourse' %}">Enroll</a>
+            </button>
+        </div>
+    {% endif %}
     <table>
         <thead>
             <tr>
@@ -25,10 +38,16 @@
         {% for course in all_courses %}
             <tr>
                 <td>{{course.id}}</td>
-                <td><a class="Course" href="{% url 'course_detail' course.id %}">{{course.name}}</a>
-                <td><a href="modCourse/?nid={{course.id}}">Modify</a>
+                <td><a class="Course" href="{% url 'course_detail' course.id %}">{{course.name}}</a></td>
+
+                {% if role == 'Instructor' %}
+                    <td><a href="modCourse/?nid={{course.id}}">Modify</a>
                 |
-                <a href="delCourse/?nid={{course.id}}">Delete</a></td>
+                    <a href="delCourse/?nid={{course.id}}">Delete</a></td>
+                {% elif role == 'Student' %}
+                    <td><a href="unenrollCourse/?nid={{course.id}}">Unenroll</a></td>
+                {% endif %}
+
 
             </tr>
         {% endfor %}
