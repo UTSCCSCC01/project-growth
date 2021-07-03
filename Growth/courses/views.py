@@ -58,6 +58,7 @@ def addCourse(request):
                 course_id=courseInfo.id,
                 user_id=request.user.id
             )
+            courseUser.save()
             return redirect('/courses/')
 
 
