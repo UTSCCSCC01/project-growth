@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'builder.html' %}
 
 {% block title %}
 Modify my Company
@@ -15,8 +15,8 @@ Modify my Company
 
     <form method="POST" enctype="multipart/form-data" > {% csrf_token %}
         {{ form.as_p }}
-    <input type="submit" value="Save" />
-            <button class="btn btn-default"><a href="{% url 'company_profile' company_obj.id %}">Cancel</a></button>
+    <input class="btn btn-primary" type="submit" value="Save" />
+        <a class="btn btn-outline-primary" href="{% url 'company_profile' company_obj.id %}">Cancel</a>
     <br>
     <a class="btn btn-danger" href="{% url 'delete_company' company_obj.id %}">Delete company</a>
 

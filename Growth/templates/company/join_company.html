@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'builder.html' %}
 
 {% block title %}
 Add current user
@@ -33,7 +33,7 @@ Add current user
             <p>If you have pending request to another company, it will be reverted.</p>
             <p>Are you sure to join this company?</p>
             <form action="" method="POST">{% csrf_token %}
-                <input type="submit" name="user_request_to_be_member" value="Request" />
+                <input class="btn btn-warning" type="submit" name="user_request_to_be_member" value="Request" />
             </form>
 
         <!--IF company does not have admin, show claim this company as admin-->
@@ -44,7 +44,7 @@ Add current user
             <p>After this, you will not be allowed to leave, unless you assign another admin as a replacement, or completely delete this company.</p>
             <p>Are you sure to claim this company?</p>
             <form action="" method="POST">{% csrf_token %}
-                <input type="submit" name="user_request_to_be_admin" value="Confirm" />
+                <input class="btn btn-warning" type="submit" name="user_request_to_be_admin" value="Confirm" />
             </form>
 
 

@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'builder.html' %}
 
 {% block title %}
 Manage company members
@@ -7,6 +7,7 @@ Manage company members
 {% block content %}
 
 
+    <button class="btn btn-default"><a href="{% url 'company_profile' company_obj.id %}">< Back</a></button>
 
 
     <br>
@@ -120,7 +121,7 @@ Manage company members
 
 
     <br>
-    <button class="btn btn-default"><a href="{% url 'company_profile' company_obj.id %}">Back</a></button>
+    <button class="btn btn-default"><a href="{% url 'company_profile' company_obj.id %}">< Back</a></button>
 
 
 

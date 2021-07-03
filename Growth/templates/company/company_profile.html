@@ -1,11 +1,11 @@
-{% extends 'base.html' %}
+{% extends 'builder.html' %}
 
 {% block title %}
 Company profile
 {% endblock %}
 
 {% block content %}
-    <button class="btn btn-default"><a href="{% url 'companies' %}">Back </a></button>
+    <button class="btn btn-default"><a href="{% url 'companies' %}">< Back</a></button>
 
         <br>
         <br>
@@ -91,7 +91,7 @@ Company profile
 
 
             <br>
-    <button class="btn btn-default"><a href="{% url 'companies' %}">Back </a></button>
+    <button class="btn btn-default"><a href="{% url 'companies' %}">< Back</a></button>
 
 
 {% endblock %}

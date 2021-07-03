@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'builder.html' %}
 
 {% block title %}
 Manage files
@@ -6,6 +6,7 @@ Manage files
 
 {% block content %}
 
+    <button class="btn btn-default"><a href="{% url 'company_profile' company_obj.id %}">< Back</a></button>
 
 
     <br>
@@ -21,7 +22,7 @@ Manage files
         {{ form.as_p }}
                 <!--{{ form.fields.as_hidden }}-->
 
-    <input class="btn btn-outline-primary btn-sm" type="submit" name="add_file" value="Upload" />
+    <input class="btn btn-primary btn-sm" type="submit" name="add_file" value="Upload" />
     </form>
 
 
@@ -52,7 +53,7 @@ Manage files
 
 
 
-    <button class="btn btn-default"><a href="{% url 'company_profile' company_obj.id %}">Back</a></button>
+    <button class="btn btn-default"><a href="{% url 'company_profile' company_obj.id %}">< Back</a></button>
 
 
 
