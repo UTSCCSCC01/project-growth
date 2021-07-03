@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+        <link rel="stylesheet" href="https://unpkg.com/mobi.css/dist/mobi.min.css">
+    <style>
+        table {margin:auto;}
+        body {text-align:center;}
+    </style>
+</head>
+<body>
+    <table>
+        <thead>
+            <tr>
+                <div class="headers">
+                <th>ID</th>
+                <th>Course</th>
+                <th>Operation</th>
+                </div>
+            </tr>
+        </thead>
+        <tbody>
+
+            {% for course in all_courses %}
+                <tr>
+                    <td>{{course.id}}</td>
+                    <td>{{course.name}}</td>
+                    <td><a href="/courses/enrollOneCourse/?nid={{course.id}}">Enroll</a></td>
+
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

@@ -1,0 +1,59 @@
+{% extends "forum/builder.html" %}
+{% block content %}
+{% for post in user.post_set.all %}
+<article class="media content-section">
+    <div class="media-body">
+        <div class="article-metadata">
+
+            <a class="mr-2" href="{% url 'profile' post.username %}">{{ post.username }}</a>
+            <small class="text-muted">Posted on: {{ post.date_posted}}</small>
+            <!-- to change the date using a date filter using documentation and date format filters
+                {{ post.date_posted|date:"F d, Y"}} so this is without time-->
+            <small class="text-muted">Last updated: {{ post.last_modified}}</small>
+
+        </div>
+        <!-- detailed view for a single post -->
+        <h2><a class="article-title" href="{% url 'individual-post' post.id %}">{{ post.title }}</a></h2>
+        <p class="article-content">{{ post.text }}</p>
+        <a class="btn btn-primary btn-sm mt-1 mb-1" role="button" href="{% url 'like-post' post.id %}">Like:
+            {{post.likes.count }}</a>
+
+        <!-- preview latest comment for post -->
+
+    </div>
+</article>
+{% endfor %}
+
+<h5>My Comments:</h5>
+{% for comment in user.comment_set.all %}
+
+<article class="media content-section">
+    <div class="media-body">
+        <div class="article-metadata">
+            <a class="mr-2" href="#">{{comment.username}}</a>
+        </div>
+
+            <h2><a class="article-title" href="{% url 'individual-post' comment.post.id %}#com{{comment.id}}">{{ comment }}</a></h2>
+
+    </div>
+</article>
+{% endfor %}
+
+<h5>My Replies:</h5>
+{% for reply in user.reply_set.all %}
+
+<article class="media content-section">
+    <div class="media-body">
+        <div class="article-metadata">
+            <a class="mr-2" href="#">{{reply.username}}</a>
+
+        </div>
+        <h2><a class="article-title" href="{% url 'individual-post' reply.comment.post.id %}#rep{{reply.id}}">{{ reply }}</a></h2>
+
+
+    </div>
+</article>
+{% endfor %}
+
+
+{% endblock content %}

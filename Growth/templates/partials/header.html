@@ -1,0 +1,64 @@
+
+
+    <!--Code for nav bar-->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Growth</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{% url 'index' %}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'inbox' %}">Inbox</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'forum-landing' %}">Forums</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'companies' %}">Company</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">African Impact Challenge</a>
+                    </li>
+
+                </ul>
+                <!-- Search bar code , notice its a form-->
+
+                <ul class="navbar-nav flex-row ml-md-auto d-none d-md-flex">
+                    <li class="form-control-sm">
+                        <form class="d-inline-flex ">
+                            <input class="form-control-sm " type="search" placeholder="Search" aria-label="Search">
+                        </form>
+                    </li>
+                    <li class="button">
+
+                    <button class="btn btn-outline-success btn-sm mt-1 mt-2 mr-2" type="submit">Search</button>
+                    </li>
+                      {% if user.is_authenticated %}
+                        <li class="nav-item">
+                        <button class="btn btn-default  btn-sm  mt-1 mt-2 ml-2">
+                          <a href="{% url 'profile' user.username %}">View Profile</a></button>
+                        </li>
+
+                      {% else %}
+                        <li class="nav-item">
+                        <button class="btn btn-default  btn-sm  mt-1 mt-2 ml-2">
+                          <a href="{% url 'login' %}?next={{ request.path }}">Log in</a></button>
+                        </li>
+                      {% endif %}
+
+                </ul>
+
+            </div>
+        </div>
+    </nav>

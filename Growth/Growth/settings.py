@@ -11,6 +11,10 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
+from django.contrib.messages import constants as messages
+
+
+from decouple import config
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -26,6 +30,10 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+
+NUMB_TURN_CREDENTIAL = config('NUMB_TURN_CREDENTIAL', default=None)
+NUMB_TURN_USERNAME = config('NUMB_TURN_USERNAME', default=None)
+
 # Application definition
 
 STATICFILES_DIRS = [
@@ -33,8 +41,9 @@ STATICFILES_DIRS = [
 ]
 
 INSTALLED_APPS = [
-    'chat',
+    'chat.apps.ChatConfig',
     'channels',
+    'direct',
     'forum.apps.ForumConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -44,6 +53,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'users.apps.UsersConfig',
     'company_page.apps.CompanyPageConfig',
+    'courses.apps.CoursesConfig',
+    'video_chat.apps.VideoChatConfig',
     'crispy_forms',    
 ]
 
@@ -74,6 +85,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'direct.views.checkDirects',
             ],
         },
     },
@@ -117,7 +129,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Toronto'
 
 USE_I18N = True
 
@@ -128,7 +140,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 AUTH_USER_MODEL = 'users.User'
 AUTHENTICATION_BACKENDS = (
@@ -145,17 +159,31 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'cydy8001@gmail.com'
 EMAIL_HOST_PASSWORD = 'ss2231151' # when you read this, please do not copy down and pretend you did not see this
 
+NUMB_TURN_CREDENTIAL = 'eewn3cink_WUND9saus'
+NUMB_TURN_USERNAME = 'jigsaw23123@gmail.com'
 
 # for channels - clients to communicate with each other (CHAT)
 
 # Channels
 ASGI_APPLICATION = 'Growth.asgi.application'
 
+
 CHANNEL_LAYERS = {
+    # 'default': {
+    #     'BACKEND': 'channels_redis.core.RedisChannelLayer',
+    #     'CONFIG': {
+    #         "hosts": [('127.0.0.1', 6379)],
+    #     },
+    # },
     'default': {
-        'BACKEND': 'channels_redis.core.RedisChannelLayer',
-        'CONFIG': {
-            "hosts": [('127.0.0.1', 6379)],
-        },
-    },
+        "BACKEND": "channels.layers.InMemoryChannelLayer"
+    }
+}
+
+MESSAGE_TAGS = {
+    messages.DEBUG: 'alert-info',
+    messages.INFO: 'alert-info',
+    messages.SUCCESS: 'alert-success',
+    messages.WARNING: 'alert-warning',
+    messages.ERROR: 'alert-danger',
 }

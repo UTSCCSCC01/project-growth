@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <section>
+      <div class = "wp">
+          <ul>
+            <li class="active">Course Details</li>
+          </ul>
+      </div>
+      <div class = "tab">
+        <p>
+          {{ course.description }}
+        </p>
+      </div>
+        <div class="mod-chapters">
+            {% for lesson in course.lessoninfo_set.all %}
+                <h3>
+                    <a href="https://cmsweb.utsc.utoronto.ca/cscc01s21/index.html">{{ lesson.name }}</a>
+                </h3>
+            {% endfor %}
+        </div>
+    </section>
+</body>

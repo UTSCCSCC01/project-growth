@@ -1,8 +1,37 @@
 from django import forms
+from django.utils.safestring import mark_safe
 
-from .models import Company
+
+from .models import Company, Photo, File
+
+
 
 class AddCompanyForm(forms.ModelForm):
+    def __init__(self,*args, **kwargs):
+        super(AddCompanyForm, self).__init__(*args, **kwargs)
+
+        self.fields['industry'].label = "Industry*"
+        self.fields['size'].label = "Size*"
+        self.fields['type'].label = "Type*"
+        self.fields['website_url'].help_text = \
+            mark_safe('<br><i>URL should start with http:// or https:// or www.</i>')
+        self.fields['verify'].required = True
+        self.fields['verify'].label = ""
+
+
+    name = forms.CharField(label=mark_safe('<h5>Company Name*</h5>'), label_suffix='')
+    description = forms.CharField(
+        label='Description*',
+        label_suffix=mark_safe('<br><br'),
+        widget=forms.Textarea(
+            attrs={
+                "placeholder": "A brief introduction of your company's nature of business",
+                "rows":5,
+                "cols":60
+            }
+        )
+    )
+
     class Meta:
         model = Company
         fields = [
@@ -14,9 +43,32 @@ class AddCompanyForm(forms.ModelForm):
             'location',
             'website_url',
             'logo',
+            'verify'
         ]
 
+
+
 class ModifyCompanyForm(forms.ModelForm):
+    def __init__(self,*args, **kwargs):
+        super(ModifyCompanyForm, self).__init__(*args, **kwargs)
+
+        self.fields['industry'].label = "Industry*"
+        self.fields['size'].label = "Size*"
+        self.fields['type'].label = "Type*"
+
+    name = forms.CharField(label=mark_safe('<h5>Company Name*</h5>'), label_suffix='')
+    description = forms.CharField(
+        label='Description*',
+        label_suffix=mark_safe('<br><br'),
+        widget=forms.Textarea(
+            attrs={
+                "placeholder": "A brief introduction of your company's nature of business",
+                "rows":5,
+                "cols":60
+            }
+        )
+    )
+
     class Meta:
         model = Company
         fields = [
@@ -29,3 +81,74 @@ class ModifyCompanyForm(forms.ModelForm):
             'website_url',
             'logo'
         ]
+
+class AddPhotoForm(forms.ModelForm):
+    def __init__(self,*args, **kwargs):
+        super(AddPhotoForm, self).__init__(*args, **kwargs)
+        self.fields['verify'].required = True
+        self.fields['verify'].label = ""
+
+        # self.fields['industry'].label = "Industry*"
+        # self.fields['size'].label = "Size*"
+        # self.fields['type'].label = "Type*"
+
+    # name = forms.CharField(label=mark_safe('<h5>Company Name*</h5>'), label_suffix='')
+    description = forms.CharField(
+        required=False,
+        label='Description',
+        label_suffix=mark_safe('<br><br'),
+        widget=forms.Textarea(
+            attrs={
+                "placeholder": "(Optional) A brief of this picture",
+                "rows":2,
+                "cols":60
+            }
+        )
+    )
+
+    class Meta:
+        model = Photo
+        fields = [
+            'company', #TODO: MAKE THIS HIDDEN
+            'photo',
+            'description',
+            'verify',
+        ]
+        widgets = {'company': forms.HiddenInput()}
+
+class AddFileForm(forms.ModelForm):
+    def __init__(self,*args, **kwargs):
+        super(AddFileForm, self).__init__(*args, **kwargs)
+        self.fields['verify'].required = True
+        self.fields['verify'].label = ""
+
+        # self.fields['industry'].label = "Industry*"
+        # self.fields['size'].label = "Size*"
+        # self.fields['type'].label = "Type*"
+
+    # name = forms.CharField(label=mark_safe('<h5>Company Name*</h5>'), label_suffix='')
+    description = forms.CharField(
+        required=False,
+        label='Description',
+        label_suffix=mark_safe('<br><br'),
+        widget=forms.Textarea(
+            attrs={
+                "placeholder": "(Optional) A brief of this picture",
+                "rows":2,
+                "cols":60
+            }
+        )
+    )
+
+    class Meta:
+        model = File
+        fields = [
+            'company', #TODO: MAKE THIS HIDDEN
+            'file',
+            'name',
+            'tag',
+            'description',
+            'verify',
+        ]
+        widgets = {'company': forms.HiddenInput()}
+

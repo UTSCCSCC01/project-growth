@@ -1,0 +1,51 @@
+{% extends 'builder.html' %}
+
+{% block title %}
+Delete this company
+{% endblock %}
+
+{% block content %}
+
+    <br>
+    <br>
+
+    <form method="POST" enctype="multipart/form-data"> {% csrf_token %}
+        <h3>Are you sure to delete this company: "{{company_obj.name}}"?</h3>
+        <img src="{{ company_obj.logo.url }}" alt="logo" width="150px">
+        <br>
+        <br>
+        <br>
+        <br>
+        <p>All the following members will not have access to this company any more:</p>
+
+        <p><b>Admins:</b></p>
+        {% if admins %}
+             <ul>
+             {% for user in admins %}
+                 <li> {{ user.username }} </li>
+             {% endfor %}
+             </ul>
+        {% else %} <p>None</p>
+        {% endif %}
+
+        <p><b>Members:</b></p>
+        {% if members %}
+             <ul>
+             {% for user in members %}
+                 <li> {{ user.username }} </li>
+             {% endfor %}
+             </ul>
+        {% else %} <p>None</p>
+        {% endif %}
+
+
+        <p><input class="btn btn-danger" type="submit" value="Confirm" /> </p>
+
+    </form>
+
+
+    <button class="btn btn-default"><a href="{% url 'modify_company' company_obj.id %}">Cancel</a></button>
+
+
+
+{% endblock %}

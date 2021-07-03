@@ -1,0 +1,62 @@
+{% extends 'builder.html' %}
+
+{% block title %}
+Manage files
+{% endblock %}
+
+{% block content %}
+
+    <button class="btn btn-default"><a href="{% url 'company_profile' company_obj.id %}">< Back</a></button>
+
+
+    <br>
+    <br>
+    <h3>Upload your company files</h3>
+    <p>This is where you share your initiatives</p>
+
+
+    <p><b>Upload new files</b></p>
+
+
+    <form method="POST" enctype="multipart/form-data"> {% csrf_token %}
+        {{ form.as_p }}
+                <!--{{ form.fields.as_hidden }}-->
+
+    <input class="btn btn-primary btn-sm" type="submit" name="add_file" value="Upload" />
+    </form>
+
+
+        <br><p> ============================================== </p>
+
+        <h4>Preview - Company Files</h4>
+
+        <ul>
+        {% for file in files %}
+            <d>
+                <form action="" method="POST">{% csrf_token %}
+                    <p><i>Name: {{ file.name }}</i></p>
+                    <p><i>Tag: {{ file.tag }}</i></p>
+                    <p><i>Description: {{ file.description }}</i></p>
+                    <p><i>Uploaded: {{ file.date_added }} - Id: {{ file.id }} </i></p>
+                    <a class="btn btn-outline-primary btn-sm" href="{{ file.file.url }}" target="_blank">Preview</a>
+                    <a class="btn btn-outline-primary btn-sm" href="{{ file.file.url }}" download>Download</a>
+                    <input type="hidden" name="file_to_remove" value="{{file.id}}"> </input>
+                    <input class="btn btn-outline-danger btn-sm" type="submit" name="remove_file" value="Remove" />
+                </form>
+            <p> ------------- </p>
+            <br>
+            </d>
+
+        {% endfor %}
+        </ul>
+
+
+
+
+    <button class="btn btn-default"><a href="{% url 'company_profile' company_obj.id %}">< Back</a></button>
+
+
+
+
+</p>
+{% endblock %}

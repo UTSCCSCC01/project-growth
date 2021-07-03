@@ -1,0 +1,71 @@
+{% extends 'builder.html' %}
+
+{% block title %}
+Manage photos
+{% endblock %}
+
+{% block content %}
+
+    <button class="btn btn-default"><a href="{% url 'company_profile' company_obj.id %}">< Back</a></button>
+
+    <br>
+    <br>
+    <h3>Build your company gallery</h3>
+    <p>This is where you can showcase your company's products and services</p>
+
+
+    <p><b>Upload new photos</b></p>
+
+
+    <form method="POST" enctype="multipart/form-data"> {% csrf_token %}
+        {{ form.as_p }}
+                <!--{{ form.fields.as_hidden }}-->
+
+    <input class="btn btn-primary btn-sm" type="submit" name="add_photo" value="Upload" />
+    </form>
+
+
+        <br><p> ============================================== </p>
+
+
+        <h4>Preview - Company Galleries</h4>
+
+        <ul>
+
+        {% for photo in photos %}
+
+            <d>
+                <form action="" method="POST">{% csrf_token %}
+
+                    <!--Company photos-->
+                    <img src="{{ photo.photo.url }}" alt="photo" width="400px">
+
+                    <p><i>{{ photo.description }}</i></p>
+                    <p><i></i></p>
+                    <p><i>Uploaded: {{ photo.date_added }} - Id: {{ photo.id }} </i></p>
+
+                    <input type="hidden" name="photo_to_remove" value="{{photo.id}}"> </input>
+                    <input class="btn btn btn-outline-danger btn-sm"
+                           type="submit" name="remove_photo" value="Remove" />
+
+                </form>
+
+
+            <p> ------------- </p>
+            <br>
+            </d>
+
+
+        {% endfor %}
+        </ul>
+
+
+
+
+    <button class="btn btn-default"><a href="{% url 'company_profile' company_obj.id %}">< Back</a></button>
+
+
+
+
+</p>
+{% endblock %}
