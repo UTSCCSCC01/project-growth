@@ -1,10 +1,17 @@
 from django.shortcuts import render,redirect
+from django.views.generic import TemplateView, ListView, CreateView
+from django.core.files.storage import FileSystemStorage
+from django.urls import reverse_lazy
 
-from .forms import CourseForm
-from .models import CourseInfo,CourseUser
+from .forms import BookForm, CourseForm
+from .models import CourseInfo,CourseUser, Book
+
 from users.models import User
 from .import models
+from django.views.generic import TemplateView
 # Create your views here.
+
+
 def course_list(request):
     role = request.user.role
     user_id = request.user.id
@@ -29,6 +36,7 @@ def course_detail(request,course_id):
 
 
 
+
 def addCourse(request):
     if request.method == "GET":
         course_name_form = CourseForm()
@@ -50,7 +58,6 @@ def addCourse(request):
                 course_id=courseInfo.id,
                 user_id=request.user.id
             )
-            courseUser.save()
             return redirect('/courses/')
 
 
@@ -70,7 +77,6 @@ def modCourse(request):
     else:
         nid = request.POST.get('id')
         name = request.POST.get('name')
-        print(name,nid)
         course = CourseInfo.objects.get(id=nid)
         course.name = name
         course.save()
@@ -112,3 +118,86 @@ def unenrollCourse(request):
     bb = CourseUser.objects.get(course_id=nid,user_id=request.user.id)
     bb.delete()
     return redirect('/courses/')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# NAMAN CODE
+
+
+
+
+class Home(TemplateView):
+    template_name = 'courses/book_list.html'
+
+
+def upload(request):
+    context = {}
+    if request.method == 'POST':
+        uploaded_file = request.FILES['document']
+        fs = FileSystemStorage()
+        name = fs.save(uploaded_file.name, uploaded_file)
+        context['url'] = fs.url(name)
+    return render(request, 'courses/upload.html', context)
+
+
+def book_list(request):
+
+    role = request.user.role
+
+    if(role == 'Instructor' or role == 'Student' or role == 'Partner'):
+        books = Book.objects.all()
+        return render(request, 'courses/book_list.html', {
+            'books': books,
+            'role':role,
+            })
+
+
+
+
+
+def upload_book(request):
+    if request.method == 'POST':
+        form = BookForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('book_list')
+    else:
+        form = BookForm()
+    return render(request, 'courses/upload_book.html', {
+        'form': form
+    })
+
+
+def delete_book(request, pk):
+    if request.method == 'POST':
+        book = Book.objects.get(pk=pk)
+        book.delete()
+    return redirect('book_list')
+
+
+class BookListView(ListView):
+    model = Book
+    template_name = 'courses/class_book_list.html'
+    context_object_name = 'books'
+
+
+class UploadBookView(CreateView):
+    model = Book
+    form_class = BookForm
+    success_url = reverse_lazy('courses/class_book_list')
+    template_name = 'courses/upload_book.html'
