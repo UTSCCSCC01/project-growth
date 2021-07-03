@@ -78,7 +78,6 @@ def modCourse(request):
     else:
         nid = request.POST.get('id')
         name = request.POST.get('name')
-        print(name,nid)
         course = CourseInfo.objects.get(id=nid)
         course.name = name
         course.save()
