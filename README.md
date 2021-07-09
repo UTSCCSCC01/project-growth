@@ -57,7 +57,10 @@ Some of the technologies which are going to be used are:
 
 
 3. **Pillow**
-- Use "pip install pillow" to install 
+- Use ```pip install pillow``` to install 
+
+4. Notifications:
+- Use ```pip install django-notifications-hq``` to install
 
 ## Contribution
 
