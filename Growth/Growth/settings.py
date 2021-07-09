@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'chat.apps.ChatConfig',
     'channels',
     'direct',
+    'notifications',
     'forum.apps.ForumConfig',
     'django.contrib.admin',
     'django.contrib.auth',

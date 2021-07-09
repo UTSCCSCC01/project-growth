@@ -12,6 +12,8 @@ from direct.models import Message
 
 from django.db.models import Q
 from django.core.paginator import Paginator
+
+from notifications.signals import notify
 # Create your views here.
 
 @login_required
@@ -106,6 +108,7 @@ def SendDirect(request):
 	if request.method == 'POST':
 		to_user = User.objects.get(username=to_user_username)
 		Message.send_message(from_user, to_user, body)
+		notify.send(from_user, recipient=to_user, verb='Message', description=request.POST.get('message'))
 		return redirect('inbox')
 	else:
 		HttpResponseBadRequest()

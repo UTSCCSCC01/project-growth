@@ -22,6 +22,8 @@ from django.conf.urls.static import static
 from courses import views as course_views
 
 from django.conf.urls import url, include
+import notifications.urls
+
 
 
 from users import views
@@ -43,6 +45,7 @@ urlpatterns = [
     url(r'^chat/', include('chat.urls')),
     url(r'^video_chat/', include('video_chat.urls')),
     url(r'^direct/', include('direct.urls')),
+    url(r'^notifications/', include(notifications.urls, namespace='notifications')),
 
     path('', course_views.Home.as_view(), name='home'),
     path('upload/', course_views.upload, name='upload'),
