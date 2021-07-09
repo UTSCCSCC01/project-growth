@@ -18,10 +18,12 @@ One time install:
 `pip3 install virtualenv`  
 
 Set up repo for developers after cloning:  
-```cd project-growth  
+```
+cd project-growth  
 git flow init -d
 git pull origin develop 
-git flow feature start feature_name```
+git flow feature start feature_name
+```
 
 Running the code:  
 `virtualenv -p python3 .`  
