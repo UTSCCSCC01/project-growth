@@ -97,10 +97,9 @@
             {% for notification in  user.notifications.unread %}
               <div>
               Message from <b>{{ notification.actor }}</b>
-          <button class="dropdown-item" type="button">{{ notification.description }}</button>	
-        </div>
-          {% endfor %}	
+          <button class="dropdown-item" type="button">{{ notification.description }}</button>
           </div>
+          {% endfor %}	
         </div>
 
       </div>

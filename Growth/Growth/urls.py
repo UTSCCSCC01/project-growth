@@ -45,7 +45,7 @@ urlpatterns = [
     url(r'^chat/', include('chat.urls')),
     url(r'^video_chat/', include('video_chat.urls')),
     url(r'^direct/', include('direct.urls')),
-    url(r'^notifications/', include(notifications.urls, namespace='notifications')),
+    url('^inbox/notifications/', include(notifications.urls, namespace='notifications')),
 
     path('', course_views.Home.as_view(), name='home'),
     path('upload/', course_views.upload, name='upload'),
