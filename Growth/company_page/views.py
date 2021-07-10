@@ -6,11 +6,14 @@ from .models import Company, Photo, File
 
 from .forms import AddCompanyForm, ModifyCompanyForm, AddPhotoForm, AddFileForm
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+
 import os
 
 
 # Display current user company and company list page
 # Public. But users without a company will be prompt to create/join one
+@login_required
 def companies_view(request):
 
     # Get current user's company
@@ -23,6 +26,9 @@ def companies_view(request):
     companies_dict = {company_obj: get_users_string(company_obj) for company_obj in companies }
     # Company photos, sorted from latest to earliest
     photos = Photo.objects.all().order_by('-last_modified')
+    # True if current viewer is company member
+    admins = get_users(company_obj)["admins"]
+    viewer_is_admin = request.user in admins
 
     # If current viewer has company, remove their company from company list
     if has_company(request.user):
@@ -33,15 +39,35 @@ def companies_view(request):
     # Show admin pending member requests
     show_new_member_request_for_admin(request, company_obj)
 
+    # When Leave this company button is pressed
+    if "leave_this_company" in request.POST:
+
+        #  Additional step, check if there's more admin left
+        if viewer_is_admin and len(admins) < 2:  # If it is not the last admin
+            # Don't do anything and raise this error message
+            messages.error(request, "Cannot remove the last admin! "
+                                    "You need to assign at least one other admin or delete the company entirely!")
+
+        else:
+            # Remove existing admin/member from company
+            user_to_remove = request.user  # User obj of user member to be removed
+
+            user_to_remove.company_role = "member"  # Set role back to member
+            user_to_remove.save()
+
+            company_obj.user_set.remove(user_to_remove)  # Remove this user in User model's foreign key column
+            return redirect('companies')
+
+
     context = {
         "companies_dict": companies_dict, # ALl companies
         "company_obj": company_obj, # Current user's company
         "member_list": member_list, # Current user's company's members
         "photos": photos,
-        "has_company":has_company(request.user)
+        "has_company":has_company(request.user),
+        "is_admin":viewer_is_admin
     }
     return render(request, "company/companies.html", context)
-
 
 # Page for viewing a company
 # Public. But Guest, Member and Admin will see different interactions

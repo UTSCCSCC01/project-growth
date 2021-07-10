@@ -35,6 +35,8 @@ urlpatterns = [
     path('forum/', include('forum.urls')),
     url(r'^courses/', include('courses.urls')),
 
+    path(r'home', views.app_home, name='home'),
+
     path(r'profile/<slug:slug>/', views.profile, name='profile'),
     path('edit_profile/<slug:slug>/', views.edit_profile, name='edit_profile'),
     path('search_profile/',

@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
+import sys
+
 from django.contrib.messages import constants as messages
 
 
@@ -27,6 +29,9 @@ SECRET_KEY = 'e_d-*d^al%=cx5&#02y-a-og2tu@uhy@l*uwqmtc%y&@fhlblr'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+
+sys.modules['fontawesome_free'] = __import__('fontawesome-free')
+
 
 ALLOWED_HOSTS = []
 
@@ -55,7 +60,8 @@ INSTALLED_APPS = [
     'company_page.apps.CompanyPageConfig',
     'courses.apps.CoursesConfig',
     'video_chat.apps.VideoChatConfig',
-    'crispy_forms',    
+    'crispy_forms',
+    'fontawesome_free'
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'

@@ -1,80 +1,160 @@
 {% extends 'builder.html' %}
 
-{% block title %}
-Company
+{% block header %}
+<title>Browse Companies</title>
 {% endblock %}
 
 {% block content %}
 
-    <button class="btn btn-default"><a href="{% url 'index' %}">< Back to {{request.user}}'s profile</a></button>
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Companies</h1>
+        <a href="{% url 'index' %}" class="d-none d-sm-inline-block btn btn-sm btn-outline-primary shadow-sm"><i
+        class="fas fa-sm text-white-50"></i>< Back to {{request.user}}'s dashboard</a>
+    </div>
+
+    <div class="row">
+
+        <div class="col-lg-9">
+
+            <!-- Company Galleries -->
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Company Galleries</h6>
+                </div>
+                <div class="card-body">
+                    <ul>
+                        {% for photo in photos %}
+
+                        <!--Company photos-->
+                        <a href="{% url 'company_profile' photo.company.id %}">
+                            <img src="{{ photo.photo.url }}" alt="photo" width="400px">
+                        </a>
 
 
-    {% if has_company %}
-        <h3>My Company:</h3>
+                        {% endfor %}
+                    </ul><br>
+                </div>
+            </div>
 
+            <!-- Company Cards-->
+            <div class="row row-cols-1 row-cols-md-3">
+                {% for company_obj, member_list in companies_dict.items %}
+                  <div class="col mb-4">
+                    <div class="card">
+                        <!--Company logo-->
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">{{ company_obj.id }} - {{ company_obj.name }}</h6>
+                        </div>
+                                                <img src="{{ company_obj.logo.url }}" class="card-img-top" alt="logo" >
 
-        <!--Company logo-->
-        <img src="{{ company_obj.logo.url }}" alt="logo" width="150px">
-
-        <!--Company name-->
-        <h4>{{ company_obj.id }} - {{ company_obj.name }}</h4>
-        <p>{{ company_obj.description }}<p>
-        <p>{{ member_list }}<p>
-
-        <a class="btn btn-primary btn-sm" href="{% url 'company_profile' company_obj.id %}">Go to my company</a>
-
-        <br>
-        <br><p> ============================================== </p>
-        <h3>Browse other companies in the community:</h3>
-
-        <br>
-
-
-    {% endif %}
-
-    <br>
-
-        <h4>Company Galleries</h4>
-
-        <ul>
-        {% for photo in photos %}
-
-                    <!--Company photos-->
-            <a href="{% url 'company_profile' photo.company.id %}">
-                    <img src="{{ photo.photo.url }}" alt="photo" width="400px">
-            </a>
-
-
-        {% endfor %}
-        </ul><br>
-
-
-        <h4>Company List</h4>
-
-        <ul>
-        {% for company_obj, member_list in companies_dict.items %}
-
-            <d>
-            <!--Company logo-->
-            <img src="{{ company_obj.logo.url }}" alt="logo" width="50px">
-
-            <!--Company name-->
-            <p></p>
-            <h5><a class="btn btn-outline-primary" href="{% url 'company_profile' company_obj.id %}">{{ company_obj.id }} - {{ company_obj.name }}</a></h5>
-
-            <i>{{ company_obj.description }}</i>
-            <p>{{ member_list }}</p>
+                        <div class="card-body text-center">
+                        <p class="card-text">
+                            <i>{{ company_obj.description }}</i>
+                            <p>{{ member_list }}</p>
+                            <a class="btn btn-primary btn-sm" href="{% url 'company_profile' company_obj.id %}">Details</a>
+                          </p>
+                      </div>
+                    </div>
+                  </div>
+                {% endfor %}
+            </div>
 
 
 
-            <p> ------------- </p>
-            <br>
-            </d>
+        </div>
+
+        <div class="col-lg-3">
+
+            <!-- My Company Card -->
+            <div class="card shadow mb-4 text-center">
+                <!-- Card Header - Dropdown -->
+                {% if has_company %}
+                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                        <h6 class="m-0 font-weight-bold text-primary">My Company</h6>
+                        <div class="dropdown no-arrow">
+                            <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                                aria-labelledby="dropdownMenuLink">
+
+                                {% if is_admin %}
+                                    <div class="dropdown-header">Admin Actions:</div>
+
+                                    <a class="dropdown-item" href="{% url 'modify_company' company_obj.id %}">Modify company</a>
+                                    <a class="dropdown-item" href="{% url 'manage_users' company_obj.id %}">Manage users</a>
+                                {% else %}
+                                    <div class="dropdown-header">Member Actions:</div>
+                                {% endif %}
+                                <a class="dropdown-item" href="{% url 'manage_photos' company_obj.id %}">Add/Edit company photos</a>
+                                <a class="dropdown-item" href="{% url 'manage_files' company_obj.id %}">Add/Edit files</a>
+                                <div class="dropdown-divider"></div>
+                                  <!--Button: Leave this company-->
 
 
-        {% endfor %}
-        </ul>
-        <button class="btn btn-default"><a href="{% url 'index' %}">< Back to {{request.user}}'s profile</a></button>
+                                <a class="dropdown-item text-danger" href="#" data-toggle="modal" data-target="#leaveCompanyModal">
+                                    Leave this company
+                                </a>
 
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Card Body -->
+                    <div class="card-body">
+                        <!--Company logo-->
+                        <img src="{{ company_obj.logo.url }}" alt="logo" width="150px">
+
+                        <!--Company name-->
+                        <h4>{{ company_obj.id }} - {{ company_obj.name }}</h4>
+                        <p>{{ company_obj.description }}<p>
+                        <p>{{ member_list }}<p>
+
+                        <a class="btn btn-primary btn"
+                           href="{% url 'company_profile' company_obj.id %}">Go to my company</a>
+                    </div>
+                {% else %}
+                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                        <h6 class="m-0 font-weight-bold text-primary">My Company</h6>
+                    </div>
+                    <div class="card-body">
+                        Looks Like you don't have a company yet,
+                        <a href="{% url 'add_company'%}">create one now?</a><br>
+                        Or, if your company is already created, search and join it below!
+                    </div>
+                {% endif %}
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+
+<!-- Leave Company Modal-->
+<div class="modal fade" id="leaveCompanyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Are you sure to Leave this company?</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">You will need to request again to join this company</div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                <form action="" method="POST">{% csrf_token %}
+                    <input type="submit" class="btn btn-danger" name="leave_this_company" value="Leave this company" />
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
 {% endblock %}
