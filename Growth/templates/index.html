@@ -45,9 +45,9 @@
   <header id="header" class="header fixed-top">
     <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
 
-      <a href="index.html" class="logo d-flex align-items-center">
+      <a href="{% url 'index' %}" class="logo d-flex align-items-center">
         <img src='{% static "img/logo.svg"%}' alt="">
-        <span>Growth</span>
+        <span>Growth<sup>v0.5</sup></span>
       </a>
 
       <nav id="navbar" class="navbar">
@@ -133,7 +133,7 @@
       <div class="container" data-aos="fade-up">
 
         <header class="section-header">
-          <h2>Our Mission</h2>
+          <h2>The Mission</h2>
 
         </header>
 
