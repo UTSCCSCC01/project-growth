@@ -1,10 +1,12 @@
 {% extends 'builder.html' %}
 
-{% block title %}
-Modify my Company
+{% block header %}
+<title>Manage Company Details</title>
 {% endblock %}
 
 {% block content %}
+    <button class="btn btn-default"><a href="{% url 'company_profile' company_obj.id %}">< Back</a></button>
+
     <br>
     <br>
     <h3>Modify my company</h3>

@@ -17,11 +17,12 @@
 
 
     {% elif message.extra_tags == "admin_view_company_profile" %}
-      <br>
+      <p></p>
       <a class="btn btn-primary" href="{% url 'modify_company' company_obj.id %}">Modify company</a>
       <a class="btn btn-primary" href="{% url 'manage_users' company_obj.id %}">Manage users</a>
       <a class="btn btn-outline-primary" href="{% url 'manage_photos' company_obj.id %}">Add/Edit company photos</a>
       <a class="btn btn-outline-primary" href="{% url 'manage_files' company_obj.id %}">Add/Edit files</a>
+      <p></p>
       <!--Button: Leave this company-->
       <form action="" method="POST">{% csrf_token %}
         <input type="submit" class="btn btn-danger" name="leave_this_company" value="Leave this company" />

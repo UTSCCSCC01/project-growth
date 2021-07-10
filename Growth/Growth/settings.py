@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
+import sys
+
 from django.contrib.messages import constants as messages
 
 
@@ -27,6 +29,9 @@ SECRET_KEY = 'e_d-*d^al%=cx5&#02y-a-og2tu@uhy@l*uwqmtc%y&@fhlblr'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+
+sys.modules['fontawesome_free'] = __import__('fontawesome-free')
+
 
 ALLOWED_HOSTS = []
 
@@ -55,7 +60,8 @@ INSTALLED_APPS = [
     'company_page.apps.CompanyPageConfig',
     'courses.apps.CoursesConfig',
     'video_chat.apps.VideoChatConfig',
-    'crispy_forms',    
+    'crispy_forms',
+    'fontawesome_free'
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
@@ -159,6 +165,8 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'cydy8001@gmail.com'
 EMAIL_HOST_PASSWORD = 'ss2231151' # when you read this, please do not copy down and pretend you did not see this
 
+NUMB_TURN_CREDENTIAL = 'eewn3cink_WUND9saus'
+NUMB_TURN_USERNAME = 'jigsaw23123@gmail.com'
 
 # for channels - clients to communicate with each other (CHAT)
 

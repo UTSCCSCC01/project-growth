@@ -1,26 +1,27 @@
 
-var wsStart = 'ws://';
+var wsLink = 'ws://';
+
 if(window.location.protocol == 'https:'){
-    wsStart = 'wss://';
+    wsLink = 'wss://';
 }
 
-var endPoint = wsHttp + window.location.host + '/ws/video_chat/' + 'conference';
+var endPoint = wsLink + window.location.host + '/ws/video_chat/' + 'conference';
 
-var webSocket = new WebSocket(endPoint);
+var ws = new WebSocket(endPoint);
 
-webSocket.onopen = function(e){
+ws.onopen = function(e){
     console.log('Connection opened! ', e);
 }
 
-webSocket.onmessage = webSocketOnMessage;
+ws.onmessage = webSocketOnMessage;
 
-webSocket.onclose = function(e){
+ws.onclose = function(e){
     console.log('Connection closed! ', e);
 
     peer1.close();
 }
 
-webSocket.onerror = function(e){
+ws.onerror = function(e){
     console.log('Error occured! ', e);
 }
 
@@ -66,7 +67,7 @@ btnPlayRemoteVideo.addEventListener("click", function (){
 // send the given action and message strings
 // over the websocket connection
 function sendSignal(thisPeer, action, message){
-    webSocket.send(
+    ws.send(
         JSON.stringify(
             {
                 'peer': thisPeer,
@@ -203,7 +204,7 @@ userMedia = navigator.mediaDevices.getUserMedia(constraints)
     });
 
 function createOfferer(){
-    peer1 = new RTCPeerConnection(null);
+    peer1 = new RTCPeerConnection(iceConfiguration);
         
     localStream.getTracks().forEach(track => {
         peer1.addTrack(track, localStream);
