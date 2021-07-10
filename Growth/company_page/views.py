@@ -100,6 +100,8 @@ def company_profile_view(request, company_id):
             user_to_remove.save()
 
             company_obj.user_set.remove(user_to_remove)  # Remove this user in User model's foreign key column
+
+            messages.success(request, "You are now not a member of this company!")
             return redirect('company_profile', company_id=company_id)
 
     context = {

@@ -1,24 +1,25 @@
-var wsLink = 'ws://';
 
-if(window.location.protocol == 'https:'){
-    wsLink = 'wss://';
+var wsStart = 'ws://';
+
+if(loc.protocol == 'https:'){
+    wsStart = 'wss://';
 }
 
-var endPoint = wsLink + window.location.host + '/ws/video_chat/' + 'conference';
+var endPoint = wsHttp + window.location.host + '/ws/video_chat/' + 'conference';
 
-var ws = new WebSocket(endPoint);
+var webSocket = new WebSocket(endPoint);
 
-ws.onopen = function(e){
+webSocket.onopen = function(e){
             console.log('Connection opened! ', e);
 }
 
-ws.onmessage = webSocketOnMessage;
+webSocket.onmessage = webSocketOnMessage;
 
-ws.onclose = function(e){
+webSocket.onclose = function(e){
     console.log('Connection closed! ', e);
 }
 
-ws.onerror = function(e){
+webSocket.onerror = function(e){
     console.log('Error occured! ', e);
 }
 
@@ -56,7 +57,7 @@ function webSocketOnMessage(event){
 // send the given action and message strings
 // over the websocket connection
 function sendSignal(thisPeer, action, message){
-    ws.send(
+    webSocket.send(
         JSON.stringify(
             {
                 'peer': thisPeer,
@@ -100,15 +101,15 @@ const constraints = {
     'audio': true
 }
 
-const iceConfiguration = {
-    iceServers: [
-        {
-            urls: ['turn:numb.viagenie.ca'],
-            credential: '{{numb_turn_credential}}',
-            username: '{{numb_turn_username}}'
-        }
-    ]
-};
+// const iceConfiguration = {
+//     iceServers: [
+//         {
+//             urls: ['turn:numb.viagenie.ca'],
+//             credential: '{{numb_turn_credential}}',
+//             username: '{{numb_turn_username}}'
+//         }
+//     ]
+// };
 
         
 // later assign an RTCPeerConnection

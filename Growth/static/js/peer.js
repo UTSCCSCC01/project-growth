@@ -2,16 +2,6 @@
 // as key value pairs
 var mapPeers = {};
 
-var ICE_config = {
-    'iceServers': [
-      {
-        'urls': 'turn:numb.viagenie.ca',
-        'credential': 'eewn3cink_WUND9saus=',
-        'username': 'jigsaw23123@gmail.com'
-      }
-    ]
-  }
-
 // peers that stream own screen
 // to remote peers
 var mapScreenPeers = {};
@@ -68,25 +58,25 @@ var ul = document.querySelector("#message-list");
 
 var loc = window.location;
 
-var wsLink = 'ws://';
+var wsHttp = 'ws://';
 
 if(window.location.protocol == 'https:'){
-    wsLink = 'wss://';
+    wsHttp = 'wss://';
 }
 var roomName = '';
 
 document.title
 
-var endPoint = wsLink + window.location.host + '/ws/video_chat/' + 'conference';
+var endPoint = wsHttp + window.location.host + '/ws/video_chat/' + 'conference';
 
-var ws;
+var webSocket;
 
 var username= document.querySelector('#label-username').innerHTML;
 
 var btnJoin = document.querySelector('#btn-join');
 
 // set username
-// join room (initiate ws. connection)
+// join room (initiate websocket connection)
 // upon button click
 btnJoin.onclick = () => {
     if(username == ''){
@@ -97,9 +87,9 @@ btnJoin.onclick = () => {
     btnJoin.disabled = true;
     btnJoin.style.visibility = 'hidden';
 
-    ws = new WebSocket(endPoint);
+    webSocket = new WebSocket(endPoint);
 
-    ws.onopen = function(e){
+    webSocket.onopen = function(e){
         console.log('Connection opened! ', e);
         console.log(username + 'haha')
         // notify other peers
@@ -108,13 +98,13 @@ btnJoin.onclick = () => {
         });
     }
     
-    ws.onmessage = webSocketOnMessage;
+    webSocket.onmessage = webSocketOnMessage;
     
-    ws.onclose = function(e){
+    webSocket.onclose = function(e){
         console.log('Connection closed! ', e);
     }
     
-    ws.onerror = function(e){
+    webSocket.onerror = function(e){
         console.log('Error occured! ', e);
     }
 
@@ -133,6 +123,7 @@ function webSocketOnMessage(event){
     console.log('action: ', action);
 
     if(peerUsername == username){
+        // ignore all messages from oneself
         return;
     }
 
@@ -398,7 +389,7 @@ userMedia = navigator.mediaDevices.getUserMedia(constraints)
 // send the given action and message
 // over the websocket connection
 function sendSignal(action, message){
-    ws.send(
+    webSocket.send(
         JSON.stringify(
             {
                 'peer': username,
@@ -413,10 +404,8 @@ function sendSignal(action, message){
 // and store it and its datachannel
 // send sdp to remote peer after gathering is complete
 function createOfferer(peerUsername, localScreenSharing, remoteScreenSharing, receiver_channel_name){
-    var peer = new RTCPeerConnection(ICE_config);
+    var peer = new RTCPeerConnection(null);
     
-    
-
     // add local user media stream tracks
     addLocalTracks(peer, localScreenSharing);
 
@@ -439,8 +428,6 @@ function createOfferer(peerUsername, localScreenSharing, remoteScreenSharing, re
         // and the corresponding RTCDataChannel
         mapPeers[peerUsername] = [peer, dc];
 
-        peer.onicecandidate = onIceCandidateHandler;
-        peer.onaddstream = onAddStreamHandler;
         peer.oniceconnectionstatechange = () => {
             var iceConnectionState = peer.iceConnectionState;
             if (iceConnectionState === "failed" || iceConnectionState === "disconnected" || iceConnectionState === "closed"){

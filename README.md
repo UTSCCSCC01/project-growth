@@ -54,9 +54,25 @@ Some of the technologies which are going to be used are:
 - Windows: https://docs.djangoproject.com/en/1.8/howto/windows/
 - Mac:     https://appdividend.com/2018/03/28/how-to-install-django-in-mac/
 
+3. **React**
+- We will use React staging create-react-app to deploy our project. 
+- Plugins used: react-router-dom, antd, npm, yarn
+- npm download page: https://www.npmjs.com/get-npm  
+- yarn: npm install -g yarn
+- antd download: write yarn add antd in cmd
+- less: yarn add less less-loader
+- Steps:
+- 1. You can ignore antd, less right now
+- 2. npm install -g create-react-app
+- 3. clone the project
+- 4. cd ./admin_client
+- 5. npm start
+- 6. visit localhost:3000
 
+- Windows: https://www.liquidweb.com/kb/install-react-js-windows/
+- Mac:     https://www.zeolearn.com/magazine/setup-react-mac
 
-3. **Pillow**
+4. **Pillow**
 - Use "pip install pillow" to install 
 
 ## Contribution
