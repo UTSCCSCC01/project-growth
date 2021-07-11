@@ -8,6 +8,7 @@ from django.views.generic.edit import FormView
 from .models import Post, Comment, Reply
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.db.models import Count
+from notifications.signals import notify
 
 from django.views.generic import (
     ListView,
@@ -47,6 +48,7 @@ def search_forum(request):
             
             querychain = chain(posts, comments, reply, users)
             qs = sorted(querychain, key=lambda instance: instance.pk, reverse=True)
+           # notify.send(from_user, recipient=to_user, verb='Message', description=request.POST.get('body'))
             return render(request, 'forum/my_search.html', context={'data': qs})
         else:
             return redirect('/forum/')
@@ -224,6 +226,7 @@ class PostLike(LoginRequiredMixin, RedirectView):
             post.likes.remove(current_user)
         else:      
              post.likes.add(current_user)
+             notify.send(sender=current_user, recipient=post.author, verb='Liked your post', target =post)
         return post.get_absolute_url()
 
 class CommentLike(LoginRequiredMixin, RedirectView):
