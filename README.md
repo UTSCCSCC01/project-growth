@@ -27,6 +27,7 @@ Running the code:
 `virtualenv -p python3 .`  
 `source bin/activate`  
 `pip install django`  
+`pip install fontawesome-free`
 `pip install django-crispy-forms` <- Used by forums  
 `pip install pillow` <- to prevent error No module named 'PIL' 
 
