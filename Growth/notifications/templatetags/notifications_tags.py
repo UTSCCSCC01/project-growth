@@ -13,11 +13,6 @@ except ImportError:
 
 register = Library()
 
-def setterUnreadNotifications(context, badge_class='setterUnreadNotifications'):
-    user = user_context(context)
-    if not user:
-        return ''
-    user.notifications.mark_all_as_read()
 
 def notifications_unread(context):
     user = user_context(context)
@@ -89,9 +84,6 @@ def live_notify_badge(context, badge_class='live_notify_badge'):
     html = "<span class='{badge_class}'>{unread}</span>".format(
         badge_class=badge_class, unread=user.notifications.unread().count()
     )
-
-    user.notifications.unread().mark_all_as_read()
-
     return format_html(html)
 
 
