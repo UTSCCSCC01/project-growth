@@ -90,17 +90,21 @@
         <div class="navbar-item has-dropdown is-hoverable">
           <a class="navbar-link">
             <i class="fa fa-bell" style="font-size:20px"></i>
-            <span class="badge">{% live_notify_badge %}</span>
+            {% if directs_count %}
+            <span class="badge">{{ directs_count }}</span>
+            {% endif %}
           </a>
 
           <div class="navbar-dropdown">
             {% for notification in  user.notifications.unread %}
               <div>
               Message from <b>{{ notification.actor }}</b>
-          <button class="dropdown-item" type="button">{{ notification.description }}</button>
-          </div>
+              <button class="dropdown-item" type="button"><a
+                href="{% url 'newconversation' user.username %}">{{ notification.description }}</button>
+             </div>
           {% endfor %}	
         </div>
+
 
       </div>
 
