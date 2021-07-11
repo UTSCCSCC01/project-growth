@@ -39,11 +39,12 @@ class LessonInfo(models.Model):
         verbose_name_plural = verbose_name
 
 class Book(models.Model):
+    id = models.BigAutoField(primary_key=True)
     title = models.CharField(max_length=100)
     deadline = models.CharField(max_length=100)
     pdf = models.FileField(upload_to='books/pdfs/')
     cover = models.ImageField(upload_to='books/covers/', null=True, blank=True)
-
+    course = models.ForeignKey(CourseInfo,null=True, on_delete=models.CASCADE)
     def __str__(self):
         return self.title
 
