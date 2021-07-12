@@ -61,7 +61,9 @@ INSTALLED_APPS = [
     'courses.apps.CoursesConfig',
     'video_chat.apps.VideoChatConfig',
     'crispy_forms',
-    'fontawesome_free'
+    'fontawesome_free',
+    'cal.apps.CalConfig'
+
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
