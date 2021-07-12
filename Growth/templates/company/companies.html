@@ -16,10 +16,9 @@
 
     <div class="row">
 
-        <div class="col-lg-9">
+        <div class="col-lg-8">
 
-            <!-- Company Galleries -->
-
+            <!-- Gallery Card -->
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
                     <h6 class="m-0 font-weight-bold text-primary">Company Gallery</h6>
@@ -48,15 +47,12 @@
                         </div>
                         {% endfor %}
 
-
                     </div>
                     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Previous</span>
                     </button>
                     <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Next</span>
                     </button>
                 </div>
 
@@ -65,34 +61,32 @@
             <!-- Company Cards-->
             <div class="row row-cols-1 row-cols-md-3">
                 {% for company_obj, member_list in companies_dict.items %}
-                  <div class="col mb-4">
+                <div class="col mb-4">
                     <div class="card">
-                        <div class="card-body ">
+                        <div class="card-body">
                             <div class="text-center">
-                                <img class="img-thumbnail" src="{{ company_obj.logo.url }}" alt="logo"  style="max-height:60px">
+                                <a href="{% url 'company_profile' company_obj.id %}">
+                                    <img class="img-thumbnail" src="{{ company_obj.logo.url }}" alt="logo"  style="max-height:60px">
+                                </a>
                             </div>
-
                             <hr>
                             <h4>{{ company_obj.name }}</h4>
-
                             <p><i> {{ company_obj.description }}</i></p>
                             <p><i class="far fa-building"></i> {{ company_obj.industry }}</p>
                             <i class="far fa-id-card size:5x"  ></i> {{ member_list }}
-
                         </div>
                         <div class=" text-center">
                             <small class="text-muted"><a class="btn btn-primary btn-sm" href="{% url 'company_profile' company_obj.id %}">Details</a></small>
                             <p></p>
                         </div>
                     </div>
-                  </div>
+                </div>
                 {% endfor %}
             </div>
 
-
         </div>
 
-        <div class="col-lg-3">
+        <div class="col-lg-4">
 
             <!-- My Company Card -->
             <div class="card shadow mb-4">
@@ -128,21 +122,24 @@
                     </div>
                     <!-- Card Body -->
                     <div class="card-body">
-
                         <div class="text-center">
                             <!--Company logo-->
-                            <img class="img-thumbnail" src="{{ company_obj.logo.url }}" alt="logo"  style="max-height:60px">
+                            <a href="{% url 'company_profile' company_obj.id %}">
+                                <img class="img-thumbnail" src="{{ company_obj.logo.url }}" alt="logo"  style="max-height:80px"></a>
                         </div>
                         <hr>
                         <!--Company name-->
                         <h4>{{ company_obj.name }}</h4>
-                        <span class="text-white badge bg-success">{{user.company_role}}</span>
+                        <span class="text-white badge bg-success">My role: {{user.company_role}}</span>
 
                         <p><i> {{ company_obj.description }}</i></p>
 
-                        <p><i class="far fa-building"></i> {{ company_obj.industry }}</p>
-                        <i class="far fa-id-card"></i> {{ member_list }}
-                        <p></p>
+                        <!--Company details-->
+                        <p><i class="fas fa-building"></i> <strong>Industry:</strong> {{ company_obj.get_industry_display }}<p>
+                        <p><i class="fas fa-id-card"></i> <strong>Size:</strong> {{ company_obj.get_size_display }}<p>
+                        <p><i class="fas fa-briefcase"></i> <strong>Type:</strong> {{ company_obj.get_type_display }}<p>
+                        <p><i class="fas fa-map-marker-alt"></i> <strong>Location:</strong> {{ company_obj.location }}<p>
+                        <p><i class="fas fa-globe"></i> <strong>Website:</strong> {{ company_obj.website_url }}<p>
 
                         <div class="text-center">
                             <a class="btn btn-primary btn text-center"
@@ -170,11 +167,9 @@
 
             </div>
 
-
         </div>
 
     </div>
-
 
 
 <!-- Leave Company Modal-->

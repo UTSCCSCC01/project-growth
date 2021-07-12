@@ -5,6 +5,14 @@
 {% endblock %}
 
 {% block content %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'companies' %}">Company</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Profile - {{ company_obj.name }}</li>
+        </ol>
+
+    </nav>
+
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">{{ company_obj.name }}
             <small class="text-primary">id:{{company_obj.id}}</small>
@@ -18,26 +26,118 @@
 
     <div class="row">
 
+        <div class="col-lg-8">
+
+            <!-- Photos Card -->
+            <div class="card shadow mb-4">
+                <!-- Card Header - Dropdown -->
+                <div
+                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">Company Gallery</h6>
+                    {% if user in admins or user in members %}
+                    <div class="dropdown no-arrow">
+                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink3"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-edit fa-sm fa-fw text-gray-400"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                             aria-labelledby="dropdownMenuLink3">
+                            <div class="dropdown-header">Admin / Member Actions:</div>
+                            <a class="dropdown-item" href="{% url 'manage_photos' company_obj.id %}">Manage photos</a>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+                <!-- Card Body -->
+                <div class="card-body">
+                    <div class="row">
+                        {% for photo in photos %}
+                        <div class="col-md-6 mb-4">
+                            <!--Company photos-->
+                            <img src="{{ photo.photo.url }}" alt="photo" class="w-100 shadow-1-strong rounded mb-4">
+                            {{ photo.description }}
+                            <br>
+                            <small><i>Uploaded: {{ photo.date_added }} <span class="text-primary">id:{{ photo.id }}</span></i></small>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Files Card -->
+            <div class="card shadow mb-4">
+                <!-- Card Header - Dropdown -->
+                <div
+                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">Company Files</h6>
+                    {% if user in admins or user in members %}
+                    <div class="dropdown no-arrow">
+                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink4"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-edit fa-sm fa-fw text-gray-400"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                             aria-labelledby="dropdownMenuLink4">
+                            <div class="dropdown-header">Admin / Member Actions:</div>
+                            <a class="dropdown-item" href="{% url 'manage_files' company_obj.id %}">Manage files</a>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+                <!-- Card Body -->
+                <div class="card-body">
+                    <p>Here are the company files</p>
+                    <div class="row">
+                        <!-- File Card -->
+                        {% for file in files %}
+                        <div class=" col-md-6 mb-4">
+                            <div class="card border-left-{{file.tag}} shadow h-100 py-2" >
+                                <div class="card-body row no-gutters align-items-center">
+                                    <div class="col-10">
+                                        <div class="text-xs font-weight-bold text-{{file.tag}} text-uppercase mb-1">
+                                            {{file.get_tag_display}}</div>
+                                        <a href="{{ file.file.url }}" target="_blank">
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{file.name}}</div></a>
+                                        <div>
+                                            <small>
+                                                <i>{% if file.description %} {{ file.description }}
+                                                    {% else %} No Description {% endif %}</i><br>
+                                                <i>{{ file.date_added }} <span class="text-primary">id:{{ file.id }}</span></i>
+                                            </small>
+                                        </div>
+                                    </div>
+                                    <div class="col-2"><i class="fas fa-file-contract fa-2x text-gray-300"></i></div>
+
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
         <div class="col-lg-4">
 
             <!-- Details Card -->
             <div class="card shadow mb-4">
                 <!-- Card Header - Dropdown -->
                 <div
-                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                        class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                     <h6 class="m-0 font-weight-bold text-primary">Company Details</h6>
                     {% if user in admins %}
                     <div class="dropdown no-arrow">
                         <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink1"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                            aria-labelledby="dropdownMenuLink1">
-                                <div class="dropdown-header">Admin Actions:</div>
-                                <a class="dropdown-item" href="{% url 'modify_company' company_obj.id %}">Modify details</a>
+                             aria-labelledby="dropdownMenuLink1">
+                            <div class="dropdown-header">Admin Actions:</div>
+                            <a class="dropdown-item" href="{% url 'modify_company' company_obj.id %}">Modify details</a>
                             <div class="dropdown-divider"></div>
-                              <!--Button: Leave this company-->
+                            <!--Button: Leave this company-->
                             <a class="dropdown-item text-danger" href="{% url 'delete_company' company_obj.id %}" >
                                 Delete company
                             </a>
@@ -49,12 +149,18 @@
                 <!-- Card Body -->
                 <div class="card-body">
                     <!--Company logo-->
-                    <img class="img-thumbnail" src="{{ company_obj.logo.url }}" alt="logo"  style="max-height:100px">
-                    <p></p>
-                    <!--Company name-->
-                    <i>{{ company_obj.description }}</i>
+                    <div class="text-center">
+                        <a href="{% url 'company_profile' company_obj.id %}">
+                            <img class="img-thumbnail" src="{{ company_obj.logo.url }}" alt="logo"  style="max-height:80px"></a>
+                    </div>
                     <hr>
-
+                    <!--Company name-->
+                    <h4>{{ company_obj.name }}</h4>
+                    <!--My role badge-->
+                    {% if user.company == company_obj %}
+                    <span class="text-white badge bg-success">My role: {{user.company_role}}</span>
+                    {% endif %}
+                    <p><i>{{ company_obj.description }}</i></p>
                     <!--Company details-->
                     <p><i class="fas fa-building"></i> <strong>Industry:</strong> {{ company_obj.get_industry_display }}<p>
                     <p><i class="fas fa-id-card"></i> <strong>Size:</strong> {{ company_obj.get_size_display }}<p>
@@ -117,150 +223,6 @@
                     </ul>
                 </div>
             </div>
-        </div>
-
-        <div class="col-lg-8">
-
-            <!-- Photos Card -->
-            <div class="card shadow mb-4">
-                <!-- Card Header - Dropdown -->
-                <div
-                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary">Company Gallery</h6>
-                    <div class="dropdown no-arrow">
-                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink3"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                            aria-labelledby="dropdownMenuLink3">
-                            <div class="dropdown-header">Dropdown Header:</div>
-                            <a class="dropdown-item" href="#">Action</a>
-                            <a class="dropdown-item" href="#">Another action</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Something else here</a>
-                        </div>
-                    </div>
-                </div>
-                <!-- Card Body -->
-                <div class="card-body">
-                    Dropdown menus can be placed in the card header in order to extend the functionality
-                    of a basic card. In this dropdown card example, the Font Awesome vertical ellipsis
-                    icon in the card header can be clicked on in order to toggle a dropdown menu.
-                </div>
-            </div>
-
-            <!-- Files Card -->
-            <div class="card shadow mb-4">
-                <!-- Card Header - Dropdown -->
-                <div
-                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary">Company Files</h6>
-                    <div class="dropdown no-arrow">
-                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink4"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                            aria-labelledby="dropdownMenuLink4">
-                            <div class="dropdown-header">Dropdown Header:</div>
-                            <a class="dropdown-item" href="#">Action</a>
-                            <a class="dropdown-item" href="#">Another action</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Something else here</a>
-                        </div>
-                    </div>
-                </div>
-                <!-- Card Body -->
-                <div class="card-body">
-                    <p>Here are the company files</p>
-                    <div class="row">
-
-                        <!-- Earnings (Monthly) Card Example -->
-                        <div class="col-xl-5 col-md-6 mb-4">
-                            <div class="card border-left-primary shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                Earnings (Monthly)</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Earnings (Annual) Card Example -->
-                        <div class="col-xl-5 col-md-6 mb-4">
-                            <div class="card border-left-success shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                                Earnings (Annual)</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">$215,000</div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Tasks Card Example -->
-                        <div class="col-xl-5 col-md-6 mb-4">
-                            <div class="card border-left-info shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Tasks
-                                            </div>
-                                            <div class="row no-gutters align-items-center">
-                                                <div class="col-auto">
-                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">50%</div>
-                                                </div>
-                                                <div class="col">
-                                                    <div class="progress progress-sm mr-2">
-                                                        <div class="progress-bar bg-info" role="progressbar"
-                                                            style="width: 50%" aria-valuenow="50" aria-valuemin="0"
-                                                            aria-valuemax="100"></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Pending Requests Card Example -->
-                        <div class="col-xl-5 col-md-6 mb-4">
-                            <div class="card border-left-warning shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                                Pending Requests</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-comments fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
         </div>
 
@@ -287,95 +249,5 @@
         </div>
     </div>
 </div>
-
-
-    <button class="btn btn-default"><a href="{% url 'companies' %}">< Back</a></button>
-
-        <br>
-        <br>
-        <br>
-
-
-        <!--Company logo-->
-        <img src="{{ company_obj.logo.url }}" alt="logo" width="150px">
-
-        <!--Company name-->
-        <h2>{{ company_obj.name }}</h2>
-        <p>{{ company_obj.description }}<p>
-
-        <br>
-        <br>
-
-        <!--Company details-->
-        <h4>Details</h4>
-        <p>industry: {{ company_obj.get_industry_display }}<p>
-        <p>size: {{ company_obj.get_size_display }}<p>
-        <p>type: {{ company_obj.get_type_display }}<p>
-        <p>location: {{ company_obj.location }}<p>
-        <p>website_url: {{ company_obj.website_url }}<p>
-        <b>Admins:</b>
-        <ul>
-           {% if admins %}
-                {% for user in admins %}
-                <li> <a href="{% url 'profile' user.username %}">{{ user.username }}</a></li>
-                {% endfor %}
-            {% else %} No admins
-            {% endif %}
-        </ul>
-
-        <b>Members:</b>
-        <ul>
-            {% if members %}
-                {% for user in members %}
-                <li> <a href="{% url 'profile' user.username %}">{{ user.username }}</a></li>
-                {% endfor %}
-            {% else %} No members
-            {% endif %}
-
-        </ul>
-
-        <br>
-        <h4>Company Galleries</h4>
-
-        <ul>
-        {% for photo in photos %}
-            <d>
-                    <!--Company photos-->
-                    <img src="{{ photo.photo.url }}" alt="photo" width="400px">
-
-                    <p><i>{{ photo.description }}</i></p>
-                    <p><i>Uploaded: {{ photo.date_added }} - Id: {{ photo.id }} </i></p>
-            <p> ------------- </p>
-            <br>
-            </d>
-        {% endfor %}
-        </ul>
-
-
-        <h4>Company Files</h4>
-
-        <ul>
-        {% for file in files %}
-            <d>
-                <form action="" method="POST">{% csrf_token %}
-                    <p><i>Name: {{ file.name }}</i></p>
-                    <p><i>Tag: {{ file.tag }}</i></p>
-                    <p><i>Description: {{ file.description }}</i></p>
-                    <p><i>Uploaded: {{ file.date_added }} - Id: {{ file.id }} </i></p>
-                    <a class="btn btn-outline-primary btn-sm" href="{{ file.file.url }}" target="_blank">Preview</a>
-                    <a class="btn btn-outline-primary btn-sm" href="{{ file.file.url }}" download>Download</a>
-                </form>
-            <p> ------------- </p>
-            <br>
-            </d>
-
-        {% endfor %}
-        </ul>
-
-
-
-            <br>
-    <button class="btn btn-default"><a href="{% url 'companies' %}">< Back</a></button>
-
 
 {% endblock %}

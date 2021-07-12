@@ -90,17 +90,15 @@ def company_profile_view(request, company_id):
         # Show admin pending member requests
         show_new_member_request_for_admin(request, company_obj)
 
-        messages.info(request,
-                         "You are viewing this page as an ADMIN, you have access to all the below actions.",
-                         extra_tags="admin_view_company_profile")
+        messages.warning(request,
+                         "You are viewing this page as an ADMIN, you have full access to all the page management actions.")
 
 
     elif viewer_is_member:
-        messages.info(request,
-                         "You are viewing this page as a MEMBER, you have access to the below actions. "
+        messages.warning(request,
+                         "You are viewing this page as a MEMBER, you have limited access to the page management actions. "
                          "If you need more access including editing company profile, "
-                         "membership management, please contact your admin.",
-                         extra_tags="member_view_company_profile")
+                         "membership management, please contact your admin.")
 
     else:
 
@@ -265,14 +263,27 @@ def manage_users_view(request, company_id):
             userId = request.POST.get('user_to_add') # UserId of user member to be added
             user = User.objects.get(id=userId) # User obj of user member to be added
 
-            user.company_role = "member"  # Set role to member
+            user.company_role = "member"  # Set role to member from pending_member
             user.save()
 
             company_obj.user_set.add(user) # Add this user in User model's foreign key column
             messages.success(request,"User {0} was successfully added to your company! ".format(user.username))
 
+        # When "Reject" Button is pressed on manage member page
+        elif "reject_new_member" in request.POST:
+
+            # Add new member to company
+            userId = request.POST.get('user_to_add') # UserId of user member to be added
+            user = User.objects.get(id=userId) # User obj of user member to be added
+
+            user.company_role = "member"  # Set role to member from pending_member
+            user.company = None # Clear user's reuqest company status
+            user.save()
+
+            messages.warning(request,"User {0}'s request was rejected".format(user.username))
+
         # When "Add" Button is pressed on manage member page
-        if "add_user" in request.POST:
+        elif "add_user" in request.POST:
 
             # Add new user to company
             userId = request.POST.get('user_to_add') # UserId of user member to be added
