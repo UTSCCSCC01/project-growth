@@ -31,15 +31,20 @@ def register(request):
 
 
 def index(request):
+    if request.user.is_authenticated :
+        return redirect(app_home)
     return render(request, 'index.html')
 
+@login_required()
+def app_home(request):
+    return render(request, 'home.html', context={'data': request.user})
 
 @login_required
 def profile(request, slug):
     # return HttpResponse(slug)
     data = get_user_model().objects.filter(
         username=slug).first()
-    return render(request, 'profile/user_profile.html', context={'data': data})
+    return render(request, 'profile/user_profile.html', context={'user': request.user, 'data': data})
 
 
 @login_required

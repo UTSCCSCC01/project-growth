@@ -11,10 +11,13 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
+import sys
+
 from django.contrib.messages import constants as messages
 
-
 from decouple import config
+
+
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -28,11 +31,18 @@ SECRET_KEY = 'e_d-*d^al%=cx5&#02y-a-og2tu@uhy@l*uwqmtc%y&@fhlblr'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+sys.modules['fontawesome_free'] = __import__('fontawesome-free')
 
+
+
+ALLOWED_HOSTS = []
 
 NUMB_TURN_CREDENTIAL = config('NUMB_TURN_CREDENTIAL', default=None)
 NUMB_TURN_USERNAME = config('NUMB_TURN_USERNAME', default=None)
+
+
+
+
 
 # Application definition
 
@@ -55,7 +65,9 @@ INSTALLED_APPS = [
     'company_page.apps.CompanyPageConfig',
     'courses.apps.CoursesConfig',
     'video_chat.apps.VideoChatConfig',
-    'crispy_forms',    
+    'crispy_forms',
+    'fontawesome_free',
+    'cal.apps.CalConfig'
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'

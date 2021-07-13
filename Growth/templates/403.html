@@ -1,12 +1,14 @@
 {% extends 'builder.html' %}
 
-{% block title %}
-403 Forbidden
+{% block header %}
+<title>403 Forbidden</title>
 {% endblock %}
 
 {% block content %}
-    <h1>403 Forbidden</h1>
-    <strong>Hey, you are not supposed to be here!</strong>
-    <p>You may not have sufficient level of access to view this page...</p>
-
+    <div class="text-center">
+        <div class="error mx-auto" data-text="403">403</div>
+        <p class="lead text-gray-800 mb-5">Hey, you are not supposed to be here!</p>
+        <p class="text-gray-500 mb-0">You may not have sufficient level of access to view this page...</p>
+        <a href="{% url 'index' %}">&larr; Back to Home</a>
+    </div>
 {% endblock %}
