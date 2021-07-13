@@ -227,7 +227,7 @@ def upload_book(request):
 
             # Till here
 
-            ## instance = form.save() CHECKING RESTORE LATER
+            form.save()
 
             return redirect('book_list')
     else:
