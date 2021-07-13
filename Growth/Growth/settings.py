@@ -60,6 +60,11 @@ INSTALLED_APPS = [
     'courses.apps.CoursesConfig',
     'video_chat.apps.VideoChatConfig',
     'crispy_forms',
+<<<<<<< HEAD
+=======
+    'fontawesome_free',
+    'cal.apps.CalConfig'
+>>>>>>> develop
 
 ]
 
