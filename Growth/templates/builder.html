@@ -67,7 +67,6 @@
 
 <!--                TODO: CONTENT END HERE-->
 
-
                 </div>
                 <!-- /.container-fluid -->
 
@@ -75,15 +74,7 @@
             <!-- End of Main Content -->
 
             <!-- Footer -->
-            <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span>Designed for <a href="https://www.africanimpact.ca/the-african-impact-challenge">
-                            <i>#TheAfricanImpactChallenge</i></a></span><br>
-                        <span>Project-Growth 2021</span><br>
-                    </div>
-                </div>
-            </footer>
+            {% include 'partials/footer.html' %}
             <!-- End of Footer -->
 
         </div>
@@ -116,6 +107,8 @@
 
     <!-- Custom scripts for all pages-->
     <script src='{% static "js/builder.min.js" %}'></script>
+    {% block script %}
+    {% endblock %}
 
     <!-- Page level plugins -->
 <!--    <script src='{% static "vendor/chart.js/Chart.min.js" %}'></script>-->

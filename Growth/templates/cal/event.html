@@ -5,9 +5,22 @@ Event
 {% endblock %}
 
 {% block content %}
-<div class="clearfix">
-  <a class="btn btn-info left" href="{% url 'cal:calendar' %}"> Calendar </a>
+<!--Bread Crumb-->
+<nav aria-label="breadcrumb">
+	<ol class="breadcrumb">
+		<li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+		<li class="breadcrumb-item"><a href="{% url 'cal:calendar' %}">Calendar</a></li>
+		<li class="breadcrumb-item active" aria-current="page">New Event</li>
+	</ol>
+</nav>
+
+<!-- Page Header -->
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+	<h1 class="h3 mb-0 text-gray-800">New Event</h1>
+	<a href="{% url 'cal:calendar' %}" class="d-none d-sm-inline-block btn btn-sm btn-outline-primary shadow-sm"><i
+			class="fas fa-sm text-white-50"></i>< Back to {{request.user}}'s Calendar</a>
 </div>
+
 
 {% if form.errors %}
     {% for field in form %}
