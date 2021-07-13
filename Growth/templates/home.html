@@ -25,6 +25,9 @@
         </button>
         <button class="btn btn-default"><a href="{% url 'course_list' %}">Modules</a>
         </button>
+        <button class="btn btn-default"><a href="/calendar/">Calendar</a>
+        </button>
+
         <button class="btn btn-default"><a href="{% url 'password_change' %}?next={{ request.path }}">Change
                 password</a>
         </button><button class="btn btn-default"><a href="{% url 'profile' user.username %}">Profile</a>
