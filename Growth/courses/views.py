@@ -162,6 +162,7 @@ def book_list(request):
 
     course_id = request.GET.get('nid')
 
+
     books = []
 
     if(role == 'Instructor' or role == 'Student' or role == 'Partner'):
@@ -216,8 +217,9 @@ def upload_book(request):
 
             bookCourse = BookCourse.objects.create(
 
-                course_id = book.id,
-                book_id = course_id
+                book_id = book.id,
+                course_id = course_id
+                
 
             )
 
@@ -225,12 +227,14 @@ def upload_book(request):
 
             # Till here
 
-            instance = form.save()
+            ## instance = form.save() CHECKING RESTORE LATER
 
             return redirect('book_list')
     else:
+        
         form = BookForm()
-    return render(request, 'courses/upload_book.html', {
+        
+        return render(request, 'courses/upload_book.html', {
         'form': form,
         'course_id':course_id,
     })
