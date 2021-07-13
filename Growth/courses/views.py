@@ -171,7 +171,7 @@ def book_list(request):
 
 
 
-        bookCourse = BookCourse.objects.filter(course_id=int(course_id))
+        bookCourse = BookCourse.objects.filter(course_id=course_id)
 
         for book in bookCourse:
             books.append(Book.objects.get(id=book.book_id))
