@@ -4,7 +4,7 @@ from django.core.files.storage import FileSystemStorage
 from django.urls import reverse_lazy
 
 from .forms import BookForm, CourseForm
-from .models import CourseInfo,CourseUser, Book
+from .models import BookCourse, CourseInfo,CourseUser, Book
 
 from users.models import User
 from .import models
@@ -159,10 +159,29 @@ def upload(request):
 def book_list(request):
 
     role = request.user.role
+
     course_id = request.GET.get('nid')
+
+    books = []
+
     if(role == 'Instructor' or role == 'Student' or role == 'Partner'):
-        books = Book.objects.filter(course_id=course_id)
-        return render(request, 'courses/book_list.html', {
+
+        # Edited Portion
+
+
+
+        bookCourse = BookCourse.objects.filter(course_id=int(course_id))
+
+        for book in bookCourse:
+            books.append(Book.objects.get(id=book.book_id))
+
+    else:
+        books = Book.objects.all()
+
+
+        # Edited Portion
+        
+    return render(request, 'courses/book_list.html', {
             'books': books,
             'role':role,
             'course_id':course_id
@@ -174,11 +193,40 @@ def book_list(request):
 
 def upload_book(request):
     course_id = request.GET.get('nid')
+
     if request.method == 'POST':
         form = BookForm(request.POST, request.FILES)
         if form.is_valid():
+
+            # Edit Portion
+
+            title = form.cleaned_data['title']
+            deadline = form.cleaned_data['deadline']
+            pdf = form.cleaned_data['pdf']
+            cover = form.cleaned_data['cover']
+
+            book = Book.objects.create(
+                title = title,
+                deadline = deadline,
+                pdf = pdf,
+                cover = cover
+            )
+
+            book.save()
+
+            bookCourse = BookCourse.objects.create(
+
+                course_id = book.id,
+                book_id = course_id
+
+            )
+
+            bookCourse.save()
+
+            # Till here
+
             instance = form.save()
-            instance.course = course_id
+
             return redirect('book_list')
     else:
         form = BookForm()

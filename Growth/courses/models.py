@@ -26,6 +26,8 @@ class CourseUser(models.Model):
     course = models.ForeignKey(CourseInfo, on_delete=models.CASCADE)
 
 
+
+
 class LessonInfo(models.Model):
     name = models.CharField(max_length=50, verbose_name="chaptername")
     courseinfo = models.ForeignKey(CourseInfo, verbose_name="course info",on_delete=models.CASCADE)
@@ -44,7 +46,7 @@ class Book(models.Model):
     deadline = models.CharField(max_length=100)
     pdf = models.FileField(upload_to='books/pdfs/')
     cover = models.ImageField(upload_to='books/covers/', null=True, blank=True)
-    course = models.ForeignKey(CourseInfo,null=True, on_delete=models.CASCADE)
+    
     def __str__(self):
         return self.title
 
@@ -52,3 +54,8 @@ class Book(models.Model):
         self.pdf.delete()
         self.cover.delete()
         super().delete(*args, **kwargs)
+
+class BookCourse(models.Model):
+
+    book = models.ForeignKey(Book, on_delete=models.CASCADE)
+    course = models.ForeignKey(CourseInfo, on_delete=models.CASCADE) # null=True
