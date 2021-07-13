@@ -13,11 +13,13 @@ import os
 
 # Display current user company and company list page
 # Public. But users without a company will be prompt to create/join one
-@login_required
 def companies_view(request):
-
-    # Get current user's company
-    company_obj = request.user.company
+    # Check if user is authenticated
+    if not request.user.is_authenticated:
+        company_obj = None
+    else:
+        # Get current user's company
+        company_obj = request.user.company
     member_list = get_users_string(company_obj) #Get "members: xxx, xxx" string
 
     # Get all companies
@@ -26,15 +28,13 @@ def companies_view(request):
     companies_dict = {company_obj: get_users_string(company_obj) for company_obj in companies }
     # Company photos, sorted from latest to earliest
     photos = Photo.objects.all().order_by('-last_modified')
-    # True if current viewer is company member
+    # True if current viewer is company admin
     admins = get_users(company_obj)["admins"]
     viewer_is_admin = request.user in admins
 
     # If current viewer has company, remove their company from company list
     if has_company(request.user):
         companies_dict.pop(company_obj)
-    else:
-        messages.info(request, "Looks like you do not have a company yet, ", extra_tags="no_company")
 
     # Show admin pending member requests
     show_new_member_request_for_admin(request, company_obj)
@@ -90,17 +90,15 @@ def company_profile_view(request, company_id):
         # Show admin pending member requests
         show_new_member_request_for_admin(request, company_obj)
 
-        messages.info(request,
-                         "You are viewing this page as an ADMIN, you have access to all the below actions.",
-                         extra_tags="admin_view_company_profile")
+        messages.warning(request,
+                         "You are viewing this page as an ADMIN, you have full access to all the page management actions.")
 
 
     elif viewer_is_member:
-        messages.info(request,
-                         "You are viewing this page as a MEMBER, you have access to the below actions. "
+        messages.warning(request,
+                         "You are viewing this page as a MEMBER, you have limited access to the page management actions. "
                          "If you need more access including editing company profile, "
-                         "membership management, please contact your admin.",
-                         extra_tags="member_view_company_profile")
+                         "membership management, please contact your admin.")
 
     else:
 
@@ -137,9 +135,9 @@ def company_profile_view(request, company_id):
     }
     return render(request, "company/company_profile.html", context)
 
-
 # Page for adding a new company
 # Public. But only users who are company-less can submit the form
+@login_required()
 def add_company_view(request):
 
     # Initiate Django form
@@ -173,10 +171,9 @@ def add_company_view(request):
     }
     return render(request, "company/add_company.html", context)
 
-
-
 # Page for company owners to edit their company
 # Admins only. 403 otherwise
+@login_required()
 def modify_company_view(request, company_id):
 
     # Get the company object
@@ -213,9 +210,9 @@ def modify_company_view(request, company_id):
         }
         return render(request, "company/modify_company.html", context)
 
-
 # Page for company owners to confirm deletion of the company
 # Admins only. 403 otherwise
+@login_required()
 def delete_company_view(request, company_id):
     # Get the company object
     company_obj = get_object_or_404(Company, id = company_id)
@@ -239,9 +236,9 @@ def delete_company_view(request, company_id):
     }
     return render(request, "company/delete_company.html", context)
 
-
 # Page for company owners to manage company members
 # Admins only. 403 otherwise
+@login_required()
 def manage_users_view(request, company_id):
 
     # Get the company object
@@ -266,14 +263,27 @@ def manage_users_view(request, company_id):
             userId = request.POST.get('user_to_add') # UserId of user member to be added
             user = User.objects.get(id=userId) # User obj of user member to be added
 
-            user.company_role = "member"  # Set role to member
+            user.company_role = "member"  # Set role to member from pending_member
             user.save()
 
             company_obj.user_set.add(user) # Add this user in User model's foreign key column
             messages.success(request,"User {0} was successfully added to your company! ".format(user.username))
 
+        # When "Reject" Button is pressed on manage member page
+        elif "reject_new_member" in request.POST:
+
+            # Add new member to company
+            userId = request.POST.get('user_to_add') # UserId of user member to be added
+            user = User.objects.get(id=userId) # User obj of user member to be added
+
+            user.company_role = "member"  # Set role to member from pending_member
+            user.company = None # Clear user's reuqest company status
+            user.save()
+
+            messages.warning(request,"User {0}'s request was rejected".format(user.username))
+
         # When "Add" Button is pressed on manage member page
-        if "add_user" in request.POST:
+        elif "add_user" in request.POST:
 
             # Add new user to company
             userId = request.POST.get('user_to_add') # UserId of user member to be added
@@ -367,9 +377,9 @@ def manage_users_view(request, company_id):
         }
         return render(request, 'company/manage_users.html', context)
 
-
 # Page for company members to manage company photos
 # Member or Admin only. 403 otherwise
+@login_required()
 def manage_photos_view(request, company_id):
     # Get the company object
     company_obj = get_object_or_404(Company, id = company_id)
@@ -428,9 +438,9 @@ def manage_photos_view(request, company_id):
     }
     return render(request, "company/manage_photos.html", context)
 
-
 # Page for company members to manage company files
 # Member or Admin only. 403 otherwise
+@login_required()
 def manage_files_view(request, company_id):
     # Get the company object
     company_obj = get_object_or_404(Company, id = company_id)
@@ -490,7 +500,8 @@ def manage_files_view(request, company_id):
     return render(request, "company/manage_files.html", context)
 
 # Page for users to join a company
-# Public, But only users who are company-less can submit form
+# Public except users not logged in, But only users who are company-less can submit form
+@login_required()
 def join_company_view(request, company_id):
 
     # Get the company object
@@ -550,8 +561,9 @@ Our great and helpful helpers are as below
 def has_company(user):
     # True if user has a company
     # TODO: Check for user role (Partner, instructor will pass)
-    return (user.company != None) and (user.company_role != "pending_member") # user is not an unapproved member
-
+    if user.is_authenticated and user.role == "Student":
+        return (user.company != None) and (user.company_role != "pending_member") # user is not an unapproved member
+    else: return False
 
 # Helper function to get all the users
 def get_users(company_obj):
@@ -559,7 +571,6 @@ def get_users(company_obj):
     pending_members = User.objects.filter(company=company_obj, company_role="pending_member")
     members = User.objects.filter(company=company_obj, company_role="member")
     return {"admins": admins, "pending_members": pending_members, "members": members}
-
 
 # Helper function to get a pretty string of main members
 def get_users_string(company_obj):
@@ -581,7 +592,6 @@ def get_users_string(company_obj):
 
     result += ". "
 
-
     if len(members) == 0:
         result += "No member"
     elif len(members) <= 2:
@@ -592,10 +602,6 @@ def get_users_string(company_obj):
     else:
         result += "Members: " + members[0].username + ", " + members[1].username \
                   + " and " + str(len(members)-2) + " other(s) "
-
-
-        # result += members[0].username + ", " + members[1].username + " and " + str(len(members)-2) + " other(s) "
-
     return result
 
 # Helper function to see if user has minimal level of role required access to see this page
@@ -619,12 +625,11 @@ def check_has_enough_access(request, company_obj, required_role):
 def show_new_member_request_for_admin(request, company_obj):
     # True if current viewer is company member
     is_admin = request.user in get_users(company_obj)["admins"]
-
     # IF user is admin and there are pending member request
-    if is_admin:
+    if is_admin and company_obj:
         # Get pending members
         pending_members = company_obj.user_set.filter(company_role="pending_member")
         for user in pending_members:
-            messages.info(request,
+            messages.success(request,
                           "There is a pending member request: {0}".format(user.username),
                           extra_tags='new_member_request')
