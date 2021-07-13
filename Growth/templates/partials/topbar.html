@@ -120,7 +120,7 @@
                 </h6>
                 <a class="dropdown-item d-flex align-items-center" href="#">
                     <div class="dropdown-list-image mr-3">
-                        <img class="rounded-circle" src="img/undraw_profile_1.svg"
+                        <img class="rounded-circle" src=""
                             alt="...">
                         <div class="status-indicator bg-success"></div>
                     </div>
@@ -132,7 +132,7 @@
                 </a>
                 <a class="dropdown-item d-flex align-items-center" href="#">
                     <div class="dropdown-list-image mr-3">
-                        <img class="rounded-circle" src="img/undraw_profile_2.svg"
+                        <img class="rounded-circle" src=""
                             alt="...">
                         <div class="status-indicator"></div>
                     </div>
@@ -144,7 +144,7 @@
                 </a>
                 <a class="dropdown-item d-flex align-items-center" href="#">
                     <div class="dropdown-list-image mr-3">
-                        <img class="rounded-circle" src="img/undraw_profile_3.svg"
+                        <img class="rounded-circle" src=""
                             alt="...">
                         <div class="status-indicator bg-warning"></div>
                     </div>
@@ -178,9 +178,20 @@
         <li class="nav-item dropdown no-arrow">
             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{user.username}}</span>
-                <img class="img-profile rounded-circle"
-                    src="https://bootdey.com/img/Content/avatar/avatar7.png">
+                <div>
+                    {% if user.role == 'Student' %}
+                    <span class="text-white badge rounded-pill bg-gradient-primary">{{user.role}}</span>
+                    {% elif user.role == 'Instructor' %}
+                    <span class="text-white badge rounded-pill bg-gradient-success">{{user.role}}</span>
+                    {% elif user.role == 'Partner' %}
+                    <span class="text-white badge rounded-pill bg-gradient-warning">{{user.role}}</span>
+                    {% endif %}
+                    <span class="mr-2 d-none d-lg-inline text-gray-600 ">
+                        {{user.username}}
+                    </span>
+                    <img class="img-profile rounded-circle"
+                        src="https://bootdey.com/img/Content/avatar/avatar7.png">
+                </div>
             </a>
             <!-- Dropdown - User Information -->
             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -205,8 +216,12 @@
         {% else %}
         <li class="nav-item">
 
+            <a class="nav-link text-primary" href="{% url 'users:register' %}?next={{ request.path }}">
+                <span>Register</span></a>
+        </li>
+        <li class="nav-item">
+
             <a class="nav-link" href="{% url 'login' %}?next={{ request.path }}">
-                <i class="fas fa-fw fa-chart-area"></i>
                 <span>Log in</span></a>
         </li>
 

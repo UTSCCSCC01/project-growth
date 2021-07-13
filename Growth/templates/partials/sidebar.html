@@ -58,7 +58,7 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Growth Company:</h6>
                         <a class="collapse-item" href="{% url 'companies' %}">Companies</a>
-                        {% if user.company %}
+                        {% if user.company and user.role == 'Student' %}
                             <a class="collapse-item" href="{% url 'company_profile' user.company.id %}">My company</a>
                         {% else %}
                             <a class="collapse-item disabled text-muted">My company</a>

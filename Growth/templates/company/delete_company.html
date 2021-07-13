@@ -38,13 +38,12 @@
         {% else %} <p>None</p>
         {% endif %}
 
-
-        <p><input class="btn btn-danger" type="submit" value="Confirm" /> </p>
+        <button type="button" class="btn btn-outline-primary" onclick="history.back(-1)">Cancel</button>
+        <input class="btn btn-danger" type="submit" value="Confirm" />
 
     </form>
 
 
-    <button class="btn btn-default"><a href="{% url 'modify_company' company_obj.id %}">Cancel</a></button>
 
 
 
