@@ -48,7 +48,6 @@ def search_forum(request):
             
             querychain = chain(posts, comments, reply, users)
             qs = sorted(querychain, key=lambda instance: instance.pk, reverse=True)
-           # notify.send(from_user, recipient=to_user, verb='Message', description=request.POST.get('body'))
             return render(request, 'forum/my_search.html', context={'data': qs})
         else:
             return redirect('/forum/')
@@ -226,7 +225,7 @@ class PostLike(LoginRequiredMixin, RedirectView):
             post.likes.remove(current_user)
         else:      
              post.likes.add(current_user)
-             notify.send(sender=current_user, recipient=post.username, verb='Like', description=post)
+             notify.send(sender=current_user, recipient=post.username, verb='LikePost', description=post)
         return post.get_absolute_url()
 
 class CommentLike(LoginRequiredMixin, RedirectView):
@@ -238,6 +237,7 @@ class CommentLike(LoginRequiredMixin, RedirectView):
             comment.likes.remove(current_user)
         else:      
              comment.likes.add(current_user)
+             notify.send(sender=current_user, recipient=comment.username, verb='LikeComment', description=comment)
         return comment.get_absolute_url()
 
 
@@ -250,4 +250,5 @@ class ReplyLike(LoginRequiredMixin, RedirectView):
             reply.likes.remove(current_user)
         else:      
              reply.likes.add(current_user)
+             notify.send(sender=current_user, recipient=reply.username, verb='LikeReply', description=reply)
         return reply.get_absolute_url()

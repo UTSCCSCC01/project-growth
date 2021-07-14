@@ -1,5 +1,6 @@
 {% load static %}
 {% load notifications_tags_forum %}
+{% load class_name %}
 
 <!DOCTYPE html>
 <html>
@@ -61,6 +62,7 @@
             {% endif %}
 
             <div class="navbar-item has-dropdown is-hoverable">
+
               <a class="navbar-link">
                 <i class="fa fa-bell" style="font-size:20px"></i>
                 {% if directs_count %}
@@ -71,13 +73,26 @@
               <div class="navbar-dropdown">
                 {% for notification in user.notificationsForum.unread %}
                 <div>
-                  {% if notification.verb == "Like" and notification.recipient != notification.sender %}
-                  New like from <b>{{ notification.actor }}</b>
-                  {% endif %}         
+                    
+                {% if notification.verb == "LikePost" and notification.recipient != notification.actor %}
+                  New like on Post from <b>{{ notification.actor }}</b>
+                  <button class="dropdown-item" type="button"><a
+                   href="{% url 'profile' object.username %}">{{ notification.description }}</button>
+                {% endif %} 
+
+                  {% if notification.verb == "LikeComment" and notification.recipient != notification.actor %}
+                  New like on comment from <b>{{ notification.actor }}</b>
                   <button class="dropdown-item" type="button"><a
                     href="">{{ notification.description }}</button>
+                  {% endif %} 
+                  
+                  {% if notification.verb == "LikeReply" and notification.recipient != notification.actor %}
+                  New like on reply from <b>{{ notification.actor }}</b>
+                  <button class="dropdown-item" type="button"><a
+                    href="">{{ notification.description }}</button>
+                  {% endif %} 
                 </div>
-              {% endfor %}	
+                 {% endfor %}	
               </div>
             </div>
 
