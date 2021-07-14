@@ -23,6 +23,7 @@ from courses import views as course_views
 
 from django.conf.urls import url, include
 import notifications.urls
+import notificationsForum.urls
 
 
 
@@ -46,6 +47,7 @@ urlpatterns = [
     url(r'^video_chat/', include('video_chat.urls')),
     url(r'^direct/', include('direct.urls')),
     url('^inbox/notifications/', include(notifications.urls, namespace='notifications')),
+    url('^inbox/notificationsForum/', include(notificationsForum.urls, namespace='notificationsForum')),
 
     path('', course_views.Home.as_view(), name='home'),
     path('upload/', course_views.upload, name='upload'),

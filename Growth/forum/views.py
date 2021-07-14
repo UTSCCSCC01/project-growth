@@ -8,7 +8,7 @@ from django.views.generic.edit import FormView
 from .models import Post, Comment, Reply
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.db.models import Count
-from notifications.signals import notify
+from notificationsForum.signals import notify
 
 from django.views.generic import (
     ListView,
@@ -226,7 +226,7 @@ class PostLike(LoginRequiredMixin, RedirectView):
             post.likes.remove(current_user)
         else:      
              post.likes.add(current_user)
-             notify.send(sender=current_user, recipient=post.author, verb='Liked your post', target =post)
+             notify.send(sender=current_user, recipient=post.username, verb='Like', description=post)
         return post.get_absolute_url()
 
 class CommentLike(LoginRequiredMixin, RedirectView):

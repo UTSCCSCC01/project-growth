@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'channels',
     'direct',
     'notifications',
+    'notificationsForum',
     'forum.apps.ForumConfig',
     'django.contrib.admin',
     'django.contrib.auth',

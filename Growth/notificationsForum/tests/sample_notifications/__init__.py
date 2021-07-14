@@ -1,0 +1,1 @@
+default_app_config = 'notificationsForum.tests.sample_notificationsForum.apps.SamplenotificationsForumConfig'
