@@ -1,13 +1,13 @@
 from django import forms
-from django.forms import widgets
+from django.forms import fields, widgets
 
-from courses.models import CourseInfo, CourseUser, Book
+from courses.models import CourseInfo, CourseUser, Book, Upload
 
 class DateInput(forms.DateInput):
     input_type = 'date'
 
 
-    
+   
 
 class CourseForm(forms.ModelForm):
     class Meta:
@@ -19,3 +19,8 @@ class BookForm(forms.ModelForm):
         model = Book
         fields = ('title', 'deadline', 'pdf', 'cover')
         widgets = {'deadline' : DateInput()}
+
+class UploadForm(forms.ModelForm):
+    class Meta:
+        model = Upload
+        fields = ('remark', 'pdf')

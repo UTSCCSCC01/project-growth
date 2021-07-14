@@ -3,8 +3,8 @@ from django.views.generic import TemplateView, ListView, CreateView
 from django.core.files.storage import FileSystemStorage
 from django.urls import reverse_lazy
 
-from .forms import BookForm, CourseForm
-from .models import BookCourse, CourseInfo,CourseUser, Book
+from .forms import BookForm, CourseForm, UploadForm
+from .models import BookCourse, CourseInfo,CourseUser, Book, Upload, UploadBookUser
 
 from users.models import User
 from .import models
@@ -259,3 +259,108 @@ class UploadBookView(CreateView):
     form_class = BookForm
     success_url = reverse_lazy('courses/class_book_list')
     template_name = 'courses/upload_book.html'
+
+
+
+
+# For student submission
+
+
+def upload_list(request):
+
+
+    
+    role = request.user.role
+
+    user_id = request.user.id
+
+    book_id = request.GET.get('nid')
+
+
+    uploads = []
+
+    if(role == 'Instructor'):
+
+        # Edited Portion
+
+        uploadBookUser = UploadBookUser.objects.filter(book_id=book_id)
+
+        for uploadBook in uploadBookUser:
+
+            uploads.append(Upload.objects.get(id=uploadBook.book_id))
+
+    elif(role == 'Student'):
+
+        uploadBookUser = UploadBookUser.objects.filter(user_id=user_id).filter(book_id=book_id)
+
+        for uploadBook in uploadBookUser:
+            
+            uploads.append(Upload.objects.get(id=uploadBook.book_id)) 
+
+
+        # Edited Portion
+        
+    return render(request, 'courses/upload_list.html', {
+            'uploads': uploads,
+            'role':role,
+            'book_id':book_id,
+            'user_id':user_id
+            })
+
+
+    
+
+def upload_upload(request):
+
+    book_id = request.GET.get('nid')
+
+    if request.method == 'POST':
+
+        form = UploadForm(request.POST, request.FILES)
+
+        if form.is_valid():
+
+            # Edit Portion
+            # Working
+
+            remark = form.cleaned_data['remark']
+            pdf = form.cleaned_data['pdf']
+
+            upload = Upload.objects.create(
+                
+                remark = remark,
+                pdf = pdf
+            )
+
+            upload.save()
+
+            uploadBookUser= UploadBookUser.objects.create(
+
+                book_id = book_id,
+                user_id = request.user.id,
+                upload_id = upload.id
+                
+
+            )
+
+            uploadBookUser.save()
+
+            # Till here
+
+            form.save()
+
+            return redirect('upload_list')
+    else:
+        
+        form = UploadForm()
+        
+        return render(request, 'courses/upload_upload.html', {
+        'form': form,
+        'book_id':book_id,
+    })
+
+def delete_upload(request, pk):
+    if request.method == 'POST':
+        upload = Upload.objects.get(pk=pk)
+        upload.delete()
+    return redirect('upload_list')

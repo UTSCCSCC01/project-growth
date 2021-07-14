@@ -59,3 +59,23 @@ class BookCourse(models.Model):
 
     book = models.ForeignKey(Book, on_delete=models.CASCADE)
     course = models.ForeignKey(CourseInfo, on_delete=models.CASCADE) # null=True
+
+class Upload(models.Model):
+
+    id = models.BigAutoField(primary_key=True)
+    remark = models.CharField(max_length=100)
+    pdf = models.FileField(upload_to='books/pdfs/')
+    
+    def __str__(self):
+        return self.title
+
+    def delete(self, *args, **kwargs):
+        self.pdf.delete()
+        super().delete(*args, **kwargs)
+
+class UploadBookUser(models.Model):
+
+    book = models.ForeignKey(Book, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    upload = models.ForeignKey(Upload, on_delete=models.CASCADE)
+    

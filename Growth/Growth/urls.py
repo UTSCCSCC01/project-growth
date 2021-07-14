@@ -48,9 +48,19 @@ urlpatterns = [
 
     path('', course_views.Home.as_view(), name='home'),
     path('upload/', course_views.upload, name='upload'),
+
+
     path('books/', course_views.book_list, name='book_list'),
+
+    path('books/upload_l/', course_views.upload_list, name='upload_list'),
+
     path('books/upload/', course_views.upload_book, name='upload_book'),
+
+    path('books/upload_l/uploadm/', course_views.upload_upload, name='upload_upload'), 
+
     path('books/<int:pk>/', course_views.delete_book, name='delete_book'),
+    
+    path('books/upload_l/<int:pk>/', course_views.delete_upload, name='delete_upload'), 
 
     path('class/books/', course_views.BookListView.as_view(), name='class_book_list'),
     path('class/books/upload/', course_views.UploadBookView.as_view(), name='class_upload_book'),
