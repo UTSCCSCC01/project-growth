@@ -158,22 +158,24 @@ class SeePostDetails(LoginRequiredMixin, DetailView, CreateView):
 
 class MakePost(LoginRequiredMixin, CreateView):
     model = Post
-    fields = ['title', 'text']
+    fields = ['title', 'text', 'video', 'course']
     # this links to post_from.html automatically
     # Note: this autmatically has a default form that it passes to the above html
     # overiding the default method
+
+    success_url = '/forum'
 
     def form_valid(self, form):
         form.instance.username = self.request.user
         return super().form_valid(form)
 
     # def get_absolute_url(self): # new
-    #     return reverse('post_detail', args=[str(self.id)])
+    #      return reverse('post_detail', args=[str(self.id)])
 
 
 class EditPost(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Post
-    fields = ['title', 'text']
+    fields = ['title', 'text', 'video']
     # this links to post_from.html automatically
     # Note: this autmatically has a default form that it passes to the above html
     # overiding the default method
@@ -248,3 +250,7 @@ class ReplyLike(LoginRequiredMixin, RedirectView):
         else:      
              reply.likes.add(current_user)
         return reply.get_absolute_url()
+
+#in modules: list of assignments, then posts should have a course tag to link to elearning.
+
+#course is null then just do in regular posts

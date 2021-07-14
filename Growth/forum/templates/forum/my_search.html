@@ -14,6 +14,8 @@
           <div class="article-metadata">
   
               <a class="mr-2" href="{% url 'profile' object.username %}">{{ object.username }}</a>
+              {% include "forum/nameTag.html" %}
+
               <small class="text-muted">Posted on: {{ object.date_posted}}</small>
               <!-- to change the date using a date filter using documentation and date format filters
                   {{ post.date_posted|date:"F d, Y"}} so this is without time-->

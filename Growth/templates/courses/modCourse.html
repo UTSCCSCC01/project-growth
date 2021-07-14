@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,6 +9,7 @@
   <h1>Modify course</h1>
   <form method="POST" action="/courses/modCourse/">
       {% csrf_token %}
+      
       <input style="display: none" name="id" value="{{ course.id }}">
       <p>Course Name: <input type="text" name="name" value="{{ course.name }}"></p>
         <input type="submit" value="submit">

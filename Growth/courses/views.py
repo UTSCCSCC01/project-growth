@@ -9,6 +9,15 @@ from .models import BookCourse, CourseInfo,CourseUser, Book
 from users.models import User
 from .import models
 from django.views.generic import TemplateView
+
+from django.views.generic import (
+    ListView,
+    DetailView,
+    CreateView,
+    UpdateView,
+    DeleteView
+)
+
 # Create your views here.
 
 
@@ -26,6 +35,26 @@ def course_list(request):
         'all_courses':all_courses,
         'role':role,
     })
+
+class CourseList(ListView):
+    model = CourseInfo
+    template_name = 'courses/course_list.html'  # <appName>/<model>_<viewtype>.html
+    context_object_name = 'course'
+
+    # this will be minipulated when using filters,
+    # the minus means decending order
+    # Change this ordering to by likes when you sort by best
+    #ordering = ['-date_posted']
+
+class CourseDetail(DetailView):
+    model = CourseInfo
+    template_name = 'courses/course_detail.html'  # <appName>/<model>_<viewtype>.html
+    context_object_name = 'course'
+
+    # this will be minipulated when using filters,
+    # the minus means decending order
+    # Change this ordering to by likes when you sort by best
+    #ordering = ['-date_posted']
 
 def course_detail(request,course_id):
     if course_id:
@@ -161,7 +190,11 @@ def book_list(request):
     role = request.user.role
 
     course_id = request.GET.get('nid')
-
+    course_from_id = CourseInfo.objects.get(id=course_id)
+    #posts = Post.objects.get(course=course_from_id)
+    #print(posts)
+    #Query posts get all by course id
+    #in html just include the forum thing
 
     books = []
 
@@ -185,7 +218,8 @@ def book_list(request):
     return render(request, 'courses/book_list.html', {
             'books': books,
             'role':role,
-            'course_id':course_id
+            'course_id':course_id,
+            'posts': course_from_id.post_set.all,
             })
 
 

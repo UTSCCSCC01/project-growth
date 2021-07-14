@@ -1,0 +1,7 @@
+{% if post.username.role == 'Student' %}
+<span class="text-white badge rounded-pill bg-gradient-primary">{{post.username.role}}</span>
+{% elif post.username.role == 'Instructor' %}
+<span class="text-white badge rounded-pill bg-gradient-success">{{post.username.role}}</span>
+{% elif post.username.role == 'Partner' %}
+<span class="text-white badge rounded-pill bg-gradient-warning">{{post.username.role}}</span>
+{% endif %}
