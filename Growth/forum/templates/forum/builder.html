@@ -1,6 +1,5 @@
 {% load static %}
 {% load notifications_tags_forum %}
-{% load class_name %}
 
 <!DOCTYPE html>
 <html>
@@ -72,27 +71,44 @@
     
               <div class="navbar-dropdown">
                 {% for notification in user.notificationsForum.unread %}
+                
                 <div>
-                    
-                {% if notification.verb == "LikePost" and notification.recipient != notification.actor %}
-                  New like on Post from <b>{{ notification.actor }}</b>
-                  <button class="dropdown-item" type="button"><a
-                   href="{% url 'profile' object.username %}">{{ notification.description }}</button>
-                {% endif %} 
+                {% for post in user.post_set.all %}
 
-                  {% if notification.verb == "LikeComment" and notification.recipient != notification.actor %}
-                  New like on comment from <b>{{ notification.actor }}</b>
+                {% if post.title == notification.description %}
+                    
+                  {% if notification.verb == "LikePost" and notification.recipient != notification.actor %}
+                  <b>{{ notification.actor }}</b> liked your Post:
                   <button class="dropdown-item" type="button"><a
-                    href="">{{ notification.description }}</button>
+                   href="{% url 'individual-post' post.id %}">{{ notification.description }}</button></a>
                   {% endif %} 
+
+                {% endif %}
+                {% endfor %}
                   
-                  {% if notification.verb == "LikeReply" and notification.recipient != notification.actor %}
-                  New like on reply from <b>{{ notification.actor }}</b>
-                  <button class="dropdown-item" type="button"><a
-                    href="">{{ notification.description }}</button>
+                {% for comment in user.comment_set.all %}
+
+                  {% if notification.verb == "LikeComment" and notification.recipient != notification.actor and notification.description == comment.text %} 
+                    <b>{{ notification.actor }}</b> liked your comment <b>"{{ comment.text }}"</b>
+                    <button class="dropdown-item" type="button"><a
+                      href="{% url 'individual-post' comment.post.id %}">{{ comment.post.title }}</button></a>
                   {% endif %} 
-                </div>
-                 {% endfor %}	
+                
+                {% endfor %}
+                
+                
+                {% for reply in user.reply_set.all %}
+
+                  {% if notification.verb == "LikeReply" and notification.recipient != notification.actor and notification.description == reply.text %}
+                  <b>{{ notification.actor }}</b> liked your reply <b>"{{ reply.text }}"</b>
+                  <button class="dropdown-item" type="button"><a
+                    href="{% url 'individual-post' reply.comment.post.id %}">{{ reply.comment.post.title }}</button></a>
+                  {% endif %} 
+                
+                {% endfor %}
+
+                </div>	
+              {% endfor %}
               </div>
             </div>
 
@@ -123,6 +139,7 @@
 </body>
 
 <style>
+
   .notification {
     color: white;
     text-decoration: none;
