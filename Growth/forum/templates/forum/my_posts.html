@@ -1,5 +1,7 @@
 {% extends "forum/builder.html" %}
 {% block content %}
+<div class="row">
+  <div class="col-md-8">
 {% for post in user.post_set.all %}
 <article class="media content-section">
     <div class="media-body">
@@ -54,6 +56,10 @@
     </div>
 </article>
 {% endfor %}
-
+  </div>
+  <div class="col-md-4">
+    {% include "forum/filter.html" %}
+  </div>
+</div>
 
 {% endblock content %}
