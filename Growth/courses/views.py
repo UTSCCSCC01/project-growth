@@ -228,7 +228,7 @@ def upload_book(request):
 
             # Till here
 
-            form.save()
+            # form.save()
 
             return redirect('book_list')
     else:
@@ -279,26 +279,29 @@ def upload_list(request):
 
     uploads = []
 
-    if(role == 'Instructor'):
+    uploads = Upload.objects.all()
 
-        # Edited Portion
 
-        uploadBookUser = UploadBookUser.objects.filter(book_id=book_id)
 
-        for uploadBook in uploadBookUser:
 
-            uploads.append(Upload.objects.get(id=uploadBook.book_id))
 
-    elif(role == 'Student'):
 
-        uploadBookUser = UploadBookUser.objects.filter(user_id=user_id).filter(book_id=book_id)
-
-        for uploadBook in uploadBookUser:
+    # if(role == 'Instructor'):
+        
+        # uploadBookUser = UploadBookUser.objects.filter(book_id=book_id)
+        
+        # for uploadBook in uploadBookUser:
             
-            uploads.append(Upload.objects.get(id=uploadBook.book_id)) 
+            # uploads.append(Upload.objects.get(id=uploadBook.book_id))
+            
+    # elif(role == 'Student'):
+        
+        # uploadBookUser = UploadBookUser.objects.filter(user_id=user_id).filter(book_id=book_id)
+        
+        # for uploadBook in uploadBookUser:
+            
+            # uploads.append(Upload.objects.get(id=uploadBook.book_id)) 
 
-
-        # Edited Portion
         
     return render(request, 'courses/upload_list.html', {
             'uploads': uploads,
@@ -346,8 +349,6 @@ def upload_upload(request):
             uploadBookUser.save()
 
             # Till here
-
-            form.save()
 
             return redirect('upload_list')
     else:
