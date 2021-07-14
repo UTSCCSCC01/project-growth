@@ -175,10 +175,12 @@ class MakePost(LoginRequiredMixin, CreateView):
 
 class EditPost(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Post
-    fields = ['title', 'text', 'video']
+    fields = ['title', 'text', 'video', 'course']
     # this links to post_from.html automatically
     # Note: this autmatically has a default form that it passes to the above html
     # overiding the default method
+
+    success_url = '/forum'
 
     def form_valid(self, form):
         form.instance.username = self.request.user

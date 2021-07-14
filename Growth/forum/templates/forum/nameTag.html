@@ -4,4 +4,12 @@
 <span class="text-white badge rounded-pill bg-gradient-success">{{post.username.role}}</span>
 {% elif post.username.role == 'Partner' %}
 <span class="text-white badge rounded-pill bg-gradient-warning">{{post.username.role}}</span>
+{% elif post.video.url != null %}
+<p class="text-white badge rounded-pill">Video Attached</p>
+{% endif %}
+{% if post.course != null %}
+<span class="text-white badge rounded-pill bg-gradient-dark">{{post.course}}</span>
+{% endif %}
+{% if post.video.url != null %}
+<span class="text-white badge rounded-pill bg-gradient-info">Video Attached</span>
 {% endif %}
