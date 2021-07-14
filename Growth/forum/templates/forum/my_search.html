@@ -2,7 +2,8 @@
 {% load class_name %}
 {% block content %}
 
-
+<div class="row">
+  <div class="col-md-8">
 
 {% for object in data %}
     {% with object|class_name as klass %}
@@ -97,10 +98,13 @@
     </form> -->
 </article>
 
-
-
-
-
-
 {% endfor %}
+
+
+  </div>
+  <div class="col-md-4">
+    {% include "forum/filter.html" %}
+  </div>
+</div>
+
 {% endblock content %}

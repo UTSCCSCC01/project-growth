@@ -13,20 +13,25 @@
                 {{ post.date_posted|date:"F d, Y"}} so this is without time-->
       <small class="text-muted">Last updated: {{ post.last_modified}}</small>
 
-    </div>
-    <!-- detailed view for a single post -->
-    <h2><a class="article-title" href="{% url 'individual-post' post.id %}">{{ post.title }}</a></h2>
-    <p class="article-content">{{ post.text }}</p>
-    <a class="btn btn-primary btn-sm mt-1 mb-1" role="button" href="{% url 'like-post' post.id %}">Like:
-      {{post.likes.count }}</a>
+        </div>
+        <!-- detailed view for a single post -->
+        <h2><a class="article-title" href="{% url 'individual-post' post.id %}">{{ post.title }}</a></h2>
+        <p class="article-content">{{ post.text }}</p>
+        <a class="btn btn-primary btn-sm mt-1 mb-1" role="button" href="{% url 'like-post' post.id %}">Like:
+          {{post.likes.count }}</a>
 
-    <!-- preview latest comment for post -->
-    <h5>Comments:</h5>
+        <!-- preview latest comment for post -->
+        <h5>Comments:</h5>
 
-    {% for comment in post.comment_set.all %}
-    <p class="article-content">{{comment.username}}: {{ comment }}</p>
+        {% for comment in post.comment_set.all %}
+        <p class="article-content">{{comment.username}}: {{ comment }}</p>
+        {% endfor %}
+      </div>
+    </article>
     {% endfor %}
   </div>
-</article>
-{% endfor %}
-{% endblock content %}
+  <div class="col-md-4">
+    {% include "forum/filter.html" %}
+  </div>
+</div>
+{% endblock %}
