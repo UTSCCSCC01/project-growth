@@ -1,59 +1,60 @@
-## Sprint 2.md
+## Sprint 3.md
 ---
 ### Our Goal
-- To finish(design, code, testing(slight)) at least 9 user stories from the 20 that were designed in sprint 0.
+- To finish(design, code, testing(slight)) at least 7 user stories from the 20 that were designed in sprint 0.
 
-### User Stories for Sprint 2:
-1. E-Learning - Instructor makes deliverables
-2. Community - View profile info and change password,etc
-3. Community - Search, navigate and filter Posts
-4. Community - Post refinement: create replies, Improve UI, introduce likes
-5. E-learning - Student Explore learnings modules
-6. E-learning - Host video conference
-7. E-learning - Join video conference
-8. Community - Add other users to the company and files along with photos
-9. Community - Chat Rooms functionality
+### User Stories for Sprint 3:
+1. E-Learning - Track events by calendar
+2. Community/E-learning - Create graphic user interface for all pages
+3. E-learning - User dashboard page
+4. Community - Notifications for direct messages and Forums
+5. Community - Merge video chat and chatroom
+6. E-learning - Posting Videos
+7. E-learning - Submit modules as a student
 
 ### Team Capacity:
-- With our experience with Sprint 1, we got exposed to certain technologies and now in Sprint 2 we took a step towards to functionality which require a good level of understanding of new technologies. We were succesfull in completing 9 user stories which was exactly what we planned before starting working on Sprint 2, this decision was made as everyone now has a good understanding of technologies and everyone had enough availability to complete thier respective user stories . The user stories that are completed are Instructor makes deliverables(1), View profile info and change password,etc(2), Search, navigate and filter Posts(3), Post refinement: create replies, Improve UI, introduce likes(4), Student Explore learnings modules(5), Host video conference(6), Join video conference(7), Add other users to the company and files along with photos(8) and Chat Rooms functionality(9). We are now looking forward to complete rest of the user stories soon as Sprint 1 helped us improve our understanding and we can now now complete user stories which have more functionality as we have gain confidence and experience now.
+- With our success in completing 9 user stories in Sprint 2, we managed to create base functionality for a lot of features which increases efficiency of our website a lot. In Sprint 3, we are more foccused to use base functionality and complete user stories which were dependent on user stories from sprint2. Most features in sprint 3 requires integrity from other base functionality and with end of sprint of 2 we can now successfully complete them. The user stories that are completed are Track events by calendar(1), Create graphic user interface for all pages(2), User dashboard page(3), Notifications for direct messages and Forums(4), Merge video chat and chatroom(5),  Posting Videos(6), Submit modules as a student(7). We are now looking forward to improve functionality and UI experience for rest of the user stories soon as after Sprint 2 helped us to make base for many other user stories functionalities and we are focussing on improving functionality, by working on base from previous user stories and then integrating many functionalities.
 
 ### What are practices that you should continue during next sprint
-- user stories which are connected, feature branch should be created from each other before merging them to develop
-- making useful branches ( one branch per task )
-- Merging conflict should be discuused to properly to avoid errors.
-- Repeatedly reviewing code and testing functionality
+- Making feature branch of feature branch to avoid conflicts in develop
+- Merging branches should be done under other team members watch who share files which are responsible for conflict, so that key functionality does not get removed.
+- User stories which are connected, feature branch should be created from each other before merging them to develop.
+- Availability of other teams member for most of the time which helped to learn and understand errors.
+- Spending adequate time on imroving user interface of the website.
+- Distribution of new features should be based on previous features.
 
 ### What are some new practices that you might want to use during next sprint
-- Meeting basic required functionality first so that we can increase functionality later on and work on Website Interface as well.
-- Proper distributing of work to members based on thier interest so that each can work on user story for which they are most confident about so that overall work can be completed faster so as to test each features properly with adequate time.
-- More testing should be incorporated for the features.
+- Learning more about front end technologies to increase UI experience.
+- Merging feature based on priorties to avoid repetitive error and conflcits.
+- Distrubution of user stories priorties, based on team members availability to complete work.
+
 
 ### What are (if any) harmful practices you should stop using during next sprint
-- We should stop waiting to merge pull request till the end as it cause a lot of problems, merging should be done in a proper manner so that user stories which cause many conflicts should not be repeatedly merged and when user stories should be merrged wither from highest priority to lowest or lowest to highest
+- Stop waiting to merge pull request till the end and merging should be done based on priority to avoid same and repetitive merging problems which causes wastage of time and decrease time for Testing and UI.
 
 ### What was your best/worst experience during sprint 2
-- Best: Learnt to cordinate on user storis which are highly associated with each other
-- Worst: Order of merging to develop was not effective
+- Best: Understanding priority of user stories to complete maximum user stories for sprint 2 effectively, so that we can work on UI later.
+- Worst: Difference in Time Zone, created slight delay in work as we need to discuss before merging.
 
 ### Participants
+
 Ronish Bhatt, Yihang Cheng, Naman Bhandari, Shashwat Piyush Doshi, Jaiteg Sahota, Zhengyi Zhang, Pritish Panda
 
 ### Tasks breakdown:
 
 
-- View profiles: Pritish Panda
-- Search, Sort, Filer Post: Jaiteg Sahota
-- Post refinement: Jaiteg Sahota
-- Modules: Naman Bhandari
-- Courses: Yihang Cheng
-- Video conference: Ronish Bhatt, Pritish Panda
-- Company Information: Zhengyi Zhang
-- Chat Functionality : Shashwat Doshi
+- Tracking events: Yihang Cheng
+- Graphic UI: Zhengyi Zhang
+- Posting Videos: Jaiteg Sahota
+- Submit Modules: Naman Bhandari
+- Notification(Direct Message and Forums): Shashwat Piyush Doshi
+- Chat Functionality: Ronish Bhatt
+- User Profile: Pritish Panda
 - CRC Cards: Everyone
-- burndown.pdf - Zhengyi Zhang, Yihang Cheng
+- burndown.pdf - Zhengyi Zhang
 - schedule.pdf - Pritish Panda
-- sprint2.md - Naman Bhandari
-- SR1.md - Shashwat Doshi
+- sprint3.md - Naman Bhandari
+- SR2.md - Shashwat Piyush Doshi
 - System Design - Ronish Bhatt
 - PB.md - Jaiteg Sahota 
 - Documentation.pdf - Yihang Cheng
