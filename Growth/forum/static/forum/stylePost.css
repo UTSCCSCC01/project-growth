@@ -88,3 +88,12 @@ a.article-title:hover {
 .account-heading {
   font-size: 2.5rem;
 }
+
+video{
+  padding: 10px 20px;
+
+  border: 0.5px solid #dddddd;
+  border-radius: 10px;
+  margin-bottom: 20px;
+
+}

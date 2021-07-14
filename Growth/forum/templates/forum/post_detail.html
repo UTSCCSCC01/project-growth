@@ -6,7 +6,11 @@
 <article class="media content-section">
   <div class="media-body">
     <div class="article-metadata">
-      <a class="mr-2" href="{% url 'profile' object.username %}">{{ object.username }}</a>
+      <a class="mr-2" href="{% url 'profile' post.username %}">{{ post.username }}</a>
+      {% include "forum/nameTag.html" %}
+    
+      
+      
       <small class="text-muted">Posted on: {{ object.date_posted}}</small>
       <!-- to change the date using a date filter using documentation and date format filters
                 {{ post.date_posted|date:"F d, Y"}} so this is without time-->
@@ -22,10 +26,18 @@
     </div>
     <h2 class="article-title">{{ object.title }}</a></h2>
     <p class="article-content">{{ object.text }}</p>
+    {% if object.video.url != null %}
+    <div class="view">
+    <video class="embed-responsive embed-responsive-16by9" controls="controls" >
+      <source src="{{object.video.url}}" type="video/mp4" />
+    </video>
+    </div>
+    {% endif %}
     <a class="btn btn-success btn-sm mt-1 mb-1" id=pos{{object.id}} href="{% url 'like-post' object.id %}">Like:
       {{object.likes.count}}</a>
 
 
+   
 
 
     <h5>Comment Here:</h5>
