@@ -69,7 +69,7 @@
                 {% endif %}
               </a>
     
-              <div class="navbar-dropdown">
+              <div id="notification-dropdown" class="navbar-dropdown">
                 {% for notification in user.notificationsForum.unread %}
                 
                 <div>
@@ -111,6 +111,8 @@
               {% endfor %}
               </div>
             </div>
+
+            <button type="button" onclick="clearNotifications('notification-dropdown')" >Clear</button>
 
           </div>
     </nav>
@@ -159,6 +161,14 @@
     color: white;
   }
 </style>
+
+<script>
+  function clearNotifications(elementID)
+  {
+    document.getElementById(elementID).innerHTML = "";
+  }
+</script>
+
 
 <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 <script src="{% static 'js/init.js' %}"></script>
