@@ -8,33 +8,12 @@
 
     <!--Render buttons for special messages-->
     {% if message.extra_tags == "new_member_request" %}
-      <br>
-      <a href="{% url 'manage_users' company_obj.id %}">View the request</a>
+      <hr>
+      <a class="btn btn-success" href="{% url 'manage_users' company_obj.id %}">View the request</a>
 
     {% elif message.extra_tags == "no_company" %}
       <a href="{% url 'add_company'%}">create one now?</a><br>
       Or, if your company is already created, search and join it below!
-
-
-    {% elif message.extra_tags == "admin_view_company_profile" %}
-      <br>
-      <a class="btn btn-primary" href="{% url 'modify_company' company_obj.id %}">Modify company</a>
-      <a class="btn btn-primary" href="{% url 'manage_users' company_obj.id %}">Manage users</a>
-      <a class="btn btn-outline-primary" href="{% url 'manage_photos' company_obj.id %}">Add/Edit company photos</a>
-      <a class="btn btn-outline-primary" href="{% url 'manage_files' company_obj.id %}">Add/Edit files</a>
-      <!--Button: Leave this company-->
-      <form action="" method="POST">{% csrf_token %}
-        <input type="submit" class="btn btn-danger" name="leave_this_company" value="Leave this company" />
-      </form>
-
-    {% elif message.extra_tags == "member_view_company_profile" %}
-      <br>
-      <button class="btn btn-outline-primary"><a href="{% url 'manage_photos' company_obj.id %}">Add/Edit company photos</a></button>
-      <button class="btn btn-outline-primary"><a href="{% url 'manage_files' company_obj.id %}">Add/Edit files</a></button>
-      <!--Button: Leave this company-->
-      <form action="" method="POST">{% csrf_token %}
-        <input type="submit" class="btn btn-danger" name="leave_this_company" value="Leave this company" />
-      </form>
 
     {% elif message.extra_tags == "guest_view_company_profile" %}
       <a href="{% url 'join_company' company_obj.id%}">request to join this company</a><br>
