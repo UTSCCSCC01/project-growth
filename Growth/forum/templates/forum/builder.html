@@ -83,6 +83,12 @@
                    href="{% url 'individual-post' post.id %}">{{ notification.description }}</button></a>
                   {% endif %} 
 
+                  {% if notification.verb == "NewComment" and notification.recipient != notification.actor %}
+                  <b>{{ notification.actor }}</b> commented on your post:
+                  <button class="dropdown-item" type="button"><a
+                   href="{% url 'individual-post' post.id %}">{{ notification.description }}</button></a>
+                  {% endif %}
+
                 {% endif %}
                 {% endfor %}
                   
@@ -92,6 +98,12 @@
                     <b>{{ notification.actor }}</b> liked your comment <b>"{{ comment.text }}"</b>
                     <button class="dropdown-item" type="button"><a
                       href="{% url 'individual-post' comment.post.id %}">{{ comment.post.title }}</button></a>
+                  {% endif %} 
+
+                  {% if notification.verb == "NewReply" and notification.recipient != notification.actor and notification.description == comment.text %}
+                  <b>{{ notification.actor }}</b> replied on your comment <b>"{{ notification.description }}"</b>
+                  <button class="dropdown-item" type="button"><a
+                    href="{% url 'individual-post' comment.post.id %}">{{ comment.post.title }}</button></a>
                   {% endif %} 
                 
                 {% endfor %}
@@ -111,6 +123,7 @@
               {% endfor %}
               </div>
             </div>
+
 
             <button type="button" onclick="clearNotifications('notification-dropdown')" >Clear</button>
 

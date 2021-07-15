@@ -114,6 +114,10 @@ class SeePostDetails(LoginRequiredMixin, DetailView, CreateView):
     def form_valid(self, form):
         form.instance.username = self.request.user
         form.instance.post = Post.objects.get(pk=self.kwargs.get('pk'))
+
+        post = get_object_or_404(Post, id= self.kwargs.get('pk'))
+        notify.send(sender=self.request.user, recipient=post.username, verb='NewComment', description=post)
+
         return super().form_valid(form)
 
     #form = CommentForm()
@@ -214,6 +218,12 @@ class ReplyCreateView(LoginRequiredMixin, DetailView, CreateView):
     def form_valid(self, form):
         form.instance.username = self.request.user
         form.instance.comment =  Comment.objects.get(pk=int(self.request.POST.get('replyButton')))
+        comment = form.instance.comment
+
+
+        #reply = get_object_or_404(Reply, id= self.kwargs.get('rk'))
+        notify.send(sender=self.request.user, recipient=comment.username, verb='NewReply', description=comment.text)
+
         return super().form_valid(form)
 
 class PostLike(LoginRequiredMixin, RedirectView):
@@ -236,8 +246,9 @@ class CommentLike(LoginRequiredMixin, RedirectView):
         if current_user in comment.likes.all():
             comment.likes.remove(current_user)
         else:      
-             comment.likes.add(current_user)
+             comment.likes.add(current_user) # like on comment done.
              notify.send(sender=current_user, recipient=comment.username, verb='LikeComment', description=comment.text)
+             
         return comment.get_absolute_url()
 
 
