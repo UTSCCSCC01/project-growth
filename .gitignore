@@ -1,8 +1,6 @@
-# The following files should be ignored 
+# The following files should be ignored - Created by Ethan
 lib
 bin
 pyvenv.cfg
 .idea
 **/.DS_Store
-__pycache__/
-*.pyc

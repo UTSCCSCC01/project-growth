@@ -1,103 +1,62 @@
 {% extends 'builder.html' %}
 
-{% block header %}
-<title>Company Files</title>
+{% block title %}
+Manage files
 {% endblock %}
 
 {% block content %}
 
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{% url 'companies' %}">Company</a></li>
-            <li class="breadcrumb-item"><a href="{% url 'company_profile' company_obj.id %}">Profile - {{ company_obj.name }}</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Files</li>
-        </ol>
-    </nav>
+    <button class="btn btn-default"><a href="{% url 'company_profile' company_obj.id %}">< Back</a></button>
 
-    <p>Share your initiatives and plans with other participants and partners</p>
 
-    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Manage Files
-        </h1>
+    <br>
+    <br>
+    <h3>Upload your company files</h3>
+    <p>This is where you share your initiatives</p>
 
-        <a href="{% url 'company_profile' company_obj.id %}" class="d-none d-sm-inline-block btn btn-sm btn-outline-primary shadow-sm"><i
-        class="fas fa-sm text-white-50"></i>< Back to Company Page</a>
-    </div>
 
-    <div class="row">
+    <p><b>Upload new files</b></p>
 
-        <div class="col-lg-8">
 
-            <!-- Files Card -->
-            <div class="card shadow mb-4">
-                <!-- Card Header  -->
-                <div
-                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-secondary">Preview <span class="text-primary">Company Files</span></h6>
-                </div>
-                <!-- Card Body -->
-                <div class="card-body row">
+    <form method="POST" enctype="multipart/form-data"> {% csrf_token %}
+        {{ form.as_p }}
+                <!--{{ form.fields.as_hidden }}-->
 
-                    <!-- File Card -->
-                    {% for file in files %}
-                    <div class=" col-md-6 mb-4">
-                        <div class="card border-left-{{file.tag}} shadow h-100 py-2" >
-                            <div class="card-body row no-gutters align-items-top">
-                                <div class="col-2 ">
-                                    <i class="fas fa-file-contract fa-2x text-gray-300"></i> </div>
-                                <div class="col-10">
-                                    <div class="text-xs font-weight-bold text-{{file.tag}} text-uppercase mb-1">
-                                        {{file.get_tag_display}}</div>
-                                    <a href="{{ file.file.url }}" target="_blank">
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{file.name}}</div></a>
-                                    <div>
-                                        <small>
-                                            <i>{% if file.description %} {{ file.description }}
-                                                {% else %} No Description {% endif %}</i><br>
-                                            <i>{{ file.date_added }} <span class="text-primary">id:{{ file.id }}</span></i>
-                                        </small>
-                                    </div>
-                        <form action="" method="POST">{% csrf_token %}
-                            <input type="hidden" name="file_to_remove" value="{{file.id}}"> </input>
-                            <input class="btn btn-outline-danger btn-sm" type="submit" name="remove_file" value="Remove" />
-                        </form>
-                                </div>
-                            </div>
-                        </div>
+    <input class="btn btn-primary btn-sm" type="submit" name="add_file" value="Upload" />
+    </form>
+
+
+        <br><p> ============================================== </p>
+
+        <h4>Preview - Company Files</h4>
+
+        <ul>
+        {% for file in files %}
+            <d>
+                <form action="" method="POST">{% csrf_token %}
+                    <p><i>Name: {{ file.name }}</i></p>
+                    <p><i>Tag: {{ file.tag }}</i></p>
+                    <p><i>Description: {{ file.description }}</i></p>
+                    <p><i>Uploaded: {{ file.date_added }} - Id: {{ file.id }} </i></p>
+                    <a class="btn btn-outline-primary btn-sm" href="{{ file.file.url }}" target="_blank">Preview</a>
+                    <a class="btn btn-outline-primary btn-sm" href="{{ file.file.url }}" download>Download</a>
+                    <input type="hidden" name="file_to_remove" value="{{file.id}}"> </input>
+                    <input class="btn btn-outline-danger btn-sm" type="submit" name="remove_file" value="Remove" />
+                </form>
+            <p> ------------- </p>
+            <br>
+            </d>
+
+        {% endfor %}
+        </ul>
 
 
 
-
-                    </div>
-                    {% endfor %}
-
-
-
-                </div>
-            </div>
-        </div>
-
-        <div class="col-lg-4">
-
-            <!-- New File Card -->
-            <div class="card shadow mb-4">
-                <!-- Card Header  -->
-                <div
-                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-success">Upload A New File</h6>
-                </div>
-                <!-- Card Body -->
-                <div class="card-body">
-                    <form method="POST" enctype="multipart/form-data"> {% csrf_token %}
-                        {% load crispy_forms_tags %}
-                        {{ form|crispy }}
-                        <input class="btn btn-primary btn-sm" type="submit" name="add_file" value="Upload" />
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <button class="btn btn-default"><a href="{% url 'company_profile' company_obj.id %}">< Back</a></button>
 
+
+
+
+</p>
 {% endblock %}
