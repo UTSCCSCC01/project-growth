@@ -18,10 +18,12 @@ One time install:
 `pip3 install virtualenv`  
 
 Set up repo for developers after cloning:  
-`cd project-growth`  
-`git flow init -d`  
-`git pull origin develop`  
-`git flow feature start feature_name`  
+```
+cd project-growth  
+git flow init -d
+git pull origin develop 
+git flow feature start feature_name
+```
 
 Running the code:  
 `virtualenv -p python3 .`  
@@ -30,6 +32,7 @@ Running the code:
 `pip install fontawesome-free`
 `pip install django-crispy-forms` <- Used by forums  
 `pip install pillow` <- to prevent error No module named 'PIL' 
+`pip install python-decouple`
 
 ***Now, install Docker: https://www.docker.com/get-docker****
 
@@ -58,7 +61,10 @@ Some of the technologies which are going to be used are:
 
 
 3. **Pillow**
-- Use "pip install pillow" to install 
+- Use ```pip install pillow``` to install 
+
+4. **Notifications**
+- Use ```pip install django-notifications-hq``` to install
 
 ## Contribution
 
