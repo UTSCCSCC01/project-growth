@@ -4,7 +4,7 @@ from django.core.files.storage import FileSystemStorage
 from django.urls import reverse_lazy
 
 from .forms import BookForm, CourseForm
-from .models import BookCourse, CourseInfo,CourseUser, Book
+from .models import CourseInfo,CourseUser, Book
 
 from users.models import User
 from .import models
@@ -160,32 +160,11 @@ def book_list(request):
 
     role = request.user.role
 
-    course_id = request.GET.get('nid')
-
-
-    books = []
-
     if(role == 'Instructor' or role == 'Student' or role == 'Partner'):
-
-        # Edited Portion
-
-
-
-        bookCourse = BookCourse.objects.filter(course_id=course_id)
-
-        for book in bookCourse:
-            books.append(Book.objects.get(id=book.book_id))
-
-    else:
         books = Book.objects.all()
-
-
-        # Edited Portion
-        
-    return render(request, 'courses/book_list.html', {
+        return render(request, 'courses/book_list.html', {
             'books': books,
             'role':role,
-            'course_id':course_id
             })
 
 
@@ -193,51 +172,15 @@ def book_list(request):
 
 
 def upload_book(request):
-    course_id = request.GET.get('nid')
-
     if request.method == 'POST':
         form = BookForm(request.POST, request.FILES)
         if form.is_valid():
-
-            # Edit Portion
-            # Working
-
-            title = form.cleaned_data['title']
-            deadline = form.cleaned_data['deadline']
-            pdf = form.cleaned_data['pdf']
-            cover = form.cleaned_data['cover']
-
-            book = Book.objects.create(
-                title = title,
-                deadline = deadline,
-                pdf = pdf,
-                cover = cover
-            )
-
-            book.save()
-
-            bookCourse = BookCourse.objects.create(
-
-                book_id = book.id,
-                course_id = course_id
-                
-
-            )
-
-            bookCourse.save()
-
-            # Till here
-
             form.save()
-
             return redirect('book_list')
     else:
-        
         form = BookForm()
-        
-        return render(request, 'courses/upload_book.html', {
-        'form': form,
-        'course_id':course_id,
+    return render(request, 'courses/upload_book.html', {
+        'form': form
     })
 
 

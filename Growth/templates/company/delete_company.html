@@ -1,7 +1,7 @@
 {% extends 'builder.html' %}
 
-{% block header %}
-<title>Delete Company</title>
+{% block title %}
+Delete this company
 {% endblock %}
 
 {% block content %}
@@ -38,12 +38,13 @@
         {% else %} <p>None</p>
         {% endif %}
 
-        <button type="button" class="btn btn-outline-primary" onclick="history.back(-1)">Cancel</button>
-        <input class="btn btn-danger" type="submit" value="Confirm" />
+
+        <p><input class="btn btn-danger" type="submit" value="Confirm" /> </p>
 
     </form>
 
 
+    <button class="btn btn-default"><a href="{% url 'modify_company' company_obj.id %}">Cancel</a></button>
 
 
 
