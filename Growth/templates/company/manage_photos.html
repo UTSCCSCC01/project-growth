@@ -8,8 +8,8 @@
 
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{% url 'companies' %}">Company</a></li>
-            <li class="breadcrumb-item"><a href="{% url 'company_profile' company_obj.id %}">Profile - {{ company_obj.name }}</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'companies' %}">Companies</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'company_profile' company_obj.id %}">{{ company_obj.name }}</a></li>
             <li class="breadcrumb-item active" aria-current="page">Gallery</li>
         </ol>
     </nav>
