@@ -47,6 +47,22 @@ function register_notifier(func) {
     registered_functions.push(func);
 }
 
+function notification_delete(notificationId) {
+    var r = new XMLHttpRequest();
+    r.addEventListener('onclick', function(event){
+        if (this.status === 200){
+           consecutive_misfires = 0;
+           var data = JSON.parse(r.responseText);
+           console.log(data)
+        }else{
+            consecutive_misfires++;
+        }
+    }
+    )
+    r.open("GET", notify_api_url+'?mark_as_read='+"{{ notification.id }}", true);
+    r.send();
+}
+
 function fetch_api_data() {
     if (registered_functions.length > 0) {
         //only fetch data if a function is setup

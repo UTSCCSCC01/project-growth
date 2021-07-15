@@ -89,6 +89,8 @@ def mark_as_read(request, slug=None):
 
     return redirect('notificationsForum:unread')
 
+    # return redirect('/forum/')
+
 
 @login_required
 def mark_as_unread(request, slug=None):
@@ -184,6 +186,7 @@ def live_unread_notification_list(request):
         if notificatonForum.data:
             struct['data'] = notificatonForum.data
         unread_list.append(struct)
+
         if request.GET.get('mark_as_read'):
             notificatonForum.mark_as_read()
     data = {
