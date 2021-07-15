@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.auth import get_user_model
 from django.urls import reverse
+from courses.models import BookCourse, CourseInfo, CourseUser
 
 
 def register(request):
@@ -31,13 +32,30 @@ def register(request):
 
 
 def index(request):
-    if request.user.is_authenticated :
-        return redirect(app_home)
+    if request.user.is_authenticated:
+        return redirect(dashboard)
     return render(request, 'index.html')
+
 
 @login_required()
 def app_home(request):
     return render(request, 'home.html', context={'data': request.user})
+
+
+@login_required()
+def dashboard(request):
+    user_id = request.user.id
+    role = request.user.role
+    queryset = BookCourse.objects.all()
+    template_name = 'dashboard.html'
+    if(role == 'Instructor' or role == 'Student'):
+        count = CourseUser.objects.filter(user_id=int(user_id)).count()
+        coursesUsers = CourseUser.objects.filter(user_id=int(user_id))
+    else:
+        coursesUsers = CourseInfo.objects.all()
+        count = CourseInfo.objects.all().count()
+    return render(request, template_name, {'books': queryset, 'courses': coursesUsers, 'count': count})
+
 
 @login_required
 def profile(request, slug):
