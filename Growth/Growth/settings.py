@@ -32,7 +32,7 @@ sys.modules['fontawesome_free'] = __import__('fontawesome-free')
 
 
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 NUMB_TURN_CREDENTIAL = config('NUMB_TURN_CREDENTIAL', default=None)
 NUMB_TURN_USERNAME = config('NUMB_TURN_USERNAME', default=None)
@@ -178,15 +178,15 @@ ASGI_APPLICATION = 'Growth.asgi.application'
 
 
 CHANNEL_LAYERS = {
-    # 'default': {
-    #     'BACKEND': 'channels_redis.core.RedisChannelLayer',
-    #     'CONFIG': {
-    #         "hosts": [('127.0.0.1', 6379)],
-    #     },
-    # },
     'default': {
-        "BACKEND": "channels.layers.InMemoryChannelLayer"
-    }
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],
+        },
+    },
+    # 'default': {
+    #     "BACKEND": "channels.layers.InMemoryChannelLayer"
+    # }
 }
 
 MESSAGE_TAGS = {
