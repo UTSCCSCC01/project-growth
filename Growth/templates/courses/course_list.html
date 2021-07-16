@@ -1,19 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <!-- 123-->
-    <link rel="stylesheet" href="https://unpkg.com/mobi.css/dist/mobi.min.css">
+<!-- This file extends builder.html, which has the navigation bar created" -->
+{% extends "builder.html" %}
+
+<!-- To replace title, change the following title block" -->
+{% block header %}
+<link rel="stylesheet" href="https://unpkg.com/mobi.css/dist/mobi.min.css">
+<title>Courses</title>
     <style>
         table {margin:auto;}
         body {text-align:center;}
     </style>
-</head>
-<body>
+{% endblock %}
 
-    <h1><a href="/">Home</a></h1>
-    <h2>Courses</h2>
+<!-- To replace content, change the following content block" -->
+{% block content %}
+
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Courses</h1>
+    </div>
+
+
     {% if role == 'Instructor' %}
         <div>
             <button class="btn btn-default"><a href="{% url 'addCourse' %}">Add</a>
@@ -56,5 +61,4 @@
 
         </tbody>
     </table>
-</body>
-</html>
+{% endblock %}

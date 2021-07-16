@@ -1,6 +1,19 @@
-{% extends 'courses/base.html' %}
+<!-- This file extends builder.html, which has the navigation bar created" -->
+{% extends "builder.html" %}
 
+<!-- To replace title, change the following title block" -->
+{% block header %}
+<link rel="stylesheet" href="https://unpkg.com/mobi.css/dist/mobi.min.css">
+<title>Courses</title>
+    <style>
+        table {margin:auto;}
+        body {text-align:center;}
+    </style>
+{% endblock %}
+
+<!-- To replace content, change the following content block" -->
 {% block content %}
+
   <h2>Upload</h2>
   <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
