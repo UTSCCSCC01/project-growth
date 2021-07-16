@@ -279,20 +279,23 @@ def upload_list(request):
 
     uploads = []
 
-    uploads = Upload.objects.all()
+    
+
+    if(role == 'Instructor'):
+
+        uploadBookUser = UploadBookUser.objects.filter(book_id=book_id)
+
+        for uploadBook in uploadBookUser:
+            uploads.append(Upload.objects.get(id=uploadBook.upload_id))
+
+    elif(role == 'Student'):
+
+        uploadBookUser = UploadBookUser.objects.filter(user_id=user_id).filter(book_id=book_id)
+
+        for uploadBook in uploadBookUser:
+           uploads.append(Upload.objects.get(id=uploadBook.upload_id)) 
 
 
-
-
-
-
-    # if(role == 'Instructor'):
-        
-        # uploadBookUser = UploadBookUser.objects.filter(book_id=book_id)
-        
-        # for uploadBook in uploadBookUser:
-            
-            # uploads.append(Upload.objects.get(id=uploadBook.book_id))
             
     # elif(role == 'Student'):
         
