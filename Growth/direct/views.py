@@ -33,7 +33,7 @@ def Inbox(request):
 
 	context = {
 		'directs': directs,
-		'messages': messages,
+		'direct_messages': messages,
 		'active_direct': active_direct,
 		}
 
@@ -76,7 +76,7 @@ def Directs(request, username):
 
 	context = {
 		'directs': directs,
-		'messages': messages,
+		'direct_messages': messages,
 		'active_direct':active_direct,
 	}
 

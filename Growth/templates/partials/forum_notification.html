@@ -1,0 +1,52 @@
+<a class="dropdown-item d-flex align-items-center" href="">
+
+{% for notification in user.notificationsForum.unread %}
+
+    {% for post in user.post_set.all %}
+
+        {% if post.title == notification.description %}
+
+              {% if notification.verb == "LikePost" and notification.recipient != notification.actor %}
+                <a class="dropdown-item d-flex align-items-center" href="{% url 'individual-post' post.id %}">
+                    <div class="mr-3">
+                        <div class="icon-circle bg-success">
+                            <i class="fas fa-donate text-white"></i>
+                        </div>
+                    </div>
+                    <div>
+
+
+                        <b>{{ notification.actor }}</b> liked your Post:
+                    {{ notification.description }}
+
+                       <!--<button class="dropdown-item" type="button"><a-->
+                        <!--href="{% url 'notificationsForum:mark_as_read' notification.slug %}">CLEARRR</a> </button>-->
+                    </div>
+                </a>
+              {% endif %}
+
+              {% if notification.verb == "NewComment" and notification.recipient != notification.actor %}
+                <a class="dropdown-item d-flex align-items-center" href="{% url 'individual-post' post.id %}">
+                    <div class="mr-3">
+                        <div class="icon-circle bg-success">
+                            <i class="fas fa-donate text-white"></i>
+                        </div>
+                    </div>
+                    <div>
+                  <b>{{ notification.actor }}</b> commented on your post:
+                    {{ notification.description }}
+                   <!--<button class="dropdown-item" type="button"><a-->
+                    <!--href="{% url 'notificationsForum:mark_as_read' notification.slug %}">CLEARRR</a></button>-->
+                    </div>
+                </a>
+
+              {% endif %}
+         {% endif %}
+
+    {% endfor %}
+  {% endfor %}
+</a>
+                
+
+
+

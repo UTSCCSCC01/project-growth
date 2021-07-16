@@ -100,15 +100,18 @@ const constraints = {
     'audio': true
 }
 
-const iceConfiguration = {
-    iceServers: [
-        {
-            urls: ['turn:numb.viagenie.ca'],
-            credential: '{{numb_turn_credential}}',
-            username: '{{numb_turn_username}}'
-        }
+var ICE_config = {
+    'iceServers': [
+      {
+        'urls': 'stun:stun.l.google.com:19302'
+
+        // 'urls': 'turn:numb.viagenie.ca',
+        // 'credential': 'eewn3cink_WUND9saus=',
+        // 'username': 'jigsaw23123@gmail.com'
+      }
     ]
-};
+  };
+
 
         
 // later assign an RTCPeerConnection
@@ -160,7 +163,7 @@ userMedia = navigator.mediaDevices.getUserMedia(constraints)
     });
 
 function createAnswerer(){
-    peer2 = new RTCPeerConnection(null);
+    peer2 = new RTCPeerConnection(iceConfiguration);
         
     localStream.getTracks().forEach(track => {
         peer2.addTrack(track, localStream);
