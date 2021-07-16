@@ -23,4 +23,4 @@ class BookForm(forms.ModelForm):
 class UploadForm(forms.ModelForm):
     class Meta:
         model = Upload
-        fields = ('remark', 'pdf')
+        fields = ('pdf',)

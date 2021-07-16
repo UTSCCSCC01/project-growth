@@ -320,6 +320,9 @@ def upload_upload(request):
 
     book_id = request.GET.get('nid')
 
+    user_id = request.user.id
+
+
     if request.method == 'POST':
 
         form = UploadForm(request.POST, request.FILES)
@@ -328,13 +331,12 @@ def upload_upload(request):
 
             # Edit Portion
             # Working
-
-            remark = form.cleaned_data['remark']
+            
             pdf = form.cleaned_data['pdf']
 
             upload = Upload.objects.create(
                 
-                remark = remark,
+                remark = user_id,
                 pdf = pdf
             )
 

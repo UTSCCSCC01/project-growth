@@ -44,12 +44,7 @@
         {% if role == 'Instructor' %}
         <th>Student ID</th>
         {% endif %}
-        {% if role == 'Student' %}
-        <th>Remark</th>
-        {% endif %}
-        {% if role == 'Instructor' %}
-        <th>Student Feedback</th>
-        {% endif %}
+
         <th>Download</th>
         {% if role == 'Student' %}
         <th>Delete</th>
@@ -60,13 +55,9 @@
       {% for upload in uploads %}
         <tr>
 
-            {% if role == 'Instructor' %} 
-            <td>{{user_id}}</td> <!-- Try Deleting it later on to display id-->
-            {% endif %}
-
-
+            {% if role == 'Instructor' %}
             <td>{{upload.remark}}</td>
-           
+            {% endif %} 
             
             <td>
                 <a href="{{ upload.pdf.url }}" class="btn btn-primary btn-sm" target="_blank">
