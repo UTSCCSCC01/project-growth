@@ -278,8 +278,18 @@ def upload_book(request):
 def delete_book(request, pk):
     if request.method == 'POST':
         book = Book.objects.get(pk=pk)
+
+        print(book.id)
+
+        cid = BookCourse.objects.get(book_id=book.id)
+
+
+        c_id = cid.course_id
+
+        print(c_id)
+
         book.delete()
-    return redirect('book_list')
+    return redirect('/books/?nid='+str(c_id))
 
 
 class BookListView(ListView):
