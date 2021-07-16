@@ -1,7 +1,7 @@
 ## Sprint 3.md
 ---
 ### Our Goal
-- To finish(design, code, testing(slight)) at least 7 user stories from the 20 that were designed in sprint 0.
+- To finish(design, code, testing(slight)) at least 7 user stories.
 
 ### User Stories for Sprint 3:
 1. E-Learning - Track events by calendar
