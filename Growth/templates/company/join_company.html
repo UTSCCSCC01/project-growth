@@ -8,8 +8,8 @@
 
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{% url 'companies' %}">Company</a></li>
-        <li class="breadcrumb-item"><a href="{% url 'company_profile' company_obj.id %}">Profile - {{ company_obj.name }}</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'companies' %}">Companies</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'company_profile' company_obj.id %}">{{ company_obj.name }}</a></li>
         <li class="breadcrumb-item active" aria-current="page">Join this company</li>
     </ol>
 
@@ -30,7 +30,7 @@
 
     <div class="col-lg-8">
 
-        <!-- Photos Card -->
+        <!-- Card -->
         <div class="card shadow mb-4">
             <!-- Card Header  -->
             <div
@@ -125,7 +125,7 @@
             <div class="card-body">
                 <b>Admins:</b>
                 <ul>
-                    {% if admins %}
+                    {% if company_obj.get_user_set %}
                     {% for user in admins %}
                     <li> <a href="{% url 'profile' user.username %}">{{ user.username }}</a></li>
                     {% endfor %}

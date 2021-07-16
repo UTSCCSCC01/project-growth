@@ -5,26 +5,45 @@
 {% endblock %}
 
 {% block content %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'companies' %}">Companies</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Add</li>
+        </ol>
+    </nav>
 
+    <!-- Page Title -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Register a new company for you and your team</h1>
+        <a href="{% url 'companies' %}" class="d-none d-sm-inline-block btn btn-sm btn-outline-primary shadow-sm"><i
+                class="fas fa-sm text-white-50"></i>< Back to Company Home</a>
+    </div>
 
-    <br>
-    <br>
-    <h3>Register a new company for you and your team</h3>
-    <img src=" /media/logo/default_company_logo.png " alt="logo" width="150px">
+    <div class="row">
+        <div class="col-lg-8">
 
-    <form method="POST" enctype="multipart/form-data"> {% csrf_token %}
-        {{ form.as_p }}
-        <p><b>By registering this new company, you will be set by default as the company page admin.</b></p>
-    <input type="submit" value="Register" />
-    </form>
+            <!-- New Company Card -->
+            <div class="card shadow mb-4">
+                <!-- Card Header  -->
+                <div
+                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">New Company</h6>
+                </div>
+                <!-- Card Body -->
+                <div class="card-body">
 
+                    <!-- Default Logo -->
+                    <img src=" /media/default_company_logo.png " alt="logo" width="150px">
+                    <form method="POST" enctype="multipart/form-data"> {% csrf_token %}
+                        {{ form.as_p }}
+                        <p><b>By registering this new company, you will be set by default as the company page admin.</b></p>
+                        <input type="submit" class="btn btn-primary" value="Register" />
+                    </form>
+                    <button class="btn btn-default"><a href="{% url 'companies' %}">Cancel</a></button>
 
+                </div>
+            </div>
+        </div>
+    </div>
 
-
-    <button class="btn btn-default"><a href="{% url 'companies' %}">Cancel</a></button>
-
-
-
-
-</p>
 {% endblock %}
