@@ -3,7 +3,7 @@
 
 <!-- To replace title, change the following title block" -->
 {% block header %}
-<link rel="stylesheet" href="https://unpkg.com/mobi.css/dist/mobi.min.css">
+<!--<link rel="stylesheet" href="https://unpkg.com/mobi.css/dist/mobi.min.css">-->
 <title>Courses</title>
     <style>
         table {margin:auto;}
@@ -13,28 +13,39 @@
 
 <!-- To replace content, change the following content block" -->
 {% block content %}
-<body>
-    <table>
-        <thead>
-            <tr>
-                <div class="headers">
-                <th>ID</th>
-                <th>Course</th>
-                <th>Operation</th>
-                </div>
-            </tr>
-        </thead>
-        <tbody>
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'course_list' %}">Courses</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Enroll</li>
+    </ol>
+</nav>
 
-            {% for course in all_courses %}
-                <tr>
-                    <td>{{course.id}}</td>
-                    <td>{{course.name}}</td>
-                    <td><a href="/courses/enrollOneCourse/?nid={{course.id}}">Enroll</a></td>
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Enroll to a new course
+    </h1>
 
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-</body>
+    <a href="{% url 'course_list' %}" class="d-none d-sm-inline-block btn btn-sm btn-outline-primary shadow-sm"><i
+            class="fas fa-sm text-white-50"></i>< Back to Courses Home</a>
+</div>
+<hr>
+<table class="table table-hover">
+    <thead>
+    <tr>
+            <th>ID</th>
+            <th>Course</th>
+            <th>Operation</th>
+    </tr>
+    </thead>
+    <tbody>
+
+    {% for course in all_courses %}
+    <tr>
+        <td>{{course.id}}</td>
+        <td><a class="Course" href="/books/?nid={{course.id}}">{{course.name}}</a></td>
+        <td><a class="btn-sm btn-primary" href="/courses/enrollOneCourse/?nid={{course.id}}">Enroll</a></td>
+
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
 {% endblock %}

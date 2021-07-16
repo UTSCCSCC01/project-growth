@@ -1,10 +1,28 @@
-{% extends 'courses/base.html' %}
+<!-- This file extends builder.html, which has the navigation bar created" -->
+{% extends "builder.html" %}
+
+<!-- To replace title, change the following title block" -->
+{% block header %}
+<link rel="stylesheet" href="https://unpkg.com/mobi.css/dist/mobi.min.css">
+<title>Courses</title>
+
+{% endblock %}
 
 {% block content %}
 
-  {% block content_header %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'course_list' %}">Courses</a></li>
+            <li class="breadcrumb-item" >{{course.name}}</li>
+            <li class="breadcrumb-item active" aria-current="page">{{book.title}}</li>
+        </ol>
+    </nav>
 
-    <h2>Submitted Modules List</h2>
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Submitted Modules List</h1>
+        <button type="button" class="btn btn-outline-primary" onclick="history.back(-1)">Back</button>
+    </div>
+
 
 
     <!--Edit here to hide Upload functionality
@@ -40,7 +58,6 @@
         </p>
     </div>
     {% endif %}
-  {% endblock %}
   <table class="table mb-0">
     <thead>
       <tr>

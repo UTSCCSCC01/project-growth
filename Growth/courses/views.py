@@ -1,4 +1,5 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect, get_object_or_404
+
 from django.views.generic import TemplateView, ListView, CreateView
 from django.core.files.storage import FileSystemStorage
 from django.urls import reverse_lazy
@@ -205,12 +206,14 @@ def book_list(request):
 
 
         bookCourse = BookCourse.objects.filter(course_id=course_id)
+        course = get_object_or_404(CourseInfo, id=course_id)
 
         for book in bookCourse:
             books.append(Book.objects.get(id=book.book_id))
 
     else:
         books = Book.objects.all()
+        course = None
 
 
         # Edited Portion
@@ -219,6 +222,7 @@ def book_list(request):
             'books': books,
             'role':role,
             'course_id':course_id,
+            'course':course,
             'posts': course_from_id.post_set.all,
             })
 
@@ -228,6 +232,7 @@ def book_list(request):
 
 def upload_book(request):
     course_id = request.GET.get('nid')
+    course = get_object_or_404(CourseInfo, id=course_id)
 
     if request.method == 'POST':
         form = BookForm(request.POST, request.FILES)
@@ -272,7 +277,8 @@ def upload_book(request):
         return render(request, 'courses/upload_book.html', {
         'form': form,
         'course_id':course_id,
-    })
+            'course': course
+        })
 
 
 def delete_book(request, pk):
@@ -342,6 +348,7 @@ def upload_list(request):
 
         count = count + 1
 
+    book_obj = get_object_or_404(Book, id = book_id)
 
             
     # elif(role == 'Student'):
@@ -352,13 +359,13 @@ def upload_list(request):
             
             # uploads.append(Upload.objects.get(id=uploadBook.book_id)) 
 
-        
     return render(request, 'courses/upload_list.html', {
             'uploads': uploads,
             'role':role,
             'book_id':book_id,
             'user_id':user_id,
-            'count':count
+            'count':count,
+            "book": book_obj
             })
 
 

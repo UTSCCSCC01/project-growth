@@ -3,8 +3,8 @@
 
 <!-- To replace title, change the following title block" -->
 {% block header %}
-<link rel="stylesheet" href="https://unpkg.com/mobi.css/dist/mobi.min.css">
-<title>Courses</title>
+<!--<link rel="stylesheet" href="https://unpkg.com/mobi.css/dist/mobi.min.css">-->
+<title>My Courses</title>
     <style>
         table {margin:auto;}
         body {text-align:center;}
@@ -14,30 +14,25 @@
 <!-- To replace content, change the following content block" -->
 {% block content %}
 
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item active" aria-current="page">Courses</li>
+        </ol>
+    </nav>
+
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Courses</h1>
+        <h1 class="h3 mb-0 text-gray-800">My Courses</h1>
     </div>
 
 
-    {% if role == 'Instructor' %}
-        <div>
-            <button class="btn btn-default"><a href="{% url 'addCourse' %}">Add</a>
-            </button>
-        </div>
-    {% elif role == 'Student' %}
-        <div>
-            <button class="btn btn-default"><a href="{% url 'enrollCourse' %}">Enroll</a>
-            </button>
-        </div>
-    {% endif %}
-    <table>
+
+    <table class="table table-hover">
         <thead>
+
             <tr>
-                <div class="headers">
                 <th>ID</th>
                 <th>Course</th>
                 <th>Operation</th>
-                </div>
             </tr>
         </thead>
         <tbody>
@@ -47,18 +42,26 @@
                 <td><a class="Course" href="/books/?nid={{course.id}}">{{course.name}}</a></td>
 
                 {% if role == 'Instructor' %}
-                    <td><a href="modCourse/?nid={{course.id}}">Modify</a>
+                    <td><a class="btn-sm btn-primary" href="modCourse/?nid={{course.id}}">Modify</a>
                 |
-                    <a href="delCourse/?nid={{course.id}}">Delete</a></td>
+                    <a class="btn-sm btn-danger" href="delCourse/?nid={{course.id}}">Delete</a></td>
                 {% elif role == 'Student' %}
-                    <td><a href="unenrollCourse/?nid={{course.id}}">Unenroll</a></td>
+                    <td><a class="btn-sm btn-danger" href="unenrollCourse/?nid={{course.id}}">Unenroll</a></td>
                 {% endif %}
-
-
             </tr>
         {% endfor %}
-
-
         </tbody>
     </table>
+
+    <hr>
+    {% if role == 'Instructor' %}
+        <div>
+            <a class="btn btn-primary" href="{% url 'addCourse' %}">Add</a>
+        </div>
+    {% elif role == 'Student' %}
+        <div>
+            <a class="btn btn-outline-primary" href="{% url 'enrollCourse' %}">+ Enroll More</a>
+        </div>
+    {% endif %}
+
 {% endblock %}
