@@ -1,0 +1,93 @@
+{% extends 'courses/base.html' %}
+
+{% block content %}
+
+  {% block content_header %}
+
+    <h2>Submitted Modules List</h2>
+
+
+    <!--Edit here to hide Upload functionality
+      Working Now
+      Naman
+    -->
+
+
+    {% if role == 'Student' %}
+        <div>
+          <p>
+            
+            {% if count == 0 %}
+            <b>Hello Student, you can submit your modules here</b>
+            <div>
+              <a href="uploadm/?nid={{book_id}}" class="btn btn-primary">Upload</a>
+            </div>
+            {% else %}
+            <b>You have already made a submission, delete the previous submission to make a new submission</b>
+            {% endif %}
+          </p>
+        </div>
+    {% elif role == 'Instructor' %}
+        <div>
+            <p>
+                <b>Hello Instructor, these are student submission for this Module</b>
+            </p>
+        </div>
+    {% elif role == 'Partner' %}
+    <div>
+        <p>
+            <b>Hello Partner, Sorry this material is only accessible to Instructor and Students</b>
+        </p>
+    </div>
+    {% endif %}
+  {% endblock %}
+  <table class="table mb-0">
+    <thead>
+      <tr>
+
+        {% if role == 'Instructor' %}
+        <th>Student ID</th>
+        {% endif %}
+
+        <th>Download</th>
+        {% if role == 'Student' %}
+        <th>Delete</th>
+        {% endif %}
+      </tr>
+    </thead>
+    <tbody>
+      {% for upload in uploads %}
+        <tr>
+
+            {% if role == 'Instructor' %}
+            <td>{{upload.remark}}</td>
+            {% endif %} 
+            
+            <td>
+                <a href="{{ upload.pdf.url }}" class="btn btn-primary btn-sm" target="_blank">
+                    Download Submitted Module
+                </a>
+            </td>
+
+            <!--Should Work-->
+
+            {% if role == 'Student' %}
+            
+            <td>
+                <form method="post" action="{% url 'delete_upload' upload.pk %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                </form>
+            </td>
+
+            {% endif %}
+
+        </tr>
+        
+        {% endfor %}
+    
+    </tbody>
+
+  </table>
+
+{% endblock %}
