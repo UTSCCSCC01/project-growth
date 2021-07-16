@@ -1,7 +1,7 @@
 {% extends 'builder.html' %}
 
-{% block title %}
-Manage company members
+{% block header %}
+<title>Manage Members</title>
 {% endblock %}
 
 {% block content %}
@@ -53,6 +53,7 @@ Manage company members
 
                     <input type="hidden" name="user_to_add" value="{{user.id}}">
                 <input class="btn btn-success btn-sm" type="submit" name="add_new_member" value="Approve" />
+                <input class="btn btn-secondary btn-sm" type="submit" name="reject_new_member" value="Reject" />
                 </form>
                 </li>
             {% endfor %}

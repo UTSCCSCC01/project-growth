@@ -4,11 +4,20 @@ from django.core.files.storage import FileSystemStorage
 from django.urls import reverse_lazy
 
 from .forms import BookForm, CourseForm
-from .models import CourseInfo,CourseUser, Book
+from .models import BookCourse, CourseInfo,CourseUser, Book
 
 from users.models import User
 from .import models
 from django.views.generic import TemplateView
+
+from django.views.generic import (
+    ListView,
+    DetailView,
+    CreateView,
+    UpdateView,
+    DeleteView
+)
+
 # Create your views here.
 
 
@@ -26,6 +35,26 @@ def course_list(request):
         'all_courses':all_courses,
         'role':role,
     })
+
+class CourseList(ListView):
+    model = CourseInfo
+    template_name = 'courses/course_list.html'  # <appName>/<model>_<viewtype>.html
+    context_object_name = 'course'
+
+    # this will be minipulated when using filters,
+    # the minus means decending order
+    # Change this ordering to by likes when you sort by best
+    #ordering = ['-date_posted']
+
+class CourseDetail(DetailView):
+    model = CourseInfo
+    template_name = 'courses/course_detail.html'  # <appName>/<model>_<viewtype>.html
+    context_object_name = 'course'
+
+    # this will be minipulated when using filters,
+    # the minus means decending order
+    # Change this ordering to by likes when you sort by best
+    #ordering = ['-date_posted']
 
 def course_detail(request,course_id):
     if course_id:
@@ -160,11 +189,37 @@ def book_list(request):
 
     role = request.user.role
 
+    course_id = request.GET.get('nid')
+    course_from_id = CourseInfo.objects.get(id=course_id)
+    #posts = Post.objects.get(course=course_from_id)
+    #print(posts)
+    #Query posts get all by course id
+    #in html just include the forum thing
+
+    books = []
+
     if(role == 'Instructor' or role == 'Student' or role == 'Partner'):
+
+        # Edited Portion
+
+
+
+        bookCourse = BookCourse.objects.filter(course_id=course_id)
+
+        for book in bookCourse:
+            books.append(Book.objects.get(id=book.book_id))
+
+    else:
         books = Book.objects.all()
-        return render(request, 'courses/book_list.html', {
+
+
+        # Edited Portion
+        
+    return render(request, 'courses/book_list.html', {
             'books': books,
             'role':role,
+            'course_id':course_id,
+            'posts': course_from_id.post_set.all,
             })
 
 
@@ -172,15 +227,51 @@ def book_list(request):
 
 
 def upload_book(request):
+    course_id = request.GET.get('nid')
+
     if request.method == 'POST':
         form = BookForm(request.POST, request.FILES)
         if form.is_valid():
+
+            # Edit Portion
+            # Working
+
+            title = form.cleaned_data['title']
+            deadline = form.cleaned_data['deadline']
+            pdf = form.cleaned_data['pdf']
+            cover = form.cleaned_data['cover']
+
+            book = Book.objects.create(
+                title = title,
+                deadline = deadline,
+                pdf = pdf,
+                cover = cover
+            )
+
+            book.save()
+
+            bookCourse = BookCourse.objects.create(
+
+                book_id = book.id,
+                course_id = course_id
+                
+
+            )
+
+            bookCourse.save()
+
+            # Till here
+
             form.save()
+
             return redirect('book_list')
     else:
+        
         form = BookForm()
-    return render(request, 'courses/upload_book.html', {
-        'form': form
+        
+        return render(request, 'courses/upload_book.html', {
+        'form': form,
+        'course_id':course_id,
     })
 
 

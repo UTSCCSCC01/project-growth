@@ -37,8 +37,8 @@ ul {
 .content-section {
   background: #ffffff;
   padding: 10px 20px;
-  border: 1px solid #dddddd;
-  border-radius: 3px;
+  border: 0.5px solid #dddddd;
+  border-radius: 10px;
   margin-bottom: 20px;
 }
 
@@ -87,4 +87,13 @@ a.article-title:hover {
 
 .account-heading {
   font-size: 2.5rem;
+}
+
+video{
+  padding: 10px 20px;
+
+  border: 0.5px solid #dddddd;
+  border-radius: 10px;
+  margin-bottom: 20px;
+
 }

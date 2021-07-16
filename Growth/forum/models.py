@@ -3,6 +3,8 @@ from django.utils import timezone, tree
 #from django.contrib.auth.models import User
 from django.conf import settings
 from django.urls import reverse
+from courses.models import CourseInfo
+
 
 
 class Post(models.Model):
@@ -12,6 +14,9 @@ class Post(models.Model):
     last_modified = models.DateTimeField(auto_now=True)
     username = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     likes= models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name='post_likes')
+    video = models.FileField(null=True, blank=True, upload_to='videos/')
+    course = models.ForeignKey(CourseInfo, on_delete=models.SET_NULL, null=True, blank=True, primary_key=False) # null=True
+
     #have a reactions thing here, like an int form 1 to 6 or a upvote downvote
 
     #how it will be printed out
