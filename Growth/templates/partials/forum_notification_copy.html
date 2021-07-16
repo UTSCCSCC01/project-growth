@@ -1,0 +1,44 @@
+        {% for notification in user.notificationsForum.unread %}
+                {% for post in user.post_set.all %}
+
+        <a class="dropdown-item d-flex align-items-center" href="">
+            <div class="mr-3">
+                <div class="icon-circle bg-primary">
+                    <i class="fas fa-file-alt text-white"></i>
+                </div>
+            </div>
+            <div>
+                <div class="small text-gray-500">December 12, 2019</div>
+
+
+                {% if post.title == notification.description %}
+
+                  {% if notification.verb == "LikePost" and notification.recipient != notification.actor %}
+                  <b>{{ notification.actor }}</b> liked your Post:
+                  <button type="button">
+                      <a href="{% url 'individual-post' post.id %}">{{ notification.description }}</a></button>
+                   <button type="button"><a
+                    href="{% url 'notificationsForum:mark_as_read' notification.slug %}">CLEARRR</a></button>
+
+                  {% endif %}
+
+                  {% if notification.verb == "NewComment" and notification.recipient != notification.actor %}
+
+                  <b>{{ notification.actor }}</b> commented on your post:
+
+                  <button type="button"><a
+                   href="{% url 'individual-post' post.id %}">{{ notification.description }}</a></button>
+
+                   <button type="button"><a
+                    href="{% url 'notificationsForum:mark_as_read' notification.slug %}">CLEARRR</a></button>
+
+
+                    {% endif %}
+
+                {% endif %}
+
+            </div>
+        </a>
+    {% endfor %}
+
+{% endfor %}
