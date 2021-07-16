@@ -295,6 +295,12 @@ def upload_list(request):
         for uploadBook in uploadBookUser:
            uploads.append(Upload.objects.get(id=uploadBook.upload_id)) 
 
+    count = 0
+
+    for upload in uploads:
+
+        count = count + 1
+
 
             
     # elif(role == 'Student'):
@@ -310,7 +316,8 @@ def upload_list(request):
             'uploads': uploads,
             'role':role,
             'book_id':book_id,
-            'user_id':user_id
+            'user_id':user_id,
+            'count':count
             })
 
 

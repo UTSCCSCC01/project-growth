@@ -16,11 +16,15 @@
     {% if role == 'Student' %}
         <div>
           <p>
-            <b>Hello Student, you can submit your modules here</b>
             
+            {% if count == 0 %}
+            <b>Hello Student, you can submit your modules here</b>
             <div>
               <a href="uploadm/?nid={{book_id}}" class="btn btn-primary">Upload</a>
             </div>
+            {% else %}
+            <b>You have already made a submission, delete the previous submission to make a new submission</b>
+            {% endif %}
           </p>
         </div>
     {% elif role == 'Instructor' %}
