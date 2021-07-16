@@ -1,10 +1,18 @@
+<!-- This file extends builder.html, which has the navigation bar created" -->
+{% extends "builder.html" %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
+<!-- To replace title, change the following title block" -->
+{% block header %}
+<link rel="stylesheet" href="https://unpkg.com/mobi.css/dist/mobi.min.css">
+<title>Courses</title>
+    <style>
+        table {margin:auto;}
+        body {text-align:center;}
+    </style>
+{% endblock %}
+
+<!-- To replace content, change the following content block" -->
+{% block content %}
 <body>
   <h1>Modify course</h1>
   <form method="POST" action="/courses/modCourse/">
@@ -15,4 +23,4 @@
         <input type="submit" value="submit">
   </form>
 </body>
-</html>
+{% endblock %}
