@@ -230,7 +230,7 @@ def upload_book(request):
 
             # form.save()
 
-            return redirect('book_list')
+            return redirect('/books/?nid='+course_id)
     else:
         
         form = BookForm()
@@ -362,7 +362,7 @@ def upload_upload(request):
 
             # Till here
 
-            return redirect('upload_list')
+            return redirect('/books/upload_l/?nid='+book_id)
     else:
         
         form = UploadForm()
