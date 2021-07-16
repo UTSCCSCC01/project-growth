@@ -1,0 +1,48 @@
+<div class="card shadow mb-4">
+<!-- Card Header - Dropdown -->
+<div
+        class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+    <h6 class="m-0 font-weight-bold text-primary">Company Details</h6>
+    {% if user in admins %}
+    <div class="dropdown no-arrow">
+        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink1"
+           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+        </a>
+        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+             aria-labelledby="dropdownMenuLink1">
+            <div class="dropdown-header">Admin Actions:</div>
+            <a class="dropdown-item" href="{% url 'modify_company' company_obj.id %}">Modify details</a>
+            <div class="dropdown-divider"></div>
+            <!--Button: Leave this company-->
+            <a class="dropdown-item text-danger" href="{% url 'delete_company' company_obj.id %}" >
+                Delete company
+            </a>
+        </div>
+    </div>
+    {% endif %}
+
+</div>
+<!-- Card Body -->
+<div class="card-body">
+    <!--Company logo-->
+    <div class="text-center">
+        <a href="{% url 'company_profile' company_obj.id %}">
+            <img class="img-thumbnail" src="{{ company_obj.logo.url }}" alt="logo"  style="max-height:80px"></a>
+    </div>
+    <hr>
+    <!--Company name-->
+    <h4>{{ company_obj.name }}</h4>
+    <!--My role badge-->
+    {% if user.company == company_obj %}
+    <span class="text-white badge bg-success">My role: {{user.company_role}}</span>
+    {% endif %}
+    <p><i>{{ company_obj.description }}</i></p>
+    <!--Company details-->
+    <p><i class="fas fa-building"></i> <strong>Industry:</strong> {{ company_obj.get_industry_display }}<p>
+    <p><i class="fas fa-id-card"></i> <strong>Size:</strong> {{ company_obj.get_size_display }}<p>
+    <p><i class="fas fa-briefcase"></i> <strong>Type:</strong> {{ company_obj.get_type_display }}<p>
+    <p><i class="fas fa-map-marker-alt"></i> <strong>Location:</strong> {{ company_obj.location }}<p>
+    <p><i class="fas fa-globe"></i> <strong>Website:</strong> {{ company_obj.website_url }}<p>
+</div>
+</div>
