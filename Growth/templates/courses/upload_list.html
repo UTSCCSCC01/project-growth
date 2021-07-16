@@ -44,8 +44,12 @@
         {% if role == 'Instructor' %}
         <th>Student ID</th>
         {% endif %}
-
-        <th>Remarks</th>
+        {% if role == 'Student' %}
+        <th>Remark</th>
+        {% endif %}
+        {% if role == 'Instructor' %}
+        <th>Student Feedback</th>
+        {% endif %}
         <th>Download</th>
         {% if role == 'Student' %}
         <th>Delete</th>
