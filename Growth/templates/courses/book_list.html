@@ -58,7 +58,9 @@
               <span class="text-muted">No cover</span>
             {% endif %}
           </td>
-          <td>{{ book.title}}</td>
+
+          <td><a href="upload_l/?nid={{book.id}}" class="btn btn-primary">{{ book.title}}</a></td
+
           <td>{{ book.deadline }}</td>
           <td>
             <a href="{{ book.pdf.url }}" class="btn btn-primary btn-sm" target="_blank">
