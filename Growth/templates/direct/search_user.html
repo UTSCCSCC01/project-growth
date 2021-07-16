@@ -1,6 +1,18 @@
-{% extends 'base.html' %}
-
+{% extends 'builder.html' %}
 {% load static %}
+{% load notifications_tags %}
+{% load notifications_tags_forum %}
+
+
+
+{% block header %}
+<title>Inbox</title>
+  <link rel="stylesheet" href="{% static 'css/bulma.min.css' %}">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+{% endblock %}
+
 
 {% block content %}
 
