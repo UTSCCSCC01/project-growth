@@ -5,12 +5,14 @@ var mapPeers = {};
 var ICE_config = {
     'iceServers': [
       {
-        'urls': 'turn:numb.viagenie.ca',
-        'credential': 'eewn3cink_WUND9saus=',
-        'username': 'jigsaw23123@gmail.com'
+        'urls': 'stun:stun.l.google.com:19302'
+
+        // 'urls': 'turn:numb.viagenie.ca',
+        // 'credential': 'eewn3cink_WUND9saus=',
+        // 'username': 'jigsaw23123@gmail.com'
       }
     ]
-  }
+  };
 
 // peers that stream own screen
 // to remote peers
@@ -439,12 +441,12 @@ function createOfferer(peerUsername, localScreenSharing, remoteScreenSharing, re
         // and the corresponding RTCDataChannel
         mapPeers[peerUsername] = [peer, dc];
 
-        peer.onicecandidate = onIceCandidateHandler;
-        peer.onaddstream = onAddStreamHandler;
+        // peer.onicecandidate = onIceCandidateHandler;
+        // peer.onaddstream = onAddStreamHandler;
         peer.oniceconnectionstatechange = () => {
             var iceConnectionState = peer.iceConnectionState;
             if (iceConnectionState === "failed" || iceConnectionState === "disconnected" || iceConnectionState === "closed"){
-                console.log('Deleting peer');
+                console.log('Deleting peer due to ' + iceConnectionState);
                 delete mapPeers[peerUsername];
                 if(iceConnectionState != 'closed'){
                     peer.close();
@@ -532,7 +534,7 @@ function createOfferer(peerUsername, localScreenSharing, remoteScreenSharing, re
 // and store it and its datachannel
 // send sdp to remote peer after gathering is complete
 function createAnswerer(offer, peerUsername, localScreenSharing, remoteScreenSharing, receiver_channel_name){
-    var peer = new RTCPeerConnection(null);
+    var peer = new RTCPeerConnection(ICE_config);
 
     addLocalTracks(peer, localScreenSharing);
 

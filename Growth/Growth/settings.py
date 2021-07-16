@@ -25,6 +25,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'e_d-*d^al%=cx5&#02y-a-og2tu@uhy@l*uwqmtc%y&@fhlblr'
 
+DEFAULT_AUTO_FIELD='django.db.models.AutoField'
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -32,7 +34,7 @@ sys.modules['fontawesome_free'] = __import__('fontawesome-free')
 
 
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 NUMB_TURN_CREDENTIAL = config('NUMB_TURN_CREDENTIAL', default=None)
 NUMB_TURN_USERNAME = config('NUMB_TURN_USERNAME', default=None)
@@ -51,6 +53,8 @@ INSTALLED_APPS = [
     'chat.apps.ChatConfig',
     'channels',
     'direct',
+    'notifications',
+    'notificationsForum',
     'forum.apps.ForumConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -178,15 +182,15 @@ ASGI_APPLICATION = 'Growth.asgi.application'
 
 
 CHANNEL_LAYERS = {
-    # 'default': {
-    #     'BACKEND': 'channels_redis.core.RedisChannelLayer',
-    #     'CONFIG': {
-    #         "hosts": [('127.0.0.1', 6379)],
-    #     },
-    # },
     'default': {
-        "BACKEND": "channels.layers.InMemoryChannelLayer"
-    }
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],
+        },
+    },
+    # 'default': {
+    #     "BACKEND": "channels.layers.InMemoryChannelLayer"
+    # }
 }
 
 MESSAGE_TAGS = {
