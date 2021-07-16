@@ -279,14 +279,11 @@ def delete_book(request, pk):
     if request.method == 'POST':
         book = Book.objects.get(pk=pk)
 
-        print(book.id)
 
         cid = BookCourse.objects.get(book_id=book.id)
 
 
         c_id = cid.course_id
-
-        print(c_id)
 
         book.delete()
     return redirect('/books/?nid='+str(c_id))
@@ -419,5 +416,11 @@ def upload_upload(request):
 def delete_upload(request, pk):
     if request.method == 'POST':
         upload = Upload.objects.get(pk=pk)
+
+        njid = UploadBookUser.objects.get(upload_id=upload.id)
+
+        nj_id = njid.book_id
+
         upload.delete()
-    return redirect('upload_list')
+        
+    return redirect('/books/upload_l/?nid='+str(nj_id))
