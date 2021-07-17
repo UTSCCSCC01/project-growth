@@ -10,6 +10,17 @@
 }
 
 video {
-  border-radius: 25%;
+  border-radius: 3%;
   background-color: black;
+  display: inline-block;
+  margin-right: 10px;
+  transform: scale(0.8, 0.8);
+  -ms-transform: scale(0.8, 0.8); 
+  -webkit-transform: scale(0.8, 0.8); 
+  -o-transform: scale(0.8, 0.8); 
+  -moz-transform: scale(0.8, 0.8);
+}
+
+html {
+  background: linear-gradient(to right, #b8761f 0%, #168d30 100%);
 }
