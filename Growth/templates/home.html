@@ -1,0 +1,40 @@
+
+    <!-- This file extends builder.html, which has the navigation bar created" -->
+    {% extends "builder.html" %}
+
+    <!-- To replace title, change the following title block" -->
+    {% block header %}
+    <title>home</title>
+    {% endblock %}
+
+    <!-- To replace content, change the following content block" -->
+    {% block content %}
+    <div>
+        <p>This is a temperory page and will be replaced by dashboard</p>
+        <h1>Welcome Entrepreneurs</h1>
+        <!--This if block contains the homepage if user has logged in. So please add features such as chat box below-->
+        <p>Logged in as：<a href="#">{{ user.username }}</a></p>
+        <button class="btn btn-default"><a href="{% url 'logout' %}?next={{ request.path }}">Log out</a>
+        </button>
+        <button class="btn btn-default"><a href="{% url 'companies' %}">Company</a>
+        </button>
+        <button class="btn btn-default"><a href="{% url 'entryChat' %}">Chat room</a>
+        </button>
+        </button>
+        <button class="btn btn-default"><a href="{% url 'inbox' %}">Inbox</a>
+        </button>
+        <button class="btn btn-default"><a href="{% url 'course_list' %}">Modules</a>
+        </button>
+        <button class="btn btn-default"><a href="/calendar/">Calendar</a>
+        </button>
+
+        <button class="btn btn-default"><a href="{% url 'password_change' %}?next={{ request.path }}">Change
+                password</a>
+        </button><button class="btn btn-default"><a href="{% url 'profile' user.username %}">Profile</a>
+        </button>
+        <button class="btn btn-default"><a href="{% url 'peer' %}">Video Chat</a>
+        </button>
+    </div>
+    {% endblock %}
+
+

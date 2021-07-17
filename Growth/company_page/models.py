@@ -102,17 +102,17 @@ def get_photos_upload_path(instance, filename):
 class File(models.Model):
 
     list_of_tags = [
-        ('pitch_decks', "Pitch Decks"),
-        ('financial_decks', "Financial Decks"),
-        ('MC', "MC"),
-        ('founding_team', "Founding Team"),
-        ('other', "other"),
+        ('primary', "Pitch Decks"),
+        ('secondary', "Financial Decks"),
+        ('success', "MC"),
+        ('info', "Founding Team"),
+        ('warning', "other"),
     ]
 
     company = models.ForeignKey(Company, on_delete=models.CASCADE, null=True, blank=True)
     name = models.CharField(max_length=100)
     description = models.TextField(blank=True, null=True)
-    tag = models.CharField(choices=list_of_tags, max_length=100, blank=True, null=True)
+    tag = models.CharField(choices=list_of_tags, max_length=100)
     file = models.FileField(upload_to=get_upload_path)
     date_added = models.DateTimeField(default=timezone.now)
     last_modified = models.DateTimeField(auto_now=True)
