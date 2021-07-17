@@ -1,71 +1,84 @@
 {% extends 'builder.html' %}
 
-{% block title %}
-Manage photos
+{% block header %}
+<title>Company Photos</title>
 {% endblock %}
 
 {% block content %}
 
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'companies' %}">Companies</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'company_profile' company_obj.id %}">{{ company_obj.name }}</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Gallery</li>
+        </ol>
+    </nav>
+
+
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Manage Photos
+        </h1>
+
+        <a href="{% url 'company_profile' company_obj.id %}" class="d-none d-sm-inline-block btn btn-sm btn-outline-primary shadow-sm"><i
+        class="fas fa-sm text-white-50"></i>< Back to Company Page</a>
+    </div>
+    <p>Showcase your company's products and services</p>
+
+
+    <div class="row">
+
+        <div class="col-lg-8">
+
+            <!-- Photos Card -->
+            <div class="card shadow mb-4">
+                <!-- Card Header - Dropdown -->
+                <div
+                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-secondary">Preview <span class="text-primary">Company Gallery</span></h6>
+                </div>
+                <!-- Card Body -->
+                <div class="card-body">
+                    <div class="row">
+                        {% for photo in photos %}
+                        <div class="col-md-6 mb-4">
+                            <!--Company photos-->
+                            <img src="{{ photo.photo.url }}" alt="photo" class="w-100 shadow-1-strong rounded mb-4">
+                            {{ photo.description }}
+                            <br>
+                            <small><i>Uploaded: {{ photo.date_added }} <span class="text-primary">id:{{ photo.id }}</span></i></small>
+                            <form action="" method="POST">{% csrf_token %}
+                                <input type="hidden" name="photo_to_remove" value="{{photo.id}}">
+                                <input class="btn btn btn-outline-danger btn-sm"
+                                       type="submit" name="remove_photo" value="Remove" />
+                            </form>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+
+            <!-- New Photo Card -->
+            <div class="card shadow mb-4">
+                <!-- Card Header - Dropdown -->
+                <div
+                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-success">Upload New Photo</h6>
+                </div>
+                <!-- Card Body -->
+                <div class="card-body">
+                    <form method="POST" enctype="multipart/form-data"> {% csrf_token %}
+                        {% load crispy_forms_tags %}
+                        {{ form|crispy }}
+                        <input class="btn btn-primary btn-sm" type="submit" name="add_photo" value="Upload" />
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <button class="btn btn-default"><a href="{% url 'company_profile' company_obj.id %}">< Back</a></button>
 
-    <br>
-    <br>
-    <h3>Build your company gallery</h3>
-    <p>This is where you can showcase your company's products and services</p>
-
-
-    <p><b>Upload new photos</b></p>
-
-
-    <form method="POST" enctype="multipart/form-data"> {% csrf_token %}
-        {{ form.as_p }}
-                <!--{{ form.fields.as_hidden }}-->
-
-    <input class="btn btn-primary btn-sm" type="submit" name="add_photo" value="Upload" />
-    </form>
-
-
-        <br><p> ============================================== </p>
-
-
-        <h4>Preview - Company Galleries</h4>
-
-        <ul>
-
-        {% for photo in photos %}
-
-            <d>
-                <form action="" method="POST">{% csrf_token %}
-
-                    <!--Company photos-->
-                    <img src="{{ photo.photo.url }}" alt="photo" width="400px">
-
-                    <p><i>{{ photo.description }}</i></p>
-                    <p><i></i></p>
-                    <p><i>Uploaded: {{ photo.date_added }} - Id: {{ photo.id }} </i></p>
-
-                    <input type="hidden" name="photo_to_remove" value="{{photo.id}}"> </input>
-                    <input class="btn btn btn-outline-danger btn-sm"
-                           type="submit" name="remove_photo" value="Remove" />
-
-                </form>
-
-
-            <p> ------------- </p>
-            <br>
-            </d>
-
-
-        {% endfor %}
-        </ul>
-
-
-
-
-    <button class="btn btn-default"><a href="{% url 'company_profile' company_obj.id %}">< Back</a></button>
-
-
-
-
-</p>
 {% endblock %}

@@ -110,11 +110,12 @@ const constraints = {
 }
 
 const iceConfiguration = {
-    iceServers: [
+    'iceServers': [
         {
-            urls: ['turn:numb.viagenie.ca'],
-            credential: '{{numb_turn_credential}}',
-            username: '{{numb_turn_username}}'
+            'urls': 'stun:stun.l.google.com:19302'
+            // urls: ['turn:numb.viagenie.ca'],
+            // credential: '{{numb_turn_credential}}',
+            // username: '{{numb_turn_username}}'
         }
     ]
 };

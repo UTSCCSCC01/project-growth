@@ -1,16 +1,42 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
+<!-- This file extends builder.html, which has the navigation bar created" -->
+{% extends "builder.html" %}
+
+<!-- To replace title, change the following title block" -->
+{% block header %}
+<link rel="stylesheet" href="https://unpkg.com/mobi.css/dist/mobi.min.css">
+<title>Courses</title>
+    <style>
+        table {margin:auto;}
+        body {text-align:center;}
+    </style>
+{% endblock %}
+
+<!-- To replace content, change the following content block" -->
+{% block content %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'course_list' %}">Courses</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'book_list' %}?nid={{course.id}}">{{course.name}}</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Modify Course</li>
+    </ol>
+</nav>
+
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Create a new course
+    </h1>
+
+    <a href="{% url 'course_list' %}" class="d-none d-sm-inline-block btn btn-sm btn-outline-primary shadow-sm"><i
+            class="fas fa-sm text-white-50"></i>< Back to Courses Home</a>
+</div>
+
 <body>
   <h1>Modify course</h1>
   <form method="POST" action="/courses/modCourse/">
       {% csrf_token %}
+
       <input style="display: none" name="id" value="{{ course.id }}">
       <p>Course Name: <input type="text" name="name" value="{{ course.name }}"></p>
         <input type="submit" value="submit">
   </form>
 </body>
-</html>
+{% endblock %}

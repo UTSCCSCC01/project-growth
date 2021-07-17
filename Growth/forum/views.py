@@ -8,6 +8,7 @@ from django.views.generic.edit import FormView
 from .models import Post, Comment, Reply
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.db.models import Count
+from notificationsForum.signals import notify
 
 from django.views.generic import (
     ListView,
@@ -113,6 +114,10 @@ class SeePostDetails(LoginRequiredMixin, DetailView, CreateView):
     def form_valid(self, form):
         form.instance.username = self.request.user
         form.instance.post = Post.objects.get(pk=self.kwargs.get('pk'))
+
+        post = get_object_or_404(Post, id= self.kwargs.get('pk'))
+        notify.send(sender=self.request.user, recipient=post.username, verb='NewComment', description=post)
+
         return super().form_valid(form)
 
     #form = CommentForm()
@@ -158,25 +163,29 @@ class SeePostDetails(LoginRequiredMixin, DetailView, CreateView):
 
 class MakePost(LoginRequiredMixin, CreateView):
     model = Post
-    fields = ['title', 'text']
+    fields = ['title', 'text', 'video', 'course']
     # this links to post_from.html automatically
     # Note: this autmatically has a default form that it passes to the above html
     # overiding the default method
+
+    success_url = '/forum'
 
     def form_valid(self, form):
         form.instance.username = self.request.user
         return super().form_valid(form)
 
     # def get_absolute_url(self): # new
-    #     return reverse('post_detail', args=[str(self.id)])
+    #      return reverse('post_detail', args=[str(self.id)])
 
 
 class EditPost(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Post
-    fields = ['title', 'text']
+    fields = ['title', 'text', 'video', 'course']
     # this links to post_from.html automatically
     # Note: this autmatically has a default form that it passes to the above html
     # overiding the default method
+
+    success_url = '/forum'
 
     def form_valid(self, form):
         form.instance.username = self.request.user
@@ -213,6 +222,12 @@ class ReplyCreateView(LoginRequiredMixin, DetailView, CreateView):
     def form_valid(self, form):
         form.instance.username = self.request.user
         form.instance.comment =  Comment.objects.get(pk=int(self.request.POST.get('replyButton')))
+        comment = form.instance.comment
+
+
+        #reply = get_object_or_404(Reply, id= self.kwargs.get('rk'))
+        notify.send(sender=self.request.user, recipient=comment.username, verb='NewReply', description=comment.text)
+
         return super().form_valid(form)
 
 class PostLike(LoginRequiredMixin, RedirectView):
@@ -224,6 +239,7 @@ class PostLike(LoginRequiredMixin, RedirectView):
             post.likes.remove(current_user)
         else:      
              post.likes.add(current_user)
+             notify.send(sender=current_user, recipient=post.username, verb='LikePost', description=post)
         return post.get_absolute_url()
 
 class CommentLike(LoginRequiredMixin, RedirectView):
@@ -234,7 +250,9 @@ class CommentLike(LoginRequiredMixin, RedirectView):
         if current_user in comment.likes.all():
             comment.likes.remove(current_user)
         else:      
-             comment.likes.add(current_user)
+             comment.likes.add(current_user) # like on comment done.
+             notify.send(sender=current_user, recipient=comment.username, verb='LikeComment', description=comment.text)
+             
         return comment.get_absolute_url()
 
 
@@ -247,4 +265,5 @@ class ReplyLike(LoginRequiredMixin, RedirectView):
             reply.likes.remove(current_user)
         else:      
              reply.likes.add(current_user)
+             notify.send(sender=current_user, recipient=reply.username, verb='LikeReply', description=reply.text)
         return reply.get_absolute_url()

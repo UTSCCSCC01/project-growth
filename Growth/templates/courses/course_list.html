@@ -1,59 +1,67 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <link rel="stylesheet" href="https://unpkg.com/mobi.css/dist/mobi.min.css">
+<!-- This file extends builder.html, which has the navigation bar created" -->
+{% extends "builder.html" %}
+
+<!-- To replace title, change the following title block" -->
+{% block header %}
+<!--<link rel="stylesheet" href="https://unpkg.com/mobi.css/dist/mobi.min.css">-->
+<title>My Courses</title>
     <style>
         table {margin:auto;}
         body {text-align:center;}
     </style>
-</head>
-<body>
+{% endblock %}
 
-    <h1><a href="/">Home</a></h1>
-    <h2>Courses</h2>
-    {% if role == 'Instructor' %}
-        <div>
-            <button class="btn btn-default"><a href="{% url 'addCourse' %}">Add</a>
-            </button>
-        </div>
-    {% elif role == 'Student' %}
-        <div>
-            <button class="btn btn-default"><a href="{% url 'enrollCourse' %}">Enroll</a>
-            </button>
-        </div>
-    {% endif %}
-    <table>
+<!-- To replace content, change the following content block" -->
+{% block content %}
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item active" aria-current="page">Courses</li>
+        </ol>
+    </nav>
+
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">My Courses</h1>
+    </div>
+
+
+
+    <table class="table table-hover">
         <thead>
+
             <tr>
-                <div class="headers">
                 <th>ID</th>
                 <th>Course</th>
                 <th>Operation</th>
-                </div>
             </tr>
         </thead>
         <tbody>
         {% for course in all_courses %}
             <tr>
                 <td>{{course.id}}</td>
-                <td><a class="Course" href="{% url 'book_list' %}">{{course.name}}</a></td>
+                <td><a class="Course" href="/books/?nid={{course.id}}">{{course.name}}</a></td>
 
                 {% if role == 'Instructor' %}
-                    <td><a href="modCourse/?nid={{course.id}}">Modify</a>
+                    <td><a class="btn-sm btn-primary" href="modCourse/?nid={{course.id}}">Modify</a>
                 |
-                    <a href="delCourse/?nid={{course.id}}">Delete</a></td>
+                    <a class="btn-sm btn-danger" href="delCourse/?nid={{course.id}}">Delete</a></td>
                 {% elif role == 'Student' %}
-                    <td><a href="unenrollCourse/?nid={{course.id}}">Unenroll</a></td>
+                    <td><a class="btn-sm btn-danger" href="unenrollCourse/?nid={{course.id}}">Unenroll</a></td>
                 {% endif %}
-
-
             </tr>
         {% endfor %}
-
-
         </tbody>
     </table>
-</body>
-</html>
+
+    <hr>
+    {% if role == 'Instructor' %}
+        <div>
+            <a class="btn btn-primary" href="{% url 'addCourse' %}">Add</a>
+        </div>
+    {% elif role == 'Student' %}
+        <div>
+            <a class="btn btn-outline-primary" href="{% url 'enrollCourse' %}">+ Enroll More</a>
+        </div>
+    {% endif %}
+
+{% endblock %}

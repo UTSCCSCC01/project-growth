@@ -22,6 +22,9 @@ from django.conf.urls.static import static
 from courses import views as course_views
 
 from django.conf.urls import url, include
+import notifications.urls
+import notificationsForum.urls
+
 
 
 from users import views
@@ -34,6 +37,10 @@ urlpatterns = [
     url(r'^$', views.index, name='index'),
     path('forum/', include('forum.urls')),
     url(r'^courses/', include('courses.urls')),
+    url(r'^calendar/', include('cal.urls'), name='calendar'),
+    path(r'home', views.app_home, name='home'),
+
+    path(r'dashboard', views.dashboard, name='dashboard'),
 
     path(r'profile/<slug:slug>/', views.profile, name='profile'),
     path('edit_profile/<slug:slug>/', views.edit_profile, name='edit_profile'),
@@ -43,14 +50,26 @@ urlpatterns = [
     url(r'^chat/', include('chat.urls')),
     url(r'^video_chat/', include('video_chat.urls')),
     url(r'^direct/', include('direct.urls')),
+    url('^inbox/notifications/', include(notifications.urls, namespace='notifications')),
+    url('^inbox/notificationsForum/', include(notificationsForum.urls, namespace='notificationsForum')),
 
     path('', course_views.Home.as_view(), name='home'),
     path('upload/', course_views.upload, name='upload'),
     path('books/', course_views.book_list, name='book_list'),
+
+    path('books/upload_l/', course_views.upload_list, name='upload_list'),
+
     path('books/upload/', course_views.upload_book, name='upload_book'),
+    
+    path('books/upload_l/uploadm/', course_views.upload_upload, name='upload_upload'), 
+
+
     path('books/<int:pk>/', course_views.delete_book, name='delete_book'),
 
+    path('books/upload_l/<int:pk>/', course_views.delete_upload, name='delete_upload'), 
+    
     path('class/books/', course_views.BookListView.as_view(), name='class_book_list'),
-    path('class/books/upload/', course_views.UploadBookView.as_view(), name='class_upload_book'),
+    path('class/books/upload/', course_views.UploadBookView.as_view(),
+         name='class_upload_book'),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,74 +1,126 @@
-{% extends 'courses/base.html' %}
+{% extends 'builder.html' %}
+{% load static %}
+
+{% block header %}
+<title>Course Modules</title>
+<link rel="stylesheet" type="text/css" href="{% static 'forum/stylePost.css' %}">
+{% endblock %}
 
 {% block content %}
 
-  {% block content_header %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'course_list' %}">Courses</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{course.name}}</li>
+        </ol>
+    </nav>
 
-    <h2>Modules List</h2>
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Course Dashboard</h1>
+        <button type="button" class="btn btn-outline-primary" onclick="history.back(-1)">Back</button>
+    </div>
 
 
-    <!--Edit here to hide Upload functionality
+
+    <div class="card shadow mb-4">
+        <!-- Card Header  -->
+        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+            <h6 class="m-0 font-weight-bold text-primary">Course Works</h6>
+        </div>
+        <!-- Card Body -->
+        <div class="card-body">
+            {% if role == 'Instructor' %}
+            <div>Hello, Instructor you can upload modules here
+                <a href="upload/?nid={{course_id}}" class="btn-sm btn-primary">Upload</a>
+            </div>
+
+            {% elif role == 'Student' %}
+            <div>Good Luck Entrepreneur on your work</div>
+            {% endif %}
+            <br>
+
+            <table class="table mb-0">
+                <thead>
+                <tr>
+                    <th>Cover</th>
+                    <th>Uploaded Material</th>
+                    <th>Deadline</th>
+                    <th>Download</th>
+                    {% if role == 'Instructor' %}
+                    <th>Delete</th>
+                    {% endif %}
+                </tr>
+                </thead>
+                <tbody>
+                {% for book in books %}
+                <tr>
+                    <td>
+                        {% if book.cover %}
+                        <img src="{{ book.cover.url }}" alt="{{ book.title }}" style="width:100px;">
+                        {% else %}
+                        <span class="text-muted">No cover</span>
+                        {% endif %}
+                    </td>
+
+                    <td><a href="upload_l/?nid={{book.id}}">{{ book.title}}</a></td>
+
+                    <td>{{ book.deadline }}</td>
+                    <td>
+                        <a href="{{ book.pdf.url }}" class="btn btn-primary btn-sm" target="_blank">
+                            Download PDF
+                        </a>
+                    </td>
+                    {% if role == 'Instructor' %}
+                    <td>
+                        <form method="post" action="{% url 'delete_book' book.pk %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                        </form>
+                    </td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <hr>
+
+<!--Edit here to hide Upload functionality
       Working Now
     -->
 
-    {% if role == 'Instructor' %}
-        <div>
-          <p>
-            <b>Hello, Instructor you can upload modules here</b>
-            
-            <div>
-              <a href="{% url 'upload_book' %}" class="btn btn-primary">Upload</a> 
-            </div>
-          </p>
-        </div>
-    {% elif role == 'Student' %}
-        <div>
-            <p>
-                <b>Good Luck Entrepreneur on your work</b>
-            </p>
-        </div>
-    {% endif %}
-  {% endblock %}
 
-  <table class="table mb-0">
-    <thead>
-      <tr>
-        <th>Cover</th>
-        <th>Uploaded Material</th>
-        <th>Deadline</th>
-        <th>Download</th>
-        {% if role == 'Instructor' %}
-        <th>Delete</th>
-        {% endif %}
-      </tr>
-    </thead>
-    <tbody>
-      {% for book in books %}
-        <tr>
-          <td>
-            {% if book.cover %}
-              <img src="{{ book.cover.url }}" alt="{{ book.title }}" style="width:100px;">
-            {% else %}
-              <span class="text-muted">No cover</span>
-            {% endif %}
-          </td>
-          <td>{{ book.title}}</td>
-          <td>{{ book.deadline }}</td>
-          <td>
-            <a href="{{ book.pdf.url }}" class="btn btn-primary btn-sm" target="_blank">
-              Download PDF
-            </a>
-          </td>
-          {% if role == 'Instructor' %}
-          <td>
-            <form method="post" action="{% url 'delete_book' book.pk %}">
-              {% csrf_token %}
-              <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-            </form>
-          </td>
-          {% endif %}
-        </tr>
+
+
+  {% for post in posts %}
+  <article class="media content-section">
+    <div class="media-body">
+      <div class="article-metadata">
+        <a class="mr-2" href="{% url 'profile' post.username %}">{{ post.username }}</a>
+
+        {% include "forum/nameTag.html" %}
+
+        <small class="text-muted">Posted on: {{ post.date_posted}}</small>
+        <!-- to change the date using a date filter using documentation and date format filters
+                  {{ post.date_posted|date:"F d, Y"}} so this is without time-->
+        <small class="text-muted">Last updated: {{ post.last_modified}}</small>
+
+      </div>
+      <!-- detailed view for a single post -->
+      <h2><a class="article-title" href="{% url 'individual-post' post.id %}">{{ post.title }}</a></h2>
+      <p class="article-content">{{ post.text }}</p>
+      <a class="btn btn-primary btn-sm mt-1 mb-1" role="button" href="{% url 'like-post' post.id %}">Like:
+        {{post.likes.count }}</a>
+
+      <!-- preview latest comment for post -->
+      <h5>Comments:</h5>
+
+      {% for comment in post.comment_set.all %}
+      <p class="article-content">{{comment.username}}: {{ comment }}</p>
       {% endfor %}
-    </tbody>
-  </table>
+    </div>
+  </article>
+  {% endfor %}
 {% endblock %}
+

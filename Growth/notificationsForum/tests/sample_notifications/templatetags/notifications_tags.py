@@ -1,0 +1,1 @@
+from notificationsForum.templatetags.notificationsForum_tags import register

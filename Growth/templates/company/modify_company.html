@@ -1,31 +1,60 @@
 {% extends 'builder.html' %}
 
-{% block title %}
-Modify my Company
+{% block header %}
+<title>Manage Company Details</title>
 {% endblock %}
 
 {% block content %}
-    <br>
-    <br>
-    <h3>Modify my company</h3>
-    <img src="{{ company_obj.logo.url }}" alt="logo" width="150px">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'companies' %}">Companies</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'company_profile' company_obj.id %}">{{ company_obj.name }}</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Modify Details</li>
+        </ol>
+    </nav>
 
+    <!-- Page Title -->
 
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">{{ company_obj.name }}
+            <small class="text-primary">id:{{company_obj.id}}</small>
+        </h1>
+        <a href="{% url 'companies' %}" class="d-none d-sm-inline-block btn btn-sm btn-outline-primary shadow-sm"><i
+                class="fas fa-sm text-white-50"></i>< Back to Company Home</a>
+    </div>
 
+    <div class="row">
+        <div class="col-lg-8">
 
-    <form method="POST" enctype="multipart/form-data" > {% csrf_token %}
-        {{ form.as_p }}
-    <input class="btn btn-primary" type="submit" value="Save" />
-        <a class="btn btn-outline-primary" href="{% url 'company_profile' company_obj.id %}">Cancel</a>
-    <br>
-    <a class="btn btn-danger" href="{% url 'delete_company' company_obj.id %}">Delete company</a>
+            <!-- Mod Company Card -->
+            <div class="card shadow mb-4">
+                <!-- Card Header  -->
+                <div
+                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">Modify Details</h6>
+                </div>
+                <!-- Card Body -->
+                <div class="card-body">
+                    <!-- Display Logo -->
+                    <img src="{{ company_obj.logo.url }}" alt="logo" width="150px">
 
+                    <form method="POST" enctype="multipart/form-data" > {% csrf_token %}
+                        {% load crispy_forms_tags %}
+                        {{ form|crispy }}
+                        <a class="btn btn-danger" href="{% url 'delete_company' company_obj.id %}">Delete company</a>
+                        <a class="btn btn-outline-primary" href="{% url 'company_profile' company_obj.id %}">Cancel</a>
+                        <input class="btn btn-primary" type="submit" value="Save" />
+                    </form>
+                </div>
+            </div>
+        </div>
 
-    </form>
+        <div class="col-lg-4">
 
+            <!-- Details Card -->
+            {% include "company/partials/company_card.html" %}
 
-
-
-
+        </div>
+    </div>
 
 {% endblock %}
