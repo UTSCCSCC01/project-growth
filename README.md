@@ -23,7 +23,7 @@ One time install:
 `python3 -m pip install channels_redis`
 
 Automatic installation:  
-`sh firstTimeRun.sh'
+`sh firstTimeRun.sh`
 
 
 - Currently, we are planning to have a web application to design our project specifics.
