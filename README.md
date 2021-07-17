@@ -17,31 +17,14 @@
 One time install:  
 `pip3 install virtualenv`  
 
-Set up repo for developers after cloning:  
-```
-cd project-growth  
-git flow init -d
-git pull origin develop 
-git flow feature start feature_name
-```
-
-Running the code:  
-`virtualenv -p python3 .`  
-`source bin/activate`  
-`pip install django`  
-`pip install fontawesome-free`
-`pip install django-crispy-forms` <- Used by forums  
-`pip install pillow` <- to prevent error No module named 'PIL' 
-`pip install python-decouple`
-
 ***Now, install Docker: https://www.docker.com/get-docker****
-
 
 `docker run -p 6379:6379 -d redis:5` <-gets docker
 `python3 -m pip install channels_redis`
 
-`cd Growth`  
-`python3 manage.py runserver`  
+Automatic installation:  
+`sh firstTimeRun.sh'
+
 
 - Currently, we are planning to have a web application to design our project specifics.
 
