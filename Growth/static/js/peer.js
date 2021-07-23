@@ -50,20 +50,20 @@ var recording = false;
 
 var file;
 
-document.getElementById('share-file-button').addEventListener('click', () => {
-    document.getElementById('select-file-dialog').style.display = 'block';
-});
+// document.getElementById('share-file-button').addEventListener('click', () => {
+//     document.getElementById('select-file-dialog').style.display = 'block';
+// });
   
-document.getElementById('cancel-button').addEventListener('click', () => {
-    document.getElementById('select-file-input').value = '';
-    document.getElementById('select-file-dialog').style.display = 'none';
-    document.getElementById('ok-button').disabled = true;
-});
+// document.getElementById('cancel-button').addEventListener('click', () => {
+//     document.getElementById('select-file-input').value = '';
+//     document.getElementById('select-file-dialog').style.display = 'none';
+//     document.getElementById('ok-button').disabled = true;
+// });
   
-document.getElementById('select-file-input').addEventListener('change', (event) => {
-    file = event.target.files[0];
-    document.getElementById('ok-button').disabled = !file;
-});
+// document.getElementById('select-file-input').addEventListener('change', (event) => {
+//     file = event.target.files[0];
+//     document.getElementById('ok-button').disabled = !file;
+// });
 
 // ul of messages
 var ul = document.querySelector("#message-list");
