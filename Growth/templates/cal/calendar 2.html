@@ -1,0 +1,39 @@
+{% extends 'builder.html' %}
+
+{% block header %}
+{% load static %}
+<title>Calendar</title>
+
+<link rel="stylesheet" type="text/css" href="{% static 'cal/css/styles.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<!--Bread Crumb-->
+<nav aria-label="breadcrumb">
+	<ol class="breadcrumb">
+		<li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+		<li class="breadcrumb-item active" aria-current="page">Calendar</li>
+	</ol>
+</nav>
+
+<!-- Page Header -->
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+	<h1 class="h3 mb-0 text-gray-800">Calendar</h1>
+	<a href="{% url 'index' %}" class="d-none d-sm-inline-block btn btn-sm btn-outline-primary shadow-sm"><i
+			class="fas fa-sm text-white-50"></i>< Back to {{request.user}}'s dashboard</a>
+</div>
+
+<div class="clearfix">
+	<a class="btn btn-info left" href="{% url 'cal:calendar' %}?{{ prev_month }}"> Previous Month </a>
+	<a class="btn btn-info right" href="{% url 'cal:calendar' %}?{{ next_month }}"> Next Month </a>
+	<a class="btn btn-info right" href="{% url 'cal:event_new' %}"> New Event </a>
+</div>
+
+{{ calendar }}
+
+<!--For some reason, the table does not close itself properly and made footers in the middle of page-->
+<!--Force closing it-->
+</tbody>
+</table>
+{% endblock content %}

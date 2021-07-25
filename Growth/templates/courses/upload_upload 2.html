@@ -1,0 +1,22 @@
+<!-- This file extends builder.html, which has the navigation bar created" -->
+{% extends "builder.html" %}
+
+<!-- To replace title, change the following title block" -->
+{% block header %}
+<link rel="stylesheet" href="https://unpkg.com/mobi.css/dist/mobi.min.css">
+<title>Courses</title>
+
+{% endblock %}
+
+<!-- To replace content, change the following content block" -->
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+  <h2>Submit Work</h2>
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+{% endblock %}
