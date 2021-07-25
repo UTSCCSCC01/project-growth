@@ -72,6 +72,10 @@ urlpatterns = [
     
     path('books/upload_l/uploadmark/', course_views.upload_mark, name='upload_mark'), 
 
+    # Result
+    
+    path('books/upload_l/uploadresult/', course_views.result, name='result'),  
+
     # Class Method
 
     path('class/books/', course_views.BookListView.as_view(), name='class_book_list'),

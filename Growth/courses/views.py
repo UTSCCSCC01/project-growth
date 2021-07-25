@@ -11,6 +11,8 @@ from users.models import User
 from .import models
 from django.views.generic import TemplateView
 
+
+
 from django.views.generic import (
     ListView,
     DetailView,
@@ -136,6 +138,7 @@ def enrollCourse(request):
 
 
 def enrollOneCourse(request):
+
     nid = request.GET.get('nid')
     courseuser = CourseUser.objects.create(
         course_id=nid,
@@ -498,7 +501,11 @@ def upload_mark(request):
     upload_id = request.GET.get('nid')
 
 
-    user_id = request.user.id
+
+    uploadbookUser = UploadBookUser.objects.get(upload_id=upload_id)
+    
+    book_id = uploadbookUser.book_id
+
 
 
     if request.method == 'POST':
@@ -516,19 +523,19 @@ def upload_mark(request):
 
 
             markobject.save()
+
             
+
             uploadMark = UploadMark.objects.create(
 
                 mark_id = markobject.id,
                 upload_id = upload_id,
+                book_id = book_id,
             )
 
             uploadMark.save()
 
 
-            # uploaded = Upload.objects.get(id=upload_id) previous
-
-            # uploaded.mark = markobject.mark # previous
 
 
             ubu_object = UploadBookUser.objects.get(upload_id=upload_id)
@@ -539,10 +546,91 @@ def upload_mark(request):
 
             return redirect('/books/upload_l/?nid='+str(ubu_object_bookid))
     else:
-        
+       
         form = MarkForm()
         
         return render(request, 'courses/upload_mark.html', {
         'form': form,
         'upload_id':upload_id,
         })
+
+
+def result(request):
+
+
+    
+    role = request.user.role
+
+    user_id = request.user.id
+
+    book_id = request.GET.get('nid')
+
+
+    
+    uploadMark = UploadMark.objects.filter(book_id=book_id)
+
+    upload_list = []
+
+
+    for umu in uploadMark:
+
+        upload_umu = umu.upload_id
+
+        if upload_umu not in upload_list:
+            upload_list.append(upload_umu)
+
+    
+    marks_marks = []
+
+    for umuu in upload_list:
+
+        uploadmarkUser = UploadMark.objects.filter(book_id=book_id).filter(upload_id=umuu)
+
+        marks_m = []
+
+        for umuu_m in uploadmarkUser:
+              
+              marks_m.append(Mark.objects.get(id=umuu_m.mark_id))
+
+        index_m = []
+
+        for jnjb in marks_m:
+
+            index_m.append(jnjb.id)
+        
+        maximum_index_m = max(index_m)
+
+        for njbj in marks_m:
+            if(maximum_index_m == njbj.id):
+                marks_m.clear()
+                marks_marks.append(njbj)
+
+        marks_value = []
+
+        for ma_ma in marks_marks:
+            marks_value.append(int(ma_ma.mark))
+
+        max_mm = max(marks_value)
+        min_mm = min(marks_value)
+
+        sum_mm = sum(marks_value)
+
+
+
+        mean_mm = sum_mm/len(marks_value)
+
+            
+            
+        
+    return render(request, 'courses/result.html', {
+
+            'role':role,
+            'book_id':book_id,
+            'user_id':user_id,
+            'marks_marks':marks_marks,
+            'max_mm':max_mm,
+            'min_mm':min_mm,
+            'mean_mm':mean_mm,
+
+            })
+

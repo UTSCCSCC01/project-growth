@@ -84,7 +84,7 @@ class UploadBookUser(models.Model):
 class Mark(models.Model):
 
     id = models.BigAutoField(primary_key=True)
-    mark = models.CharField(max_length=100)
+    mark = models.CharField(max_length=5)
     
     def __str__(self):
         return self.mark
@@ -93,3 +93,4 @@ class UploadMark(models.Model):
 
     upload = models.ForeignKey(Upload, on_delete=models.CASCADE)
     mark = models.ForeignKey(Mark, on_delete=models.CASCADE)
+    book = models.ForeignKey(Book, on_delete=models.CASCADE)
