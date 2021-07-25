@@ -571,6 +571,10 @@ def result(request):
 
     upload_list = []
 
+    max_mm = "Not Applicable"
+    min_mm = "Not Applicable"
+    mean_mm = "Not Applicable"
+
 
     for umu in uploadMark:
 
@@ -610,14 +614,14 @@ def result(request):
         for ma_ma in marks_marks:
             marks_value.append(int(ma_ma.mark))
 
-        max_mm = max(marks_value)
-        min_mm = min(marks_value)
-
-        sum_mm = sum(marks_value)
 
 
 
-        mean_mm = sum_mm/len(marks_value)
+        if(len(marks_value)>0):
+            max_mm = max(marks_value)
+            min_mm = min(marks_value)
+            sum_mm = sum(marks_value)
+            mean_mm = sum_mm/len(marks_value)
 
             
             
