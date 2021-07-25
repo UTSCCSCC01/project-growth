@@ -367,7 +367,7 @@ def upload_list(request):
         
         for nb in marks:
             index.append(nb.id)
-            print(nb.id)
+            #print(nb.id)
         
         maximum_index = max(index)
 
