@@ -4,8 +4,8 @@ from django.views.generic import TemplateView, ListView, CreateView
 from django.core.files.storage import FileSystemStorage
 from django.urls import reverse_lazy
 
-from .forms import BookForm, CourseForm, UploadForm
-from .models import BookCourse, CourseInfo,CourseUser, Book, Upload, UploadBookUser
+from .forms import BookForm, CourseForm, UploadForm, MarkForm
+from .models import BookCourse, CourseInfo,CourseUser, Book, Upload, UploadBookUser, Mark
 
 from users.models import User
 from .import models
@@ -389,13 +389,17 @@ def upload_upload(request):
             
             pdf = form.cleaned_data['pdf']
 
+            mark = "Marks not uploaded yet"
+
             upload = Upload.objects.create(
                 
                 remark = user_id,
-                pdf = pdf
+                pdf = pdf,
+                mark = mark
             )
 
             upload.save()
+
 
             uploadBookUser= UploadBookUser.objects.create(
 
@@ -420,6 +424,8 @@ def upload_upload(request):
         'book_id':book_id,
     })
 
+    
+
 def delete_upload(request, pk):
     if request.method == 'POST':
         upload = Upload.objects.get(pk=pk)
@@ -431,3 +437,55 @@ def delete_upload(request, pk):
         upload.delete()
         
     return redirect('/books/upload_l/?nid='+str(nj_id))
+
+
+# Upload mark should be same as upload_upload
+
+def upload_mark(request):
+
+    upload_id = request.GET.get('nid')
+
+
+    user_id = request.user.id
+
+    uploaded = Upload.objects.get(id=upload_id)
+
+    if request.method == 'POST':
+
+        form = MarkForm(request.POST, request.FILES)
+
+        if form.is_valid():
+
+            mark = form.cleaned_data['mark']
+
+            markobject = Mark.objects.create(
+
+                mark = mark,
+            )
+
+            markobject.save()
+
+            # uploaded = Upload.objects.get(id=upload_id)
+
+            uploaded.mark = markobject.mark
+
+            print(uploaded.mark)
+            print(uploaded.remark)
+
+
+            ubu_object = UploadBookUser.objects.get(upload_id=upload_id)
+
+            ubu_object_bookid = ubu_object.book_id
+            
+
+
+            return redirect('/books/upload_l/?nid='+str(ubu_object_bookid))
+    else:
+        
+        form = MarkForm()
+        
+        return render(request, 'courses/upload_mark.html', {
+        'form': form,
+        'upload_id':upload_id,
+        'uploaded':uploaded,
+        })

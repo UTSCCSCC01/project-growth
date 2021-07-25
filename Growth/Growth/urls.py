@@ -67,7 +67,13 @@ urlpatterns = [
     path('books/<int:pk>/', course_views.delete_book, name='delete_book'),
 
     path('books/upload_l/<int:pk>/', course_views.delete_upload, name='delete_upload'), 
+
+    # Upload Mark
     
+    path('books/upload_l/uploadmark/', course_views.upload_mark, name='upload_mark'), 
+
+    # Class Method
+
     path('class/books/', course_views.BookListView.as_view(), name='class_book_list'),
     path('class/books/upload/', course_views.UploadBookView.as_view(),
          name='class_upload_book'),
