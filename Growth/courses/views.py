@@ -5,7 +5,7 @@ from django.core.files.storage import FileSystemStorage
 from django.urls import reverse_lazy
 
 from .forms import BookForm, CourseForm, UploadForm, MarkForm
-from .models import BookCourse, CourseInfo,CourseUser, Book, Upload, UploadBookUser, Mark
+from .models import BookCourse, CourseInfo,CourseUser, Book, Upload, UploadBookUser, Mark, UploadMark
 
 from users.models import User
 from .import models
@@ -267,7 +267,6 @@ def upload_book(request):
 
             # Till here
 
-            form.save()
 
             return redirect('/books/?nid='+course_id)
     else:
@@ -323,24 +322,46 @@ def upload_list(request):
 
     book_id = request.GET.get('nid')
 
+    # uploadmarks = UploadMark.objects.filter()
 
     uploads = []
-
     
+    all_marks = Mark.objects.all() 
+    
+    k = 0
+    
+    for j in all_marks:
+        k = k + 1
+
+    marks = []
+
 
     if(role == 'Instructor'):
 
         uploadBookUser = UploadBookUser.objects.filter(book_id=book_id)
 
+
         for uploadBook in uploadBookUser:
             uploads.append(Upload.objects.get(id=uploadBook.upload_id))
+
+
 
     elif(role == 'Student'):
 
         uploadBookUser = UploadBookUser.objects.filter(user_id=user_id).filter(book_id=book_id)
 
+
+
         for uploadBook in uploadBookUser:
-           uploads.append(Upload.objects.get(id=uploadBook.upload_id)) 
+        
+           uploads.append(Upload.objects.get(id=uploadBook.upload_id))
+
+           if(k>0):
+
+               uploadmarks = UploadMark.objects.filter(upload_id=uploadBook.upload_id)
+               for um in uploadmarks:
+                marks.append(Mark.objects.get(id=um.mark_id))
+
 
     count = 0
 
@@ -349,6 +370,12 @@ def upload_list(request):
         count = count + 1
 
     book_obj = get_object_or_404(Book, id = book_id)
+
+    c = 0
+
+    for m in marks:
+
+        c = c + 1
 
             
     # elif(role == 'Student'):
@@ -360,12 +387,16 @@ def upload_list(request):
             # uploads.append(Upload.objects.get(id=uploadBook.book_id)) 
 
     return render(request, 'courses/upload_list.html', {
+
             'uploads': uploads,
             'role':role,
             'book_id':book_id,
             'user_id':user_id,
             'count':count,
-            "book": book_obj
+            'book': book_obj,
+            'c': c,
+            'marks':marks,
+
             })
 
 
@@ -389,13 +420,12 @@ def upload_upload(request):
             
             pdf = form.cleaned_data['pdf']
 
-            mark = "Marks not uploaded yet"
 
             upload = Upload.objects.create(
                 
                 remark = user_id,
                 pdf = pdf,
-                mark = mark
+
             )
 
             upload.save()
@@ -411,6 +441,10 @@ def upload_upload(request):
             )
 
             uploadBookUser.save()
+
+            # Save Form for Marks
+
+
 
             # Till here
 
@@ -448,7 +482,6 @@ def upload_mark(request):
 
     user_id = request.user.id
 
-    uploaded = Upload.objects.get(id=upload_id)
 
     if request.method == 'POST':
 
@@ -463,14 +496,21 @@ def upload_mark(request):
                 mark = mark,
             )
 
+
             markobject.save()
+            
+            uploadMark = UploadMark.objects.create(
 
-            # uploaded = Upload.objects.get(id=upload_id)
+                mark_id = markobject.id,
+                upload_id = upload_id,
+            )
 
-            uploaded.mark = markobject.mark
+            uploadMark.save()
 
-            print(uploaded.mark)
-            print(uploaded.remark)
+
+            # uploaded = Upload.objects.get(id=upload_id) previous
+
+            # uploaded.mark = markobject.mark # previous
 
 
             ubu_object = UploadBookUser.objects.get(upload_id=upload_id)
@@ -487,5 +527,4 @@ def upload_mark(request):
         return render(request, 'courses/upload_mark.html', {
         'form': form,
         'upload_id':upload_id,
-        'uploaded':uploaded,
         })

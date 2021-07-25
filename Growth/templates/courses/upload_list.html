@@ -71,7 +71,8 @@
         <th>Delete</th>
         {% endif %}
 
-        <th>Marks</th>
+
+
       </tr>
     </thead>
     <tbody>
@@ -101,7 +102,8 @@
 
             {% endif %}
 
-            <td>{{upload.mark}}</td>
+
+
 
         </tr>
         
@@ -109,6 +111,41 @@
     
     </tbody>
 
+
+
   </table>
+
+  {% if role == 'Student' %} 
+
+
+  {% if c > 0 %}
+
+
+
+  <table class="table mb-0">
+
+    <thead>
+      <tr>
+
+        <th>Marks for this Module</th> 
+
+      </tr>
+    </thead>
+
+    <tbody>
+
+      {% for mark in marks %}
+      <tr>
+        <td>{{mark.mark}}</td>
+      </tr>
+
+      {% endfor %}
+    </tbody>
+
+
+  </table>
+
+  {% endif %}
+  {% endif %}
 
 {% endblock %}
