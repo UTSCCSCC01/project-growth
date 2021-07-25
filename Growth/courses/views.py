@@ -356,11 +356,26 @@ def upload_list(request):
         
            uploads.append(Upload.objects.get(id=uploadBook.upload_id))
 
+
            if(k>0):
 
                uploadmarks = UploadMark.objects.filter(upload_id=uploadBook.upload_id)
                for um in uploadmarks:
-                marks.append(Mark.objects.get(id=um.mark_id))
+                   marks.append(Mark.objects.get(id=um.mark_id))
+                   
+        index = [0]
+        
+        for nb in marks:
+            index.append(nb.id)
+            print(nb.id)
+        
+        maximum_index = max(index)
+
+        if(maximum_index != 0):
+            for jj in marks:
+                if(maximum_index == jj.id):
+                    marks.clear()
+                    marks.append(jj)
 
 
     count = 0
@@ -371,11 +386,14 @@ def upload_list(request):
 
     book_obj = get_object_or_404(Book, id = book_id)
 
+    
+
     c = 0
 
     for m in marks:
 
         c = c + 1
+
 
             
     # elif(role == 'Student'):
