@@ -20,6 +20,8 @@
 <!-- Page Header -->
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
 	<h1 class="h3 mb-0 text-gray-800">New Event</h1>
+    	<a href="/calendar/event/del/?nid={{event_id}}" class="d-none d-sm-inline-block btn btn-sm btn-outline-primary shadow-sm"><i
+			class="fas fa-sm text-white-50"></i>Delete event</a>
 	<a href="{% url 'cal:calendar' %}" class="d-none d-sm-inline-block btn btn-sm btn-outline-primary shadow-sm"><i
 			class="fas fa-sm text-white-50"></i>< Back to {{request.user}}'s Calendar</a>
 </div>
