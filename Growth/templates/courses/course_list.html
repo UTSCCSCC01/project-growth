@@ -44,7 +44,7 @@
                 {% if role == 'Instructor' %}
                     <td><a class="btn-sm btn-primary" href="modCourse/?nid={{course.id}}">Modify</a>
                 |
-                    <a class="btn-sm btn-danger" href="delCourse/?nid={{course.id}}">Delete</a></td>
+                    <a class="btn-sm btn-danger" href="delCourse/?nid={{event_id}}">Delete</a></td>
                 {% elif role == 'Student' %}
                     <td><a class="btn-sm btn-danger" href="unenrollCourse/?nid={{course.id}}">Unenroll</a></td>
                 {% endif %}
