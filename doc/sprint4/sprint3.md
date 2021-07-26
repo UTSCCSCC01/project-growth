@@ -1,42 +1,46 @@
 ## Sprint 4.md
 ---
 ### Our Goal
-- To finish(design, code, testing(slight)) at least 8 user stories.
+- To finish(design, code, testing(slight)) at least 8 (User stories and Tasks).
 
-### User Stories for Sprint 3:
-1. E-Learning - Track events by calendar
-2. Community/E-learning - Create graphic user interface for all pages
-3. E-learning - User dashboard page
-4. Community - Notifications for direct messages and Forums
-5. Community - Merge video chat and chatroom
-6. E-learning - Posting Videos
-7. E-learning - Submit modules as a student
+### User Stories for Sprint 4:
+1. E-learning - Grade and view statistics of students' performance
+2. Make UI changes for Chat Rooms
+3. Add notification badge for forums
+4. Community - Have multiple channel layers for video chat and chat box
+5. Fix Like button bug
+6. Delete event for newly created event in calendar
+7. Make Dashboard updates after assignment submission
+8. New chat for Inbox - bug
 
 ### Team Capacity:
-- With our success in completing 9 user stories in Sprint 2, we managed to create base functionality for a lot of features which increases efficiency of our website a lot. In Sprint 3, we are more foccused to use base functionality and complete user stories which were dependent on user stories from sprint2. Most features in sprint 3 requires integrity from other base functionality and with end of sprint of 2 we can now successfully complete them. The user stories that are completed are Track events by calendar(1), Create graphic user interface for all pages(2), User dashboard page(3), Notifications for direct messages and Forums(4), Merge video chat and chatroom(5),  Posting Videos(6), Submit modules as a student(7). 
-- We are now looking forward to improve functionality and UI experience for rest of the user stories soon as after Sprint 2 helped us to make base for many other user stories functionalities and we are focusing on improving functionality, by working on base from previous user stories and then integrating many functionalities.
-- Note: For Notifications for direct messages and Forums(4), we need to still implement the functionality to delete notifications, to avoid cluttering of the notification panel. We also need to fix the badge alert for "Forum" notifications, just how we have currently fixed for Inbox notifications.
+- After completing 7 user stories and tasks in Sprint 3, we managed to complete almost all user stories from the 20 user stories that were designed in sprint 0. Therefore, we planned to first complete left over user story, from the 20 user stories designed in sprint0 and they were our highest priority of this sprint. Simultaneously we started working on User Interface for our website, and also worked on integration of features which were completed in sprint3. We then took decided to fix some bugs which were generated in these process or went unnoticed in previous sprint. After completing all 20 user stories that were designed in sprint0, we went on to complete integration and tasks which for which these user stories were a blocker. The user stories and tasks that are completed are Grade and view statistics of students' performance(1), Make UI changes for Chat Rooms(2), Add notification badge for forums(3), Community - Have multiple channel layers for video chat and chat box(4),Fix Like button bug(5),  Delete event for newly created event in calendar(6), Make Dashboard updates after assignment submission(7) and New chat for Inbox - bug(8). 
+- We are now continuously testing all features and regurlary fixing bugs. Along with it, we make a significant user stories in this sprint to improve user interface, as there are no blockers for it after completion of all 20 designed user stories. We keep adding neccasary stories and task in this sprint, if we discover some required changes in previous feature or if there is a need to add new feature.
+
 
 ### What are practices that you should continue during next sprint
-- Making feature branch of feature branch to avoid conflicts in develop
-- Merging branches should be done under other team members watch who share files which are responsible for conflict, so that key functionality does not get removed.
-- User stories which are connected, feature branch should be created from each other before merging them to develop.
-- Availability of other teams member for most of the time which helped to learn and understand errors.
-- Spending adequate time on imroving user interface of the website.
-- Distribution of new features should be based on previous features.
+- New task which are similar to previous completed task, should be allotated to team member who have worked on that previous task.
+- Regular meeting to discuss blockers, fix bugs and help other team member to understand your code, whenever they need it.
+- Creating new branch from previous feature branch to fix bugs and improve UI.
+- UI experience and bug free functionality should be considered seriously before merging to develop, to avoid later unwanted issues.
+- Availability of team members who share files with about to merge branch which helped to avoid conflict, so that current feature in develop does not change and previous functionality is restored after every merging.
+- A new separte branch for integration of two already present feature branch, in order to avoid damaging current functionality.
+- Continue to establish a healthy working environment to maximise efficiency of every team member.
+
+
 
 ### What are some new practices that you might want to use during next sprint
-- Learning more about front end technologies to increase UI experience.
-- Merging feature based on priorties to avoid repetitive error and conflcits.
-- Distrubution of user stories priorties, based on team members availability to complete work.
+- Priority of task, should be taken into consideration and separate deadlines should be made for each task based on thier priority.
+- Testing all features properly, in order to avoid bugs so that in following sprint more new functionality could be added.
+- User stories with highest priorties, should be alloted to team member based on thier availability for particular sprint.
 
 
 ### What are (if any) harmful practices you should stop using during next sprint
-- Stop waiting to merge pull request till the end and merging should be done based on priority to avoid same and repetitive merging problems which causes wastage of time and decrease time for Testing and UI.
+- Sometimes not considering order of priority of task, which causes certain unwanted delays.
 
 ### What was your best/worst experience during sprint 2
-- Best: Understanding priority of user stories to complete maximum user stories for sprint 2 effectively, so that we can work on UI later.
-- Worst: Difference in Time Zone, created slight delay in work as we need to discuss before merging.
+- Best: Improving UI experience and fixing bug exposed us to software development work cycles.
+- Worst: Time Zone and varying availability, causes slight delay in task which effects time for testing.
 
 ### Participants
 
@@ -45,18 +49,19 @@ Ronish Bhatt, Yihang Cheng, Naman Bhandari, Shashwat Piyush Doshi, Jaiteg Sahota
 ### Tasks breakdown:
 
 
-- Tracking events: Yihang Cheng
-- Graphic UI: Zhengyi Zhang
-- Posting Videos: Jaiteg Sahota
-- Submit Modules: Naman Bhandari
-- Notification(Direct Message and Forums): Shashwat Piyush Doshi
-- Chat Functionality: Ronish Bhatt
-- User Profile: Pritish Panda
+- Grade Statistics: Naman Bhandari
+- BUG-New Chat for Inbox: Shashwat Piyush Doshi
+- BUG-Like Button: Jaiteg Sahota 
+- Notification Badge (Forums):Shashwat Piyush Doshi
+- Multiple Channels Layers(Video Chat and Chat Box): Ronish Bhatt
+- Dashboard Update(Grade Released): Pritish Panda
+- Calendar(Delete Event): Yihang Cheng
+- UI Changes(Chat Room): Zhengyi Zhang
 - CRC Cards: Everyone
 - burndown.pdf - Zhengyi Zhang
 - schedule.pdf - Pritish Panda
-- sprint3.md - Naman Bhandari
-- SR2.md - Shashwat Piyush Doshi
+- sprint4.md - Naman Bhandari
+- SR3.md - Shashwat Piyush Doshi
 - System Design - Ronish Bhatt
 - PB.md - Jaiteg Sahota 
 - Documentation.pdf - Yihang Cheng
