@@ -1,0 +1,103 @@
+<!--This is the notification drop down menu in top bar-->
+{% for notification in user.notificationsForum.unread %}
+
+<a class="dropdown-item d-flex align-items-center">
+
+
+    {% for post in user.post_set.all %}
+
+    {% if post.title == notification.description %}
+
+    {% if notification.verb == "LikePost" and notification.recipient != notification.actor %}
+    <a class="dropdown-item d-flex align-items-center" href="{% url 'individual-post' post.id %}">
+        <div class="mr-3">
+            <div class="icon-circle bg-warning">
+                <i class="fas fa-exclamation-triangle text-white"></i>
+            </div>
+        </div>
+        <div>
+
+
+            <b>{{ notification.actor }}</b> liked your Post:
+            {{ notification.description }}
+
+            <!--<button class="dropdown-item" type="button"><a-->
+            <!--href="{% url 'notificationsForum:mark_as_read' notification.slug %}">CLEARRR</a> </button>-->
+        </div>
+    </a>
+    {% endif %}
+
+    {% if notification.verb == "NewComment" and notification.recipient != notification.actor %}
+    <a class="dropdown-item d-flex align-items-center" href="{% url 'individual-post' post.id %}">
+        <div class="mr-3">
+            <div class="icon-circle bg-warning">
+                <i class="fas fa-exclamation-triangle text-white"></i>
+            </div>
+        </div>
+        <div>
+            <b>{{ notification.actor }}</b> commented on your post titled
+            "{{ notification.description }}"
+            <!--<button class="dropdown-item" type="button"><a-->
+            <!--href="{% url 'notificationsForum:mark_as_read' notification.slug %}">CLEARRR</a></button>-->
+        </div>
+    </a>
+
+    {% endif %}
+    {% endif %}
+
+    {% endfor %}
+
+    {% for comment in user.comment_set.all %}
+
+    {% if notification.verb == "LikeComment" and notification.recipient != notification.actor and notification.description == comment.text %}
+    <a class="dropdown-item d-flex align-items-center" href="{% url 'individual-post' comment.post.id %}">
+        <div class="mr-3">
+            <div class="icon-circle bg-warning">
+                <i class="fas fa-exclamation-triangle text-white"></i>
+            </div>
+        </div>
+        <div>
+            <b>{{ notification.actor }}</b> liked your comment "{{ comment.text }}"
+        </div>
+    </a>
+    {% endif %}
+
+    {% if notification.verb == "NewReply" and notification.recipient != notification.actor and notification.description == comment.text %}
+    <a class="dropdown-item d-flex align-items-center" href="{% url 'individual-post' comment.post.id %}">
+        <div class="mr-3">
+            <div class="icon-circle bg-warning">
+                <i class="fas fa-exclamation-triangle text-white"></i>
+            </div>
+        </div>
+        <div>
+            <b>{{ notification.actor }}</b> replied on your comment titled "{{ notification.description }}"
+        </div>
+    </a>
+    {% endif %}
+
+    {% endfor %}
+
+    {% for reply in user.reply_set.all %}
+
+    {% if notification.verb == "LikeReply" and notification.recipient != notification.actor and notification.description == reply.text %}
+    <a class="dropdown-item d-flex align-items-center" href="{% url 'individual-post' reply.comment.post.id %}">
+        <div class="mr-3">
+            <div class="icon-circle bg-warning">
+                <i class="fas fa-exclamation-triangle text-white"></i>
+            </div>
+        </div>
+        <div>
+            <b>{{ notification.actor }}</b> liked your reply "{{ reply.text }}"
+        </div>
+    </a>
+    {% endif %}
+    {% endfor %}
+
+
+</a>
+{% endfor %}
+
+                
+
+
+

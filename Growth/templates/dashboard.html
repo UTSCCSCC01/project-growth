@@ -43,7 +43,7 @@
                     <div class="col mr-2">
                         <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                             Assignments Completed</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">0</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{upload_count}}</div>
                     </div>
                     <div class="col-auto">
                         <i class="fas fa-arrow-circle-up fa-2x text-gray-300"></i>
@@ -111,7 +111,7 @@
                 <h6 class="m-0 font-weight-bold text-primary ">What's New !</h6>
             </div>
 
-            <!-- This is where the mdoules tempelat was before-->
+            <!-- youtube video-->
             <div class="card-body pt-2">
                 <div class="text-center">
                     <object style="height: 390px; width: 640px">
@@ -175,7 +175,9 @@
 
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                     Upcoming Assigments</th>
+
                                 {% if user.role != 'Instructor' %}
+
                                 <th
                                     class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7 ps-2">
                                     Completion</th>
@@ -204,14 +206,34 @@
                                     {% for book in books %}
 
                                     {% if course.course.id == book.course.id %}
-                                    <div class="col">
 
-                                        Assigment: {{book.book.title}},
+                                    {% if book.book not in uploads %}
+                                    <div class="col">
+                                        <p><strong>Assigments</strong>: <a
+                                                href="books/upload_l/?nid={{book.book.id}}">{{book.book.title}}</a>
                                     </div>
                                     <div class="col">
 
-                                        <p>Deadline: {{book.book.deadline}}</p>
+                                        <p><strong>Deadline</strong>: {{book.book.deadline}}</p>
+
+                                        <hr>
                                     </div>
+                                    {% else %}
+
+                                    <div class="col">
+                                        <p><strong>Assigments</strong>: <a
+                                                href="books/upload_l/?nid={{book.book.id}}">{{book.book.title}}</a>
+                                    </div>
+                                    <div class="col">
+
+                                        <p><strong>Status</strong>: Submitted</p>
+
+
+                                        <hr>
+                                    </div>
+                                    {% endif %}
+
+
 
                                     {% endif %}
 
@@ -219,19 +241,51 @@
                                 </td>
                                 {% if user.role != 'Instructor' %}
                                 <td>
-                                    <div class="d-flex align-items-center justify-content-center">
+
+
+                                    {% for book in books %}
+                                    {% if course.course.id == book.course.id %}
+                                    {% if book.book not in uploads %}
+
+                                    <div class="d-flex px-0 py-10  align-items-center justify-content-center">
                                         <!-- <span class="me-2 text-xs font-weight-bold">60%</span> -->
-                                        <div class="col-md-6">
-                                            <div class="progress mb-4">
+                                        <div class="col-md-10 my-3">
+                                            <div class="progress mb-5">
                                                 <div class="progress-bar bg-danger" role="progressbar"
-                                                    style="width: 40%" aria-valuenow="40" aria-valuemin="0"
+                                                    style="width: 30%" aria-valuenow="30" aria-valuemin="0"
                                                     aria-valuemax="100"></div>
                                             </div>
 
                                         </div>
                                     </div>
+
+
+
+
+
+                                    {% else %}
+
+                                    <div class="d-flex px-0 py-10 align-items-center justify-content-center">
+                                        <!-- <span class="me-2 text-xs font-weight-bold">60%</span> -->
+                                        <div class="col-md-10  my-3">
+                                            <div class="progress mb-4">
+                                                <div class="progress-bar bg-success" role="progressbar"
+                                                    style="width: 100%" aria-valuenow="100" aria-valuemin="0"
+                                                    aria-valuemax="100"></div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+
+                                    {% endif %}
+                                    {% endif %}
+                                    {% endfor %}
+
+
                                 </td>
                                 {% endif %}
+
                             </tr>
                             {% endfor %}
                         </tbody>
