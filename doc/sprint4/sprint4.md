@@ -25,7 +25,7 @@
 - UI experience and bug free functionality should be considered seriously before merging to develop, to avoid later unwanted issues.
 - Availability of team members who share files with about to merge branch which helped to avoid conflict, so that current feature in develop does not change and previous functionality is restored after every merging.
 - A new separte branch for integration of two already present feature branch, in order to avoid damaging current functionality.
-- Continue to establish a healthy working environment to maximise efficiency of every team member.
+- Continue to establish a healthy working environment to maximise efficiency of every team members.
 
 
 
