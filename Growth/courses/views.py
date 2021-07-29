@@ -4,12 +4,14 @@ from django.views.generic import TemplateView, ListView, CreateView
 from django.core.files.storage import FileSystemStorage
 from django.urls import reverse_lazy
 
-from .forms import BookForm, CourseForm, UploadForm
-from .models import BookCourse, CourseInfo,CourseUser, Book, Upload, UploadBookUser
+from .forms import BookForm, CourseForm, UploadForm, MarkForm
+from .models import BookCourse, CourseInfo,CourseUser, Book, Upload, UploadBookUser, Mark, UploadMark
 
 from users.models import User
 from .import models
 from django.views.generic import TemplateView
+
+
 
 from django.views.generic import (
     ListView,
@@ -136,6 +138,7 @@ def enrollCourse(request):
 
 
 def enrollOneCourse(request):
+
     nid = request.GET.get('nid')
     courseuser = CourseUser.objects.create(
         course_id=nid,
@@ -267,7 +270,6 @@ def upload_book(request):
 
             # Till here
 
-            form.save()
 
             return redirect('/books/?nid='+course_id)
     else:
@@ -323,24 +325,61 @@ def upload_list(request):
 
     book_id = request.GET.get('nid')
 
+    # uploadmarks = UploadMark.objects.filter()
 
     uploads = []
-
     
+    all_marks = Mark.objects.all() 
+    
+    k = 0
+    
+    for j in all_marks:
+        k = k + 1
+
+    marks = []
+
 
     if(role == 'Instructor'):
 
         uploadBookUser = UploadBookUser.objects.filter(book_id=book_id)
 
+
         for uploadBook in uploadBookUser:
             uploads.append(Upload.objects.get(id=uploadBook.upload_id))
+
+
 
     elif(role == 'Student'):
 
         uploadBookUser = UploadBookUser.objects.filter(user_id=user_id).filter(book_id=book_id)
 
+
+
         for uploadBook in uploadBookUser:
-           uploads.append(Upload.objects.get(id=uploadBook.upload_id)) 
+        
+           uploads.append(Upload.objects.get(id=uploadBook.upload_id))
+
+
+           if(k>0):
+
+               uploadmarks = UploadMark.objects.filter(upload_id=uploadBook.upload_id)
+               for um in uploadmarks:
+                   marks.append(Mark.objects.get(id=um.mark_id))
+                   
+        index = [0]
+        
+        for nb in marks:
+            index.append(nb.id)
+            #print(nb.id)
+        
+        maximum_index = max(index)
+
+        if(maximum_index != 0):
+            for jj in marks:
+                if(maximum_index == jj.id):
+                    marks.clear()
+                    marks.append(jj)
+
 
     count = 0
 
@@ -349,6 +388,15 @@ def upload_list(request):
         count = count + 1
 
     book_obj = get_object_or_404(Book, id = book_id)
+
+    
+
+    c = 0
+
+    for m in marks:
+
+        c = c + 1
+
 
             
     # elif(role == 'Student'):
@@ -360,12 +408,16 @@ def upload_list(request):
             # uploads.append(Upload.objects.get(id=uploadBook.book_id)) 
 
     return render(request, 'courses/upload_list.html', {
+
             'uploads': uploads,
             'role':role,
             'book_id':book_id,
             'user_id':user_id,
             'count':count,
-            "book": book_obj
+            'book': book_obj,
+            'c': c,
+            'marks':marks,
+
             })
 
 
@@ -389,13 +441,16 @@ def upload_upload(request):
             
             pdf = form.cleaned_data['pdf']
 
+
             upload = Upload.objects.create(
                 
                 remark = user_id,
-                pdf = pdf
+                pdf = pdf,
+
             )
 
             upload.save()
+
 
             uploadBookUser= UploadBookUser.objects.create(
 
@@ -407,6 +462,10 @@ def upload_upload(request):
             )
 
             uploadBookUser.save()
+
+            # Save Form for Marks
+
+
 
             # Till here
 
@@ -420,6 +479,8 @@ def upload_upload(request):
         'book_id':book_id,
     })
 
+    
+
 def delete_upload(request, pk):
     if request.method == 'POST':
         upload = Upload.objects.get(pk=pk)
@@ -431,3 +492,149 @@ def delete_upload(request, pk):
         upload.delete()
         
     return redirect('/books/upload_l/?nid='+str(nj_id))
+
+
+# Upload mark should be same as upload_upload
+
+def upload_mark(request):
+
+    upload_id = request.GET.get('nid')
+
+
+
+    uploadbookUser = UploadBookUser.objects.get(upload_id=upload_id)
+    
+    book_id = uploadbookUser.book_id
+
+
+
+    if request.method == 'POST':
+
+        form = MarkForm(request.POST, request.FILES)
+
+        if form.is_valid():
+
+            mark = form.cleaned_data['mark']
+
+            markobject = Mark.objects.create(
+
+                mark = mark,
+            )
+
+
+            markobject.save()
+
+            
+
+            uploadMark = UploadMark.objects.create(
+
+                mark_id = markobject.id,
+                upload_id = upload_id,
+                book_id = book_id,
+            )
+
+            uploadMark.save()
+
+
+
+
+            ubu_object = UploadBookUser.objects.get(upload_id=upload_id)
+
+            ubu_object_bookid = ubu_object.book_id
+            
+
+
+            return redirect('/books/upload_l/?nid='+str(ubu_object_bookid))
+    else:
+       
+        form = MarkForm()
+        
+        return render(request, 'courses/upload_mark.html', {
+        'form': form,
+        'upload_id':upload_id,
+        })
+
+
+def result(request):
+
+
+    
+    role = request.user.role
+
+    user_id = request.user.id
+
+    book_id = request.GET.get('nid')
+
+
+    
+    uploadMark = UploadMark.objects.filter(book_id=book_id)
+
+    upload_list = []
+
+    max_mm = "Not Applicable"
+    min_mm = "Not Applicable"
+    mean_mm = "Not Applicable"
+
+
+    for umu in uploadMark:
+
+        upload_umu = umu.upload_id
+
+        if upload_umu not in upload_list:
+            upload_list.append(upload_umu)
+
+    
+    marks_marks = []
+
+    for umuu in upload_list:
+
+        uploadmarkUser = UploadMark.objects.filter(book_id=book_id).filter(upload_id=umuu)
+
+        marks_m = []
+
+        for umuu_m in uploadmarkUser:
+              
+              marks_m.append(Mark.objects.get(id=umuu_m.mark_id))
+
+        index_m = []
+
+        for jnjb in marks_m:
+
+            index_m.append(jnjb.id)
+        
+        maximum_index_m = max(index_m)
+
+        for njbj in marks_m:
+            if(maximum_index_m == njbj.id):
+                marks_m.clear()
+                marks_marks.append(njbj)
+
+        marks_value = []
+
+        for ma_ma in marks_marks:
+            marks_value.append(int(ma_ma.mark))
+
+
+
+
+        if(len(marks_value)>0):
+            max_mm = max(marks_value)
+            min_mm = min(marks_value)
+            sum_mm = sum(marks_value)
+            mean_mm = sum_mm/len(marks_value)
+
+            
+            
+        
+    return render(request, 'courses/result.html', {
+
+            'role':role,
+            'book_id':book_id,
+            'user_id':user_id,
+            'marks_marks':marks_marks,
+            'max_mm':max_mm,
+            'min_mm':min_mm,
+            'mean_mm':mean_mm,
+
+            })
+

@@ -30,6 +30,13 @@
       Naman
     -->
 
+    {% if role == 'Instructor' %}
+    <a href="uploadresult/?nid={{book_id}}" class="btn-sm btn-primary">Module Statistics</a>
+    {% endif %}
+
+    <br>
+    <br>
+
 
     {% if role == 'Student' %}
         <div>
@@ -70,6 +77,9 @@
         {% if role == 'Student' %}
         <th>Delete</th>
         {% endif %}
+
+
+
       </tr>
     </thead>
     <tbody>
@@ -77,7 +87,7 @@
         <tr>
 
             {% if role == 'Instructor' %}
-            <td>{{upload.remark}}</td>
+            <td><a href="uploadmark/?nid={{upload.id}}">{{upload.remark}}</a></td>
             {% endif %} 
             
             <td>
@@ -99,12 +109,58 @@
 
             {% endif %}
 
+
+
         </tr>
         
         {% endfor %}
     
     </tbody>
 
+
+
   </table>
 
+  {% if role == 'Student' %} 
+
+
+  {% if c > 0 %}
+
+
+
+  <table class="table mb-0">
+
+    <thead>
+      <tr>
+
+        <th>Marks for this Module</th> 
+
+      </tr>
+    </thead>
+
+    <tbody>
+
+      {% for mark in marks %}
+      <tr>
+        <td>{{mark.mark}}</td>
+      </tr>
+
+      {% endfor %}
+    </tbody>
+
+
+  </table>
+
+  {% elif count == 1 %}
+
+  <b>Thank you for your submission!<br>Grading is in progress<br>Marks will be updated soon</b>
+
+  {% endif %}
+
+
+  {% endif %}
+  
+
+
+ 
 {% endblock %}

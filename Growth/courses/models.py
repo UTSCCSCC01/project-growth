@@ -66,6 +66,7 @@ class Upload(models.Model):
     id = models.BigAutoField(primary_key=True)
     remark = models.CharField(max_length=100)
     pdf = models.FileField(upload_to='books/pdfs/')
+
     
     def __str__(self):
         return self.title
@@ -79,3 +80,17 @@ class UploadBookUser(models.Model):
     book = models.ForeignKey(Book, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     upload = models.ForeignKey(Upload, on_delete=models.CASCADE)
+
+class Mark(models.Model):
+
+    id = models.BigAutoField(primary_key=True)
+    mark = models.CharField(max_length=5)
+    
+    def __str__(self):
+        return self.mark
+
+class UploadMark(models.Model):
+
+    upload = models.ForeignKey(Upload, on_delete=models.CASCADE)
+    mark = models.ForeignKey(Mark, on_delete=models.CASCADE)
+    book = models.ForeignKey(Book, on_delete=models.CASCADE)

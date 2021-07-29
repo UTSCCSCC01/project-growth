@@ -1,0 +1,68 @@
+<!-- This file extends builder.html, which has the navigation bar created" -->
+{% extends "builder.html" %}
+
+<!-- To replace title, change the following title block" -->
+{% block header %}
+<link rel="stylesheet" href="https://unpkg.com/mobi.css/dist/mobi.min.css">
+<title>Courses</title>
+
+{% endblock %}
+
+{% block content %}
+
+
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Module Statistics</h1>
+        <button type="button" class="btn btn-outline-primary" onclick="history.back(-1)">Back</button>
+    </div>
+
+    <br>
+    <br>
+
+    <table class="table mb-0">
+        <thead>
+          <tr>
+    
+
+            <th>Students Marks</th>
+   
+    
+          </tr>
+        </thead>
+        <tbody>
+          {% for mm in marks_marks %}
+            <tr>
+                <td>{{mm.mark}}</td>
+            </tr>
+        {% endfor %}
+        
+        </tbody>
+    
+      </table>
+
+      <br>
+      <br>
+
+      <table class="table mb-0">
+        <thead>
+          <tr>
+    
+
+            <th>Maximum Marks</th>
+            <th>Minimum Marks</th> 
+            <th>Mean</th> 
+
+   
+          </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{max_mm}}</td>
+                <td>{{min_mm}}</td> 
+                <td>{{mean_mm}}</td>
+            </tr>
+        </tbody>
+    
+      </table>
+
+{% endblock %}
