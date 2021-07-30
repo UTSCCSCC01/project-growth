@@ -27,7 +27,7 @@ class Post(models.Model):
     #reverse returns full url as string
     def get_absolute_url(self):
         #refer to forum/urls.py
-        return reverse('individual-post', kwargs={'pk': self.pk})
+        return reverse('forum-landing')
     #Success_url method to go to home page instead
 
 class Comment(models.Model):
@@ -47,8 +47,9 @@ class Comment(models.Model):
         return self.text
 
     def get_absolute_url(self):
+        return reverse('forum-landing')
         #refer to forum/urls.py
-        return reverse('individual-post', kwargs={'pk': self.post.pk})
+        #return reverse('individual-post', kwargs={'pk': self.post.id})
 
 class Reply(models.Model):
     comment = models.ForeignKey(Comment, on_delete=models.CASCADE)
@@ -62,7 +63,8 @@ class Reply(models.Model):
 
     def get_absolute_url(self):
         #refer to forum/urls.py
-        return reverse('individual-post', kwargs={'pk': self.comment.post.pk})
+        return reverse('forum-landing')
+        #return reverse('individual-post', kwargs={'pk': self.comment.post.pk})
 
     @property
     def get_replies(self):
