@@ -6,7 +6,7 @@ from django.urls import reverse
 from courses.models import CourseInfo
 
 
-
+#Post model
 class Post(models.Model):
     title = models.CharField(max_length=100)
     text = models.TextField()
@@ -48,7 +48,7 @@ class Comment(models.Model):
 
     def get_absolute_url(self):
         return reverse('forum-landing')
-        #refer to forum/urls.py
+        #refer to forum/urls.py 
         #return reverse('individual-post', kwargs={'pk': self.post.id})
 
 class Reply(models.Model):
