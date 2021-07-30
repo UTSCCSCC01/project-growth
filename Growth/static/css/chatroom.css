@@ -11,7 +11,7 @@ body {
 
 html {
     font-family: Arial, Helvetica, sans-serif;
-    background: linear-gradient(to right, #57c1eb 0%, #246fa8 100%);
+    background: linear-gradient(to right, #b8761f 0%, #168d30 100%);
     font-size: 10px;
 }
 
@@ -69,4 +69,27 @@ body {
 
     flex-wrap: wrap; /* like text-wrapping in word */
     justify-content: space-around; /* To make it in center */
+}
+
+.video-grid-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    background-color: black;
+}
+  
+.main-grid-container {
+    display: grid;
+    grid-template-columns: 60% 20%;
+}
+
+video {
+    border-radius: 3%;
+    background-color: black;
+    display: inline-block;
+    margin-right: 10px;
+    transform: scale(0.8, 0.8);
+    -ms-transform: scale(0.8, 0.8); 
+    -webkit-transform: scale(0.8, 0.8); 
+    -o-transform: scale(0.8, 0.8); 
+    -moz-transform: scale(0.8, 0.8);
 }
