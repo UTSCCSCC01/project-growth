@@ -1,16 +1,16 @@
 <!-- chat/templates/chat/room.html -->
 
 <!DOCTYPE html>
+{% load static %}
+
 <html>
 <head>
     <meta charset="utf-8"/>
     <title>Chat Room</title>
-    {% load static %}
+    <!-- {% load static %} -->
     <link rel="stylesheet" type="text/css" href="{% static 'css/chatroom.css' %}">
 </head>
 <body>
-    <h2 id="title-chat">Welcome {{ user }} !</h2>
-    <h2 id="username">{{ user }}</h2>
     <textarea id="chat-log" cols="100" rows="20"></textarea><br>
 
     <div id="chat-text-box">
@@ -18,23 +18,42 @@
     </div>
 
     <button id="chat-message-submit" type="button" class="btn btn-danger btn-lg">Send</button>
+    <h3 id="label-username">{{ user }}'s Video Conference</h3>
+    <div>
+        <button id="btn-join">Join Conference Room</button>
+    </div>
+    <div class="main-grid-container">
+        <!-- for grid layout
+        assign class video-grad-layout -->
+        <span> 
+        <div id="video-container">
+            <div><video id="local-video" style="float: left;" autoplay playsinline></video></div>
+            <button id="btn-toggle-audio" class="btn btn-dark">Mute Audio</button>
+            <button id="btn-toggle-video" class="btn btn-dark">Turn Off Video</button>
+            <button id="btn-share-screen">Screen Share</button>
+            <button id="btn-record-screen">Screen Record</button>
+        </div>
+    </span>
+    </div>
+    <h2 id="title-chat">Welcome {{ user }} !</h2>
+    <h2 id="username">{{ user }}</h2>
     {{ room_name|json_script:"room-name" }}
     <script>
-        const roomName = JSON.parse(document.getElementById('room-name').textContent);
+        const chatName = JSON.parse(document.getElementById('room-name').textContent);
 
-        document.title = roomName;
+        document.title = chatName;
 
         const chatSocket = new WebSocket(
             'ws://'
             + window.location.host
             + '/ws/chat/'
-            + roomName
+            + chatName
             + '/'
         );
 
         chatSocket.onmessage = function(e) {
             const data = JSON.parse(e.data);
-            document.querySelector('#chat-log').value += (document.getElementById("username").innerHTML + ": " + data.message + '\n');
+            document.querySelector('#chat-log').value += (data.message + '\n');
         };
 
         chatSocket.onclose = function(e) {
@@ -50,12 +69,18 @@
 
         document.querySelector('#chat-message-submit').onclick = function(e) {
             const messageInputDom = document.querySelector('#chat-message-input');
-            const message = messageInputDom.value;
+            const message = document.getElementById("username").innerHTML + ": " + messageInputDom.value;
             chatSocket.send(JSON.stringify({
                 'message': message
             }));
             messageInputDom.value = '';
         };
     </script>
+     <script>
+        var numbTurnCredential = '{{numb_turn_credential}}';
+        var numbTurnUsername = '{{numb_turn_username}}';
+    </script> 
+    <script src="https://www.WebRTC-Experiment.com/RecordRTC.js"></script>
+    <script type="text/javascript" src="{% static 'js/peer.js' %}"></script>
 </body>
 </html>
