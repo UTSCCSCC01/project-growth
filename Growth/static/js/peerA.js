@@ -5,7 +5,7 @@ if(window.location.protocol == 'https:'){
     wsLink = 'wss://';
 }
 
-var endPoint = wsLink + window.location.host + '/ws/video_chat/' + 'conference';
+var endPoint = wsLink + window.location.host + '/ws/video_chat/' + JSON.parse(document.getElementById('room-name').textContent);
 
 var ws = new WebSocket(endPoint);
 

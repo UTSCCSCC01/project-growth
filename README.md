@@ -50,7 +50,7 @@ Some of the technologies which are going to be used are:
 ## Contribution
 
 - Do you use git flow? ***YES***
-- What do you name your branches? ***Master branch, Develop branch (will be updated as we progress through the sprints)***
+- What do you name your branches? ***Main branch, Develop branch, feature branches***
 - Do you use github issues or another ticketing website? ***Github issues will be used***
 - Do you use pull requests? ***Will be planning to use pull requests as we progress through the sprints***
 
