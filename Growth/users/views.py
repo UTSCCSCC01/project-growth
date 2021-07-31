@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.auth import get_user_model
 from django.urls import reverse
-from courses.models import BookCourse, CourseInfo, CourseUser
+from courses.models import BookCourse, CourseInfo, CourseUser,  Upload, UploadBookUser, Book
 
 
 def register(request):
@@ -46,6 +46,14 @@ def app_home(request):
 def dashboard(request):
     user_id = request.user.id
     role = request.user.role
+    uploads = []
+    upload_count = 0
+    uploadBookUser = UploadBookUser.objects.filter(
+        user_id=user_id)
+    for uploadBook in uploadBookUser:
+        uploads.append(Book.objects.get(id=uploadBook.book.id))
+        upload_count = upload_count + 1
+
     queryset = BookCourse.objects.all()
     template_name = 'dashboard.html'
     if(role == 'Instructor' or role == 'Student'):
@@ -54,7 +62,7 @@ def dashboard(request):
     else:
         coursesUsers = CourseInfo.objects.all()
         count = CourseInfo.objects.all().count()
-    return render(request, template_name, {'books': queryset, 'courses': coursesUsers, 'count': count})
+    return render(request, template_name, {'books': queryset, 'courses': coursesUsers, 'count': count, 'upload_count': upload_count, 'uploads': uploads})
 
 
 @login_required

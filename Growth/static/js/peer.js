@@ -38,9 +38,6 @@ var localDisplayStream = new MediaStream();
 btnToggleAudio = document.querySelector("#btn-toggle-audio");
 btnToggleVideo = document.querySelector("#btn-toggle-video");
 
-var messageInput = document.querySelector('#msg');
-var btnSendMsg = document.querySelector('#btn-send-msg');
-
 // button to start or stop screen recording
 var btnRecordScreen = document.querySelector('#btn-record-screen');
 // object that will start or stop screen recording
@@ -79,7 +76,7 @@ var roomName = '';
 
 document.title
 
-var endPoint = wsLink + window.location.host + '/ws/video_chat/' + 'conference';
+var endPoint = wsLink + window.location.host + '/ws/video_chat/' + JSON.parse(document.getElementById('room-name').textContent) + '/';
 
 var ws;
 
@@ -119,9 +116,6 @@ btnJoin.onclick = () => {
     ws.onerror = function(e){
         console.log('Error occured! ', e);
     }
-
-    btnSendMsg.disabled = false;
-    messageInput.disabled = false;
 }
 
 function webSocketOnMessage(event){
@@ -216,37 +210,6 @@ function webSocketOnMessage(event){
 
         return;
     }
-}
-
-messageInput.addEventListener('keyup', function(event){
-    if(event.keyCode == 13){
-        // prevent from putting 'Enter' as input
-        event.preventDefault();
-
-        // click send message button
-        btnSendMsg.click();
-    }
-});
-
-btnSendMsg.onclick = btnSendMsgOnClick;
-
-function btnSendMsgOnClick(){
-    var message = messageInput.value;
-    
-    var li = document.createElement("li");
-    li.appendChild(document.createTextNode("Me: " + message));
-    ul.appendChild(li);
-    
-    var dataChannels = getDataChannels();
-
-    console.log('Sending: ', message);
-
-    // send to all data channels
-    for(index in dataChannels){
-        dataChannels[index].send(username + ': ' + message);
-    }
-    
-    messageInput.value = '';
 }
 
 const constraints = {

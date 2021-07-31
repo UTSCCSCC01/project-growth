@@ -1,17 +1,51 @@
 <!-- chat/templates/chat/entryChat.html -->
+{% extends 'builder.html' %}
 
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8"/>
-    <title>Chat Rooms</title>
-</head>
-<body>
-    What chat room would you like to enter?<br>
-    <input id="room-name-input" type="text" size="100"><br>
-    <input id="room-name-submit" type="button" value="Enter">
+{% load static %}
 
-    <script>
+{% block header %}
+<title>Chat Rooms</title>
+{% endblock %}
+<!--End header-->
+
+{% block content %}
+
+<!--Bread Crumb-->
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Video Chat</li>
+    </ol>
+</nav>
+
+What chat room would you like to enter?<br>
+<input id="room-name-input" type="text" size="100"><br><p></p>
+
+<input  data-toggle="modal" data-target="#enterRoomModal" type="button" class="btn btn-primary" value="Enter">
+
+<!-- Logout Modal-->
+<div class="modal fade" id="enterRoomModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Join this room?</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">You will be sharing your video, audio or screen content to other users in the room.</div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                <button class="btn btn-primary" id="room-name-submit">Join</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block script %}
+
+<script>
         document.querySelector('#room-name-input').focus();
         document.querySelector('#room-name-input').onkeyup = function(e) {
             if (e.keyCode === 13) {  // enter, return
@@ -20,9 +54,8 @@
         };
 
         document.querySelector('#room-name-submit').onclick = function(e) {
-            var roomName = document.querySelector('#room-name-input').value;
-            window.location.pathname = '/chat/' + roomName + '/';
+            var chatName = document.querySelector('#room-name-input').value;
+            window.location.pathname = '/chat/' + chatName + '/';
         };
     </script>
-</body>
-</html>
+{% endblock %}

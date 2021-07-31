@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404
 
 from django.views.generic import TemplateView, ListView, CreateView
 from django.core.files.storage import FileSystemStorage
@@ -10,8 +10,6 @@ from .models import BookCourse, CourseInfo,CourseUser, Book, Upload, UploadBookU
 from users.models import User
 from .import models
 from django.views.generic import TemplateView
-
-
 
 from django.views.generic import (
     ListView,
@@ -34,10 +32,11 @@ def course_list(request):
             all_courses.append(CourseInfo.objects.get(id=course.course_id))
     else:
         all_courses = CourseInfo.objects.all()
-    return render(request, 'courses/course_list.html',{
-        'all_courses':all_courses,
-        'role':role,
+    return render(request, 'courses/course_list.html', {
+        'all_courses': all_courses,
+        'role': role,
     })
+
 
 class CourseList(ListView):
     model = CourseInfo
@@ -49,6 +48,7 @@ class CourseList(ListView):
     # Change this ordering to by likes when you sort by best
     #ordering = ['-date_posted']
 
+
 class CourseDetail(DetailView):
     model = CourseInfo
     template_name = 'courses/course_detail.html'  # <appName>/<model>_<viewtype>.html
@@ -59,23 +59,22 @@ class CourseDetail(DetailView):
     # Change this ordering to by likes when you sort by best
     #ordering = ['-date_posted']
 
-def course_detail(request,course_id):
+
+def course_detail(request, course_id):
     if course_id:
         course = CourseInfo.objects.filter(id=int(course_id))[0]
-        return render(request,'courses/course_detail.html', {
-            'course':course
+        return render(request, 'courses/course_detail.html', {
+            'course': course
         })
-
-
 
 
 def addCourse(request):
     if request.method == "GET":
         course_name_form = CourseForm()
 
-        return render(request,'courses/addCourse.html',{
+        return render(request, 'courses/addCourse.html', {
 
-            'course_name_form':course_name_form,
+            'course_name_form': course_name_form,
         })
     else:
         course_name_form = CourseForm(request.POST)
@@ -96,16 +95,17 @@ def addCourse(request):
 
 def delCourse(request):
     nid = request.GET.get('nid')
-    bb = CourseInfo.objects.get(id = nid)
+    bb = CourseInfo.objects.get(id=nid)
     bb.delete()
     return redirect('/courses/')
+
 
 def modCourse(request):
     if request.method == "GET":
         nid = request.GET.get('nid')
         course = CourseInfo.objects.get(id=nid)
-        return render(request, 'courses/modCourse.html',{
-            "course":course
+        return render(request, 'courses/modCourse.html', {
+            "course": course
         })
     else:
         nid = request.POST.get('id')
@@ -115,15 +115,17 @@ def modCourse(request):
         course.save()
         return redirect('/courses/')
 
+
 def enrollCourse(request):
     user_id = request.user.id
     instructor_list = list(User.objects.filter(role="Instructor"))
-    course_list = [] # all courses
+    course_list = []  # all courses
     for instructor in instructor_list:
         courseUsers = list(CourseUser.objects.filter(user_id=instructor.id))
         for couU in courseUsers:
             course_list.append(CourseInfo.objects.get(id=couU.course_id))
-    courseU = list(CourseUser.objects.filter(user_id=user_id)) #my chosen course
+    courseU = list(CourseUser.objects.filter(
+        user_id=user_id))  # my chosen course
     mycourse_list = []
     for coU in courseU:
         mycourse_list.append(CourseInfo.objects.get(id=coU.course_id))
@@ -132,7 +134,7 @@ def enrollCourse(request):
 
     if request.method == "GET":
         return render(request, 'courses/enrollCourse.html',
-                      {"all_courses":course_list})
+                      {"all_courses": course_list})
     else:
         return redirect('/courses/')
 
@@ -149,30 +151,12 @@ def enrollOneCourse(request):
 
 def unenrollCourse(request):
     nid = request.GET.get('nid')
-    bb = CourseUser.objects.get(course_id=nid,user_id=request.user.id)
+    bb = CourseUser.objects.get(course_id=nid, user_id=request.user.id)
     bb.delete()
     return redirect('/courses/')
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 # NAMAN CODE
-
-
 
 
 class Home(TemplateView):
@@ -196,17 +180,15 @@ def book_list(request):
     course_id = request.GET.get('nid')
     course_from_id = CourseInfo.objects.get(id=course_id)
     #posts = Post.objects.get(course=course_from_id)
-    #print(posts)
-    #Query posts get all by course id
-    #in html just include the forum thing
+    # print(posts)
+    # Query posts get all by course id
+    # in html just include the forum thing
 
     books = []
 
     if(role == 'Instructor' or role == 'Student' or role == 'Partner'):
 
         # Edited Portion
-
-
 
         bookCourse = BookCourse.objects.filter(course_id=course_id)
         course = get_object_or_404(CourseInfo, id=course_id)
@@ -218,19 +200,15 @@ def book_list(request):
         books = Book.objects.all()
         course = None
 
-
         # Edited Portion
-        
+
     return render(request, 'courses/book_list.html', {
-            'books': books,
-            'role':role,
-            'course_id':course_id,
-            'course':course,
-            'posts': course_from_id.post_set.all,
-            })
-
-
-
+        'books': books,
+        'role': role,
+        'course_id': course_id,
+        'course': course,
+        'posts': course_from_id.post_set.all,
+    })
 
 
 def upload_book(request):
@@ -250,19 +228,19 @@ def upload_book(request):
             cover = form.cleaned_data['cover']
 
             book = Book.objects.create(
-                title = title,
-                deadline = deadline,
-                pdf = pdf,
-                cover = cover
+                title=title,
+                deadline=deadline,
+                pdf=pdf,
+                cover=cover
             )
 
             book.save()
 
             bookCourse = BookCourse.objects.create(
 
-                book_id = book.id,
-                course_id = course_id
-                
+                book_id=book.id,
+                course_id=course_id
+
 
             )
 
@@ -270,15 +248,17 @@ def upload_book(request):
 
             # Till here
 
+            # TODO: @NAMAN to check if you need the following line
+            # form.save()
 
             return redirect('/books/?nid='+course_id)
     else:
-        
+
         form = BookForm()
-        
+
         return render(request, 'courses/upload_book.html', {
-        'form': form,
-        'course_id':course_id,
+            'form': form,
+            'course_id': course_id,
             'course': course
         })
 
@@ -287,9 +267,7 @@ def delete_book(request, pk):
     if request.method == 'POST':
         book = Book.objects.get(pk=pk)
 
-
         cid = BookCourse.objects.get(book_id=book.id)
-
 
         c_id = cid.course_id
 
@@ -310,15 +288,11 @@ class UploadBookView(CreateView):
     template_name = 'courses/upload_book.html'
 
 
-
-
 # For student submission
 
 
 def upload_list(request):
 
-
-    
     role = request.user.role
 
     user_id = request.user.id
@@ -328,11 +302,11 @@ def upload_list(request):
     # uploadmarks = UploadMark.objects.filter()
 
     uploads = []
-    
-    all_marks = Mark.objects.all() 
-    
+
+    all_marks = Mark.objects.all()
+
     k = 0
-    
+
     for j in all_marks:
         k = k + 1
 
@@ -351,12 +325,13 @@ def upload_list(request):
 
     elif(role == 'Student'):
 
-        uploadBookUser = UploadBookUser.objects.filter(user_id=user_id).filter(book_id=book_id)
+        uploadBookUser = UploadBookUser.objects.filter(
+            user_id=user_id).filter(book_id=book_id)
 
 
 
         for uploadBook in uploadBookUser:
-        
+
            uploads.append(Upload.objects.get(id=uploadBook.upload_id))
 
 
@@ -365,13 +340,13 @@ def upload_list(request):
                uploadmarks = UploadMark.objects.filter(upload_id=uploadBook.upload_id)
                for um in uploadmarks:
                    marks.append(Mark.objects.get(id=um.mark_id))
-                   
+
         index = [0]
-        
+
         for nb in marks:
             index.append(nb.id)
             #print(nb.id)
-        
+
         maximum_index = max(index)
 
         if(maximum_index != 0):
@@ -387,9 +362,9 @@ def upload_list(request):
 
         count = count + 1
 
-    book_obj = get_object_or_404(Book, id = book_id)
+    book_obj = get_object_or_404(Book, id=book_id)
 
-    
+
 
     c = 0
 
@@ -398,14 +373,14 @@ def upload_list(request):
         c = c + 1
 
 
-            
+
     # elif(role == 'Student'):
-        
-        # uploadBookUser = UploadBookUser.objects.filter(user_id=user_id).filter(book_id=book_id)
-        
-        # for uploadBook in uploadBookUser:
-            
-            # uploads.append(Upload.objects.get(id=uploadBook.book_id)) 
+
+    # uploadBookUser = UploadBookUser.objects.filter(user_id=user_id).filter(book_id=book_id)
+
+    # for uploadBook in uploadBookUser:
+
+    # uploads.append(Upload.objects.get(id=uploadBook.book_id))
 
     return render(request, 'courses/upload_list.html', {
 
@@ -421,14 +396,11 @@ def upload_list(request):
             })
 
 
-    
-
 def upload_upload(request):
 
     book_id = request.GET.get('nid')
 
     user_id = request.user.id
-
 
     if request.method == 'POST':
 
@@ -438,7 +410,7 @@ def upload_upload(request):
 
             # Edit Portion
             # Working
-            
+
             pdf = form.cleaned_data['pdf']
 
 
@@ -454,10 +426,10 @@ def upload_upload(request):
 
             uploadBookUser= UploadBookUser.objects.create(
 
-                book_id = book_id,
-                user_id = request.user.id,
-                upload_id = upload.id
-                
+                book_id=book_id,
+                user_id=request.user.id,
+                upload_id=upload.id
+
 
             )
 
@@ -471,15 +443,15 @@ def upload_upload(request):
 
             return redirect('/books/upload_l/?nid='+book_id)
     else:
-        
-        form = UploadForm()
-        
-        return render(request, 'courses/upload_upload.html', {
-        'form': form,
-        'book_id':book_id,
-    })
 
-    
+        form = UploadForm()
+
+        return render(request, 'courses/upload_upload.html', {
+            'form': form,
+            'book_id': book_id,
+        })
+
+
 
 def delete_upload(request, pk):
     if request.method == 'POST':
@@ -490,7 +462,7 @@ def delete_upload(request, pk):
         nj_id = njid.book_id
 
         upload.delete()
-        
+
     return redirect('/books/upload_l/?nid='+str(nj_id))
 
 
@@ -503,7 +475,7 @@ def upload_mark(request):
 
 
     uploadbookUser = UploadBookUser.objects.get(upload_id=upload_id)
-    
+
     book_id = uploadbookUser.book_id
 
 
@@ -524,7 +496,7 @@ def upload_mark(request):
 
             markobject.save()
 
-            
+
 
             uploadMark = UploadMark.objects.create(
 
@@ -541,14 +513,14 @@ def upload_mark(request):
             ubu_object = UploadBookUser.objects.get(upload_id=upload_id)
 
             ubu_object_bookid = ubu_object.book_id
-            
+
 
 
             return redirect('/books/upload_l/?nid='+str(ubu_object_bookid))
     else:
-       
+
         form = MarkForm()
-        
+
         return render(request, 'courses/upload_mark.html', {
         'form': form,
         'upload_id':upload_id,
@@ -558,7 +530,7 @@ def upload_mark(request):
 def result(request):
 
 
-    
+
     role = request.user.role
 
     user_id = request.user.id
@@ -566,7 +538,7 @@ def result(request):
     book_id = request.GET.get('nid')
 
 
-    
+
     uploadMark = UploadMark.objects.filter(book_id=book_id)
 
     upload_list = []
@@ -583,7 +555,7 @@ def result(request):
         if upload_umu not in upload_list:
             upload_list.append(upload_umu)
 
-    
+
     marks_marks = []
 
     for umuu in upload_list:
@@ -593,7 +565,7 @@ def result(request):
         marks_m = []
 
         for umuu_m in uploadmarkUser:
-              
+
               marks_m.append(Mark.objects.get(id=umuu_m.mark_id))
 
         index_m = []
@@ -601,7 +573,7 @@ def result(request):
         for jnjb in marks_m:
 
             index_m.append(jnjb.id)
-        
+
         maximum_index_m = max(index_m)
 
         for njbj in marks_m:
@@ -623,9 +595,9 @@ def result(request):
             sum_mm = sum(marks_value)
             mean_mm = sum_mm/len(marks_value)
 
-            
-            
-        
+
+
+
     return render(request, 'courses/result.html', {
 
             'role':role,
