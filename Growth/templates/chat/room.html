@@ -1,44 +1,98 @@
-<!-- chat/templates/chat/room.html -->
+{% extends 'builder.html' %}
 
-<!DOCTYPE html>
 {% load static %}
 
-<html>
-<head>
-    <meta charset="utf-8"/>
-    <title>Chat Room</title>
-    <!-- {% load static %} -->
-    <link rel="stylesheet" type="text/css" href="{% static 'css/chatroom.css' %}">
-</head>
-<body>
-    <textarea id="chat-log" cols="100" rows="20"></textarea><br>
+{% block header %}
+<meta charset="utf-8"/>
+<title>Chat Room</title>
+<link rel="stylesheet" type="text/css" href="{% static 'css/chatroom.css' %}">
+{% endblock %}
+<!--End header-->
 
-    <div id="chat-text-box">
-        <input id="chat-message-input" type="text" placeholder="Type a message..."><br>
+{% block content %}
+
+<!--Bread Crumb-->
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'entryChat' %}">Video Chat</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Room name: {{ room_name}}</li>
+    </ol>
+</nav>
+
+<!-- Title Row-->
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 id="label-username" class="h3 mb-0 text-gray-800">{{ user }}'s Video Conference</h1>
+    <a href="{% url 'home' %}" class="d-none d-sm-inline-block btn btn-sm btn-outline-primary shadow-sm"><i
+            class="fas fa-sm text-white-50"></i>< Back to Home</a>
+</div>
+
+<div align="center">
+    <button id="btn-join" class="btn btn-lg btn-success">Preveiw: <b>Ready to Start!</b></button><hr>
+</div>
+<div class="row">
+    <div  class="col-lg-8 align-items-center text-center">
+        <!--Chat Card-->
+        <div class="card shadow mb-4">
+            <!-- Card Header -->
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">Video Preview</h6>
+            </div>
+            <!-- Card Body -->
+            <div class="card-body">
+                <video id="local-video" class="w-100 shadow-1-strong rounded mb-4" autoplay playsinline></video>
+                <div>
+
+                    <button id="btn-toggle-audio" class="btn btn-primary">Mute Audio</button>
+                    <button id="btn-toggle-video" class="btn btn-primary">Turn Off Video</button>
+                    <button id="btn-share-screen" class="btn btn-outline-primary">Screen Share</button>
+                    <button id="btn-record-screen" class="btn btn-outline-primary">Screen Record</button>
+                    <div id="video-container" style="overflow: auto" class="w-100 shadow-1-strong rounded mb-4"></div>
+                </div>
+            </div>
+        </div>
+        <!--Screen share video will pop up here. MAGIC???-->
     </div>
 
-    <button id="chat-message-submit" type="button" class="btn btn-danger btn-lg">Send</button>
-    <h3 id="label-username">{{ user }}'s Video Conference</h3>
-    <div>
-        <button id="btn-join">Join Conference Room</button>
+    <div id="video-chat" class="col-lg-4">
+
+        <!--Chat Card-->
+        <div class="card shadow mb-4">
+            <!-- Card Header -->
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">Conference Chat Room</h6>
+            </div>
+            <!-- Card Body -->
+            <div class="card-body">
+
+                <div id="text-chat">
+                    <span id="title-chat">Welcome {{ user }} !</span>
+                    <h2 id="username">{{ user }}</h2>
+                    {{ room_name|json_script:"room-name" }}
+                    <textarea class="w-100" id="chat-log" style="overflow-y: scroll; height: 400px"></textarea>
+                    <hr>
+
+                    <input id="chat-message-input" type="text" style="width:100%" placeholder="Type a message...">
+                    <div  style="float:right" >
+                        <button id="chat-message-submit" type="button" class=" btn btn-small btn-outline-success">Send</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
+
     <div class="main-grid-container">
         <!-- for grid layout
         assign class video-grad-layout -->
-        <span> 
-        <div id="video-container">
-            <div><video id="local-video" style="float: left;" autoplay playsinline></video></div>
-            <button id="btn-toggle-audio" class="btn btn-dark">Mute Audio</button>
-            <button id="btn-toggle-video" class="btn btn-dark">Turn Off Video</button>
-            <button id="btn-share-screen">Screen Share</button>
-            <button id="btn-record-screen">Screen Record</button>
-        </div>
-    </span>
+
     </div>
-    <h2 id="title-chat">Welcome {{ user }} !</h2>
-    <h2 id="username">{{ user }}</h2>
-    {{ room_name|json_script:"room-name" }}
-    <script>
+</div>
+<!--End content-->
+{% endblock %}
+
+{% block script %}
+<script>
         const chatName = JSON.parse(document.getElementById('room-name').textContent);
 
         document.title = chatName;
@@ -76,11 +130,10 @@
             messageInputDom.value = '';
         };
     </script>
-     <script>
+<script>
         var numbTurnCredential = '{{numb_turn_credential}}';
         var numbTurnUsername = '{{numb_turn_username}}';
-    </script> 
-    <script src="https://www.WebRTC-Experiment.com/RecordRTC.js"></script>
-    <script type="text/javascript" src="{% static 'js/peer.js' %}"></script>
-</body>
-</html>
+    </script>
+<script src="https://www.WebRTC-Experiment.com/RecordRTC.js"></script>
+<script type="text/javascript" src="{% static 'js/peer.js' %}"></script>
+{% endblock %}
