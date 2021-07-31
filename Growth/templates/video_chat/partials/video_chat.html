@@ -1,0 +1,72 @@
+<!--This is partial html for peer.html-->
+
+<!--Bread Crumb-->
+<nav aria-label="breadcrumb">
+	<ol class="breadcrumb">
+		<li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+		<li class="breadcrumb-item active" aria-current="page">Video Chat</li>
+<!--        "{% url 'peer' %}"-->
+	</ol>
+</nav>
+<!-- Title Row-->
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 id="label-username" class="h3 mb-0 text-gray-800">{{ user }}'s Video Conference</h1>
+    <a href="{% url 'home' %}" class="d-none d-sm-inline-block btn btn-sm btn-outline-primary shadow-sm"><i
+            class="fas fa-sm text-white-50"></i>< Back to Home</a>
+</div>
+
+<div>
+    <button id="btn-join" class="btn btn-success">Join Conference Room</button><hr>
+</div>
+<div>
+    <!-- for grid layout
+    assign class video-grad-layout -->
+    <div class="row">
+
+        <div id="video-container" class="col-lg-8 align-items-center text-center">
+            <!--Chat Card-->
+            <div class="card shadow mb-4">
+                <!-- Card Header -->
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">Video Preview</h6>
+                </div>
+                <!-- Card Body -->
+                <div class="card-body">
+                    <video id="local-video" class="w-100 shadow-1-strong rounded mb-4" autoplay playsinline></video>
+                    <div>
+                        <button id="btn-toggle-audio" class="btn btn-primary">Mute Audio</button>
+                        <button id="btn-toggle-video" class="btn btn-primary">Turn Off Video</button>
+                        <button id="btn-share-screen" class="btn btn-outline-primary">Screen Share</button>
+                        <button id="btn-record-screen" class="btn btn-outline-primary">Screen Record</button>
+                    </div>
+                </div>
+            </div>
+        <!--Screen share video will pop up here. MAGIC???-->
+        </div>
+
+        <div id="video-chat" class="col-lg-4">
+
+            <!--Chat Card-->
+            <div class="card shadow mb-4">
+                <!-- Card Header -->
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">Conference Chat Room</h6>
+                </div>
+                <!-- Card Body -->
+                <div class="card-body">
+                    <div id="messages" style="overflow-y: scroll; height: 400px">
+                        <ul id="message-list"></ul>
+                    </div>
+                    <div id="ct">
+                        <input id="msg"><button
+                            id="btn-send-msg" class="btn btn-small btn-outline-success">Send</button>
+                    </div>
+                    <!-- <button id="btn-share-screen">Screen Share</button>
+                    <button id="btn-record-screen">Screen Record</button> -->
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+

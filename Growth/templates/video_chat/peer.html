@@ -1,8 +1,18 @@
-{% extends 'video_chat.html' %}
+{% extends 'builder.html' %}
 
 {% load static %}
 
+{% block header %}
+
+    <meta charset="UTF-8">
+    <title>Video Conferencing</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/video.css' %}">
+
+{% endblock %}
+
 {% block content %}
+
+    {% include "video_chat/partials/video_chat.html" %}
     <script>
         var numbTurnCredential = '{{numb_turn_credential}}';
         var numbTurnUsername = '{{numb_turn_username}}';

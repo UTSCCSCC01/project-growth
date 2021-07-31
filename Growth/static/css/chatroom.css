@@ -4,48 +4,29 @@
     box-sizing: border-box;
 }
 
-html,
-body {
-    height: 100%;
-}
-
-html {
-    font-family: Arial, Helvetica, sans-serif;
-    background: linear-gradient(to right, #b8761f 0%, #168d30 100%);
-    font-size: 10px;
-}
-
 #username {
     display: none !important;
 }
 
-body {
-    display: grid;
-    place-items: center;
-}
 
 #chat-log {
-    min-width: 400px;
-    max-width: 500px;
-    max-height: 500px;
-    height: 95vh;
-    width: 100%;
+
     background: #FFF;
     border-radius: 10px;
 }
 
-#chat-text-box {
-    display: grid;
-    grid: 51px / 32px 1fr;
-    align-content: center;
-    align-items: center;
-    grid-gap: 15px;
-    grid-area: chat-text-box;
-    border-radius: 0 0 10px 0;
-    border-top: 1px solid rgba(0,0,0,0.25);
-    padding-left: 42px;
-    padding-right: 22px;
+#my-screen-video{
+    background: #FFF;
+    border-radius: 10px;
+    max-width: 60vh;
 }
+
+#video-container{
+    background: #FFF;
+    border-radius: 10px;
+    max-width: 60vh;
+}
+
 
 #chat-message-input {
     display: flex; /* this activates the div to become a flexbox, and every item you put inside of it becomes a FLEX ITEM */
@@ -57,19 +38,10 @@ body {
     justify-content: space-around; /* THIS IS THE ONE TO MAKE ITEMS IN THE CENTRE!!!!!!
      - also it gives inherent PADDING */
 
-    min-width: 250px;
     align-self: auto;
     height: 4vh;
 }
 
-#chat-message-submit {
-    display: flex; /* activating flex box display */
-    border: 1px solid black;
-    padding: 10px; /* To give it space above and below of 10px */
-
-    flex-wrap: wrap; /* like text-wrapping in word */
-    justify-content: space-around; /* To make it in center */
-}
 
 .video-grid-container {
     display: grid;
