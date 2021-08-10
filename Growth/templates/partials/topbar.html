@@ -133,17 +133,6 @@
                     <div class="font-weight-bold">
                         <div class="text-truncate">
                             Message from {{ notification.actor }}
-                            {% if directs_count %}
-                            <svg viewBox="0 0 8 8"
-                                    width="8px"
-                                    height="8px">
-                                <circle cx="4"
-                                        cy="4"
-                                        r="4"
-                                        fill="#ff6b6b"
-                                        ></circle>
-                            </svg>
-                            {% endif %}
                         </div>
                         <div class="small text-gray-500">{{ notification.description }}</div>
                     </div>
